@@ -1,0 +1,10 @@
+{
+  "console": "Console",
+  "cache": "Cache",
+  "file-storage": "File Storage",
+  "queues": "Queues",
+  "helpers": "Helpers",
+  "events": "Events",
+  "mailer": "Mailers",
+  "localization": "Localization"
+}

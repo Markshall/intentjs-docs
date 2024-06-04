@@ -1,0 +1,24 @@
+{
+  "index": {
+    "display": "hidden"
+  },
+  "getting-started": "Getting Started",
+  "the-basics": "The Basics",
+  "advanced": "Advanced",
+  "database": "Database",
+  "security": "Security",
+  "packages": "Packages",
+  "out-of-context": "Out of Context",
+  "docs": {
+    "title": "Docs",
+    "type": "page"
+  },
+  "blog": {
+    "title": "Blog",
+    "type": "page"
+  },
+  "support": {
+    "title": "Support",
+    "type": "page"
+  }
+}
