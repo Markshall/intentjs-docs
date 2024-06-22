@@ -1,20 +1,4 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Cache
-
-## Introduction
 
 Sometimes, the data retrieval or computed tasks performed by your applications can be heavy, CPU intensive or time taking. In those cases, you may want to save it in a fast-read store so that you don't need to run the computation again and again. When the data is cached, it can be retrieved quickly on subsequent requests for the same data.
 
