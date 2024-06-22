@@ -22,8 +22,8 @@ This package provides a multi-store cache provider for your IntentJS application
 
 **Supported Caches**
 
-* Redis
-* In-Memory
+- Redis
+- In-Memory
 
 ## Configuration
 
@@ -60,7 +60,7 @@ To access the store, you can use the `CacheStore` method or `Cache` class.
 
 ```typescript
 // method
-import { CacheStore } from "@intentjs/core";
+import { CacheStore } from "@intent/core";
 const store = CacheStore("redis");
 
 // class
