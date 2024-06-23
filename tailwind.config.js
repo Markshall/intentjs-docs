@@ -7,6 +7,9 @@ module.exports = {
     "./theme.config.jsx",
   ],
   theme: {
+    colors: {
+      primary: "#65a30d",
+    },
     extend: {},
   },
   plugins: [],

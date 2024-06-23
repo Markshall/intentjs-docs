@@ -1,12 +1,14 @@
-# Helpers
+import {ListComponent} from '../../src/components/list';
+import { ArrayHelpersList, NumberHelpersList, ObjectHelpersList, StringHelpersList } from '../../src/components/utils/helpers';
 
-## Introduction
+# Helpers
 
 IntentJS comes packed with helper methods which you can use to abstract many trivial tasks from your main piece of code.
 
 IntentJS provides the following helpers
 
-* [Arrays](helpers.md#arrays)
+
+* [Arrays](he#arrays)
 * [Objects](helpers.md#objects)
 * [Numbers](helpers.md#numbers)
 * [Pipelines](helpers.md#pipelines)
@@ -15,113 +17,41 @@ IntentJS provides the following helpers
 
 ### Arrays
 
-* [Arr.toObj](helpers.md#arr.toobj)
-* Arr.isArray
-* Arr.flatten
-* Arr.forget
-* Arr.pluck
-* Arr.random
-* Arr.sort
-* Arr.sortDesc
-* Arr.head
-* Arr.last
+<ListComponent items={ArrayHelpersList}/>
 
 ### Objects
 
-* [Obj.dot](helpers.md#obj.dot)
-* Obj.undot
-* [Obj.entries](helpers.md#obj.entries)
-* Obj.pick
-* Obj.omit
-* Obj.pluck
+<ListComponent items={ObjectHelpersList} />
 
 ### Numbers
 
-* [Num.abbreviate](helpers.md#abbreviate)
-* [Num.clamp](helpers.md#clamp)
-* [Num.currency](helpers.md#currency)
-* [Num.fileSize](helpers.md#file-size)
-* [Num.forHumans](helpers.md#for-humans)
-* [Num.format](helpers.md#format)
-* [Num.ordinal](helpers.md#ordinals)
-* [Num.percentage](helpers.md#percentage)
-* [Num.spell](helpers.md#spell)
+<ListComponent items={NumberHelpersList} />
 
 ### Strings
 
-* Str.after
-* Str.before
-* Str.is
-* Str.between
-* Str.camel
-* Str.charAt
-* Str.contains
-* Str.containsAll
-* Str.endsWith
-* Str.headline
-* Str.is
-* Str.isEmail
-* Str.isJson
-* Str.isUrl
-* Stri.isUlid
-* Str.kebab
-* Str.lcfirst
-* Str.length
-* Str.limit
-* Str.lower
-* Str.mask
-* Str.padBoth
-* Str.padLeft
-* Str.padRight
-* Str.plural
-* Str.position
-* Str.random
-* Str.remove
-* Str.repeat
-* Str.replace
-* Str.replaceArray
-* Str.replaceFirst
-* Str.replaceLast
-* Str.replaceMatches
-* Str.reverse
-* Str.singular
-* Str.slug
-* Str.snake
-* Str.squish
-* Str.startsWith
-* Str.studly
-* Str.inject
-* Str.swap
-* Str.take
-* Str.title
-* Str.toBase64
-* Str.ucfirst
-* Str.ulid
-* Str.unwrap
-* Str.wordCount
-* Str.wordWrap
-* Str.words
-* Str.wrap
+<ListComponent items={StringHelpersList} />
 
 ## Array Helper Methods
 
-#### \`Arr.toObj\`
+#### Arr.toObj
 
 The `Arr.toObj` method transforms the array to an object.
 
-<pre class="language-typescript" data-full-width="false"><code class="lang-typescript">const array = [
+```ts
+const array = [
   ['The Alchemist', 'Paulo Coelho'],
   ['Shoe Dog', 'Phil Knight'],
 ];
 
 const obj = Arr.toObj(array, ['book', 'author']);
+
 /**
-<strong>[
-</strong>  { book: 'The Alchemist', author: 'Paulo Coelho' },
-  { book: 'Shoe Dog', author: 'Phil Knight' }
-]
+  [
+    { book: 'The Alchemist', author: 'Paulo Coelho' },
+    { book: 'Shoe Dog', author: 'Phil Knight' }
+  ]
 */
-</code></pre>
+```
 
 ## Object Helper Methods
 
