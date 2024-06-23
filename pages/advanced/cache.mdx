@@ -1,0 +1,163 @@
+import Image from 'next/image'
+import { Cards, Card } from 'nextra/components'
+import {RedisLogo, InMemoryCacheLogo} from '../../src/components/images/providers'
+import { Callout } from "nextra/components";
+
+# Cache
+
+Sometimes, the data retrieval or computed tasks performed by your applications can be heavy, CPU intensive or time taking. Or data could not be changing that frequently, you can cache it to avoid the network call, and directly read it from cache. 
+
+In those cases, you may want to save it in a fast-read store so that you don't need to run the computation again and again. When the data is cached, it can be retrieved quickly on subsequent requests for the same data.
+
+This package provides a multi-store cache provider for your Intent application. Currently supports the following caches.
+
+<Cards>
+  <Card icon={<RedisLogo />} title="Redis" href="" />
+  <Card icon={<InMemoryCacheLogo />} title="Tabs" href="/docs/guide/built-ins/tabs" />
+</Cards>
+
+## Configuration
+
+By default, Intent comes with a pre-configured with `local` cache, to use it you don't need to do anything.
+
+<Callout type="info">
+All of the cache related configuration is available in `config/cache.ts`.
+</Callout>
+
+### Local Cache
+
+Local cache is a zero-dependency store that you can use without starting any extra server.
+
+```ts
+import { registerAs } from "@nestjs/config";
+import { CacheOptions } from "@intentjs/core";
+
+export default registerAs(
+  "cache",
+  () =>
+    ({
+      default: "local",
+      stores: {
+        local: {
+          driver: "local",
+          prefix: "intentjs",
+        },
+      },
+    } as CacheOptions)
+);
+```
+
+### Redis Cache
+
+For production related workloads, we recommend using an external cache store like `Redis`. To configure Redis, you can configure your story like below MdNoEncryptionGmailerrorred.
+
+If you would like to configure different cache stores, you can do so like below in `config/cache.ts` file:
+
+```typescript
+import { registerAs } from "@nestjs/config";
+import { CacheOptions } from "@intentjs/core";
+
+export default registerAs(
+  "cache",
+  () =>
+    ({
+      default: "redis",
+      stores: {
+        redis: {
+          driver: "redis",
+          host: process.env.REDIS_HOST || "127.0.0.1",
+          password: process.env.REDIS_PASSWORD || undefined,
+          port: process.env.REDIS_PORT || 6379,
+          database: process.env.REDIS_DB || 0,
+          prefix: "intentjs",
+        },
+      },
+    } as CacheOptions)
+);
+```
+
+## Usage
+
+To start accessing the cache store, you can simply import the `CacheStore` method or `Cache` class from the `@intentjs/core` package.
+
+```typescript
+// method
+import { CacheStore } from "@intent/core";
+const store = CacheStore("redis");
+
+// class
+import { Cache } from "@libs/intent/cache";
+const store = Cache.store("redis");
+```
+
+If no store name is passed, then default store is returned.
+
+Now, you can set data in the store using `.set()` method.
+
+```typescript
+// saved forever in the store
+await CacheStore().set("reset_password_token", "abcd123456");
+
+// saved for 2 mins or 120 seconds in the store
+await CacheStore().set("reset_password_token", "abcdef12345678", 120);
+```
+
+To fetch the data from store, you can use `.get()` method.
+
+```typescript
+await CacheStore().set("reset_password_token");
+// will return 'abcd123456'
+```
+
+To check if key exists in the store, you can use `.has()` method
+
+```typescript
+await CacheStore().has("reset_password_token");
+// will return `true` if found, else `false`
+```
+
+To remove a key from the store, use `.forget()` method
+
+```typescript
+await CacheStore().forget("reset_password_token");
+```
+
+In a much more real world use case, you may want to process something and then save it to the store, and then read from there on. 
+
+In such case, you can consider using `remember` and `rememberForever` methods which takes a callback, keep it's output in the store, and then automatically return the data next time onwards.
+
+```ts
+const cb = () => {
+  // your custom logic here, for eg. a db query, an api call.
+  return "some_random_generated_token";
+};
+
+await CacheStore().remember("reset_password_token", cb, 120);
+```
+
+Notice the 2nd arg `cb` callback, and the 3rd arg `ttl` timeout, passed to the `remember` method. The `cb` will be processed and the value returned by the callback will be serialized and saved to the store automatically for `ttl` time.
+
+
+If you want to just store the data without any expiry, you can use the `rememberForever` method.
+
+```ts
+const cb = () => {
+  // your custom logic here, for eg. a db query, an api call.
+  return "some_random_generated_token";
+};
+
+await CacheStore().rememberForever("reset_password_token", cb);
+```
+
+The above example saves the data indefinitely in the redis store. The only difference between the `rememberForever` and `remember` method is the expiry time (3rd argument) of the key in the store.
+
+## Extras
+
+There might be instances where you would want to generate unique keys with multiple values, and to maintain a uniformity and consistency, Intent also comes with a `genKey` method.
+
+```typescript
+const key = Cache.genKey({ type: "reset_password_token", userId: 1234 });
+console.log(key); // type[reset_password_token],userId[1234]
+```
+
+`genKey` method automatically sorts the object's key in lexical order and return a string which later can be used as a key.

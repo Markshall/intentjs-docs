@@ -22,6 +22,14 @@ There are two ways you can define commands in your application.
   you can simply register it in the `providers` attribute of the app module.
 </Callout>
 
+If you want to automatically create the `@Command` class, you can simply run the following command.
+
+```bash
+$ node intent make:command NewCommand
+```
+
+This command will automatically create a `newCommand.ts` file in `commands` directory, and add it to the `providers` attribute of the app module class.
+
 ### Using Class
 
 You can create an injectable class and use `@Command` decorator on it. The package will automatically look for `handle` method inside the class.
