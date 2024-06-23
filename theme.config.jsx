@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+
 export default {
   logo: <span className="text-3xl">IntentJs</span>,
   project: {
@@ -39,4 +41,17 @@ export default {
       </div>
     ),
   },
+  navigation: {
+    prev:true,
+    next:true,
+    gitTimestamp:true,
+  },
+  useNextSeoProps() {
+    const { asPath } = useRouter()
+    if (asPath !== '/') {
+      return {
+        titleTemplate: '%s – Intent'
+      }
+    }
+  }
 };
