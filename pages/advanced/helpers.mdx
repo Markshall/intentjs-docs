@@ -322,30 +322,135 @@ Str.containsAll(sentence, ['fox', 'whale']); // returns false
 ```
 
 ### EndsWith [#str-ends-with]
+In cases where you want to check if given string ends with a `substr`, you can use `Str.endsWith` method.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+Str.endsWith(sentence, 'dog.') // returns true
+```
 
 ### Headline [#str-headline]
+`Str.headline` method converts the given string into HeadLine case. This also strips all special characters.
+
+```ts
+const sentence = 'Is this real?' ;
+
+Str.headline(sentence); // Is This Real?
+```
 
 ### Is [#str-is]
+`Str.is` method can be used for pattern matching a substr with given string, or even for exact matching as well.
+
+```ts
+const str = 'users:create';
+
+Str.is(str, 'users:create'); // true
+
+Str.is(str, '*:create'); // true
+
+Str.is(str, 'admin'); // false
+```
 
 ### IsEmail [#str-is-email]
+`Str.isEmail` method validates if given string is an email or not.
+
+```ts
+Str.isEmail('hi@tryintent.com'); // true
+
+Str.isEmail('tryintent.com'); // false
+```
 
 ### IsJson [#str-is-json]
+`Str.isJson` method validates if the given string can be parsed into `JSON` format or not.
+
+```ts
+Str.isJson('{"name": "Intent"}'); // true
+
+Str.isJson('{"name": "Intent"'); // false
+```
 
 ### IsUrl [#str-is-url]
+`Str.isUrl` method checks if the given string is a valid URL or not.
+
+```ts
+Str.isUrl('https://tryintent.com'); // true
+
+Str.isUrl('tryintent.com'); // true
+
+Str.isUrl('docs.tryintent.com'); // true
+
+Str.isUrl('http2://tryintent.com'); // false
+```
 
 ### IsUlid [#str-is-ulid]
+You can use `Str.isUlid` to verify if the given string obeys `ULID` format or  not.
+
+```ts
+Str.isUlid('01ARZ3NDEKTSV4RRFFQ69G5FAV'); // true
+
+Str.isUlid('admin'); // false
+```
 
 ### Kebab [#str-kebab]
+`Str.kebab` method converts the given string into `kebab-case`.
+
+```ts
+const example0 = 'intent_js';
+Str.kebab(example0); // intent-js
+
+const example1 = 'quick brown fox jumps';
+Str.kebab(example1); // quick-brown-fox-jumps
+
+const example2 = "Hey_there, What's up?";
+Str.kebab(example2); // hey-there-what-s-up
+```
 
 ### Lcfirst [#str-lcfirst]
+`Str.lcfirst` can be used to convert the first character to lowercase.
+
+```ts
+Str.lcfirst('INTENT'); // iNTENT
+
+Str.lcfirst('Intent'); // intent
+```
 
 ### Length [#str-length]
+You can use `Str.len` to get the length of a given string.
+
+```ts
+Str.len('intent'); // 6
+
+Str.len(undefined); // 0
+```
 
 ### Limit [#str-limit]
+If you want only `n` length of characters from a given string, you can use `Str.limit` method.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+Str.limit(sentence, 15);
+// The quick brown...
+
+Str.limit(sentence, 15, '!!!');
+// The quick brown!!!
+
+Str.limit(sentence, 50);
+// The quick brown fox jumps over a lazy dog.
+```
 
 ### Lower [#str-lower]
+`Str.lower` transforms the given string into lower case.
+
+```ts
+```
 
 ### Mask [#str-mask]
+You can use `Str.mask` method to mask a given string.
+
+```ts
+```
 
 ### PadBoth [#str-pad-both]
 
