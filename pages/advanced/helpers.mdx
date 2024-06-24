@@ -11,7 +11,7 @@ IntentJS provides the following helpers
 * [Arrays](he#arrays)
 * [Objects](helpers.md#objects)
 * [Numbers](helpers.md#numbers)
-* [Pipelines](helpers.md#pipelines)
+* [Strings](helpers.md#strings)
 
 ## Available Methods
 
@@ -33,7 +33,7 @@ IntentJS provides the following helpers
 
 ## Array Helper Methods
 
-#### Arr.toObj
+### toObj [#arr-to-obj]
 
 The `Arr.toObj` method transforms the array to an object.
 
@@ -53,9 +53,19 @@ const obj = Arr.toObj(array, ['book', 'author']);
 */
 ```
 
+### collapse [#arr-collapse]
+
+### except [#arr-except]
+
+### forget [#arr-forget]
+
+### pick [#arr-pick]
+
+### random [#arr-random]
+
 ## Object Helper Methods
 
-#### Obj.dot
+### Obj.dot
 
 The `Obj.dot` converts a nested object to dot notation object
 
@@ -76,7 +86,7 @@ const dotObj = Obj.dot(obj);
 */
 ```
 
-#### Obj.entries
+### Obj.entries
 
 The `Obj.entries` method converts a deeply nested object into a \[key, value] array. If the object is nested, it would automatically convert the obj to dot notation.
 
@@ -99,11 +109,23 @@ const objEntries = Obj.entries(obj);
 */
 ```
 
+### Obj.except [#obj-except]
+
+### Obj.forget [#obj-forget]
+
+### Obj.get [#obj-get]
+
+### Obj.isEmpty [#obj-is-empty]
+
+### Obj.isNotEmpty [#obj-is-not-empty]
+
+### Obj.pick [#obj-pick]
+
 ## Number Helper Methods
 
 All of the number helpers are exported from `import { Num } from '@intentjs/core'`
 
-#### Abbreviate
+### Num.abbreviate [#num-abbreviate]
 
 The abbreviate method returns the human-readable format of the provided numerical value.
 
@@ -120,7 +142,7 @@ Num.abbreviate(1200, { locale: 'hi' });
 // 1.2 हज़ार
 ```
 
-#### Clamp
+### Num.clamp [#num-clamp]
 
 Clamp helper allows you to ensure that the given number remains within the specified range. f the number is lower than the minimum, the minimum value is returned. If the number is higher than the maximum, the maximum value is returned:
 
@@ -138,7 +160,7 @@ Num.clamp(110, 20, 100);
 // 100
 ```
 
-#### Currency
+### Num.currency [#num-currency]
 
 Currency helper returns the currency format of a given number.
 
@@ -150,7 +172,7 @@ Num.currency(12300, { currency: 'USD' });
 // $12,300.00
 ```
 
-#### File Size
+### Num.fileSize [#num-file-size]
 
 The `fileSize` method returns the file size representation of the number passed.
 
@@ -165,7 +187,7 @@ Num.fileSize(1024 * 1024 * 1.5, { precision: 2 });
 // 1.57MB
 ```
 
-#### For Humans
+### Num.forHumans [#num-for-humans]
 
 `forHumans` method returns the expanded human-readable format of the given number.
 
@@ -183,7 +205,7 @@ Num.forHumans(1230, { locale: 'en' });
 // 1,2 millier
 ```
 
-#### Format
+### Num.format [#num-format]
 
 The `format` method formats the number into the given locale string.
 
@@ -198,7 +220,7 @@ Num.format(1200);
 // 1,200
 ```
 
-#### Ordinals
+### Num.ordinal [#num-ordinal]
 
 Ordinal method returns the ordinal format of a number.
 
@@ -216,7 +238,7 @@ Num.ordinal(20);
 // 20th
 ```
 
-#### Percentage
+### Num.percentage [#num-percentage]
 
 `Num.percentage` method formats the given value into a percentage string.
 
@@ -231,112 +253,108 @@ Num.percentage(10.123, { precision: 2 });
 // 10.12%
 ```
 
-#### Spell
-
 ## String Helper Methods
 
-#### After
+### After [#str-after]
 
-#### Before
+### Before [#str-before]
 
-#### Between
+### Between [#str-between]
 
-#### Camel
+### Camel [#str-camel]
 
-#### CharAt
+### CharAt [#str-char-at]
 
-#### Contains
+### Contains [#str-contains]
 
-#### ContainsAll
+### ContainsAll [#str-contains-all]
 
-#### EndsWith
+### EndsWith [#str-ends-with]
 
-#### Headline
+### Headline [#str-headline]
 
-#### Is
+### Is [#str-is]
 
-#### IsEmail
+### IsEmail [#str-is-email]
 
-#### IsJson
+### IsJson [#str-is-json]
 
-#### IsUrl
+### IsUrl [#str-is-url]
 
-#### IsUlid
+### IsUlid [#str-is-ulid]
 
-#### Kebab
+### Kebab [#str-kebab]
 
-#### Lcfirst
+### Lcfirst [#str-lcfirst]
 
-#### Length
+### Length [#str-length]
 
-#### Limit
+### Limit [#str-limit]
 
-#### Lower
+### Lower [#str-lower]
 
-#### Mask
+### Mask [#str-mask]
 
-#### PadBoth
+### PadBoth [#str-pad-both]
 
-#### PadLeft
+### PadLeft [#str-pad-left]
 
-#### PadRight
+### PadRight [#str-pad-right]
 
-#### Plural
+### Plural [#str-plural]
 
-#### Position
+### Position [#str-position]
 
-#### Random
+### Random [#str-random]
 
-#### Remove
+### Remove [#str-remove]
 
-#### Repeat
+### Repeat [#str-repeat]
 
-#### Replace
+### Replace [#str-replace]
 
-#### ReplaceArray
+### ReplaceArray [#str-replace-array]
 
-#### ReplaceFirst
+### ReplaceFirst [#str-replace-first]
 
-#### ReplaceLast
+### ReplaceLast [#str-replace-last]
 
-#### ReplaceMatches
+### ReplaceMatches [#str-replace-matches]
 
-#### Reverse
+### Reverse [#str-reverse]
 
-#### Singular
+### Singular [#str-singular]
 
-#### Slug
+### Slug [#str-slug]
 
-#### Snake
+### Snake [#str-snake]
 
-#### Squish
+### Squish [#str-squish]
 
-#### StartsWith
+### StartsWith [#str-starts-with]
 
-#### Studly
+### Studly [#str-studly]
 
-#### Inject
+### Inject [#str-inject]
 
-#### Swap
+### Swap [#str-swap]
 
-#### Take
+### Take [#str-take]
 
-#### Title
+### Title [#str-title]
 
-#### ToBase64
+### ToBase64 [#str-to-base64]
 
-#### Ucfirst
+### Ucfirst [#str-ucfirst`]
 
-#### Ulid
+### Ulid [#str-ulid]
 
-#### Unwrap
+### Unwrap [#str-unwrap]
 
-#### WordCount
+### WordCount [#str-word-count]
 
-#### WordWrap
+### WordWrap [#str-word-wrap]
 
-#### Words
+### Words [#str-words]
 
-#### Wrap
-
-## Pipelines
+### Wrap [#str-wrap]

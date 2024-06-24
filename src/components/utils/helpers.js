@@ -1,35 +1,32 @@
 export const ArrayHelpersList = [
-  { label: "Arr.toObj", href: "#arrtoobj" },
-  { label: "Arr.isArray", href: "" },
-  { label: "Arr.flatten", href: "" },
-  { label: "Arr.forget", href: "" },
-  { label: "Arr.pluck", href: "" },
-  { label: "Arr.random", href: "" },
-  { label: "Arr.sort", href: "" },
-  { label: "Arr.sortDesc", href: "" },
-  { label: "Arr.head", href: "" },
-  { label: "Arr.last", href: "" },
+  { label: "Arr.toObj", href: "#arr-to-obj" },
+  { label: "Arr.collapse", href: "#arr-collapse" },
+  { label: "Arr.except", href: "#arr-except" },
+  { label: "Arr.forget", href: "#arr-forget" },
+  { label: "Arr.pick", href: "#arr-pick" },
+  { label: "Arr.random", href: "#arr-random" },
 ];
 
 export const ObjectHelpersList = [
-  { label: "Obj.dot", href: "" },
-  { label: "Obj.undot", href: "" },
-  { label: "Obj.entries", href: "" },
-  { label: "Obj.pick", href: "" },
-  { label: "Obj.omit", href: "" },
-  { label: "Obj.pluck", href: "" },
-  { label: "Obj.except", href: "" },
+  { label: "Obj.dot", href: "#obj-dot" },
+  { label: "Obj.entries", href: "#obj-entries" },
+  { label: "Obj.except", href: "#obj-except" },
+  { label: "Obj.forget", href: "#objforget" },
+  { label: "Obj.get", href: "#obj-get" },
+  { label: "Obj.isEmpty", href: "#obj-is-empty" },
+  { label: "Obj.isNotEmpty", href: "#obj-is-not-empty" },
+  { label: "Obj.pick", href: "#obj-pick" },
 ];
 
 export const NumberHelpersList = [
-  { label: "Num.abbreviate", href: "#abbreviate" },
-  { label: "Num.clamp", href: "#clamp" },
-  { label: "Num.currency", href: "#currency" },
-  { label: "Num.fileSize", href: "#file-size" },
-  { label: "Num.forHumans", href: "#for-humans" },
-  { label: "Num.format", href: "#format" },
-  { label: "Num.ordinal", href: "#ordinal" },
-  { label: "Num.percentage", href: "#percentage" },
+  { label: "Num.abbreviate", href: "#num-abbreviate" },
+  { label: "Num.clamp", href: "#num-clamp" },
+  { label: "Num.currency", href: "#num-currency" },
+  { label: "Num.fileSize", href: "#num-file-size" },
+  { label: "Num.forHumans", href: "#num-for-humans" },
+  { label: "Num.format", href: "#num-format" },
+  { label: "Num.ordinal", href: "#num-ordinal" },
+  { label: "Num.percentage", href: "#num-percentage" },
 ];
 
 export const StringHelpersList = [
