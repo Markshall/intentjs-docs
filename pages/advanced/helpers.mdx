@@ -256,18 +256,70 @@ Num.percentage(10.123, { precision: 2 });
 ## String Helper Methods
 
 ### After [#str-after]
+The `Str.after` method returns the string after the specified `substr`.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+const result = Str.after(sentence, 'fox'); 
+// jumps over a lazy dog.
+```
 
 ### Before [#str-before]
+The `Str.after` method returns the string before the specified `substr`, excluding the `subtr`.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+const result = Str.before(sentence, 'fox'); 
+// The quick brown
+```
 
 ### Between [#str-between]
+The `Str.between` method returns the string present between the specified `start` and `end`.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+const result = Str.between(sentence, 'brown', 'jumps'); 
+// fox
+```
 
 ### Camel [#str-camel]
+The `Str.camel` method converts given string into it's `camelCase` representation.
 
-### CharAt [#str-char-at]
+```ts
+const example0 = 'intent_js';
+Str.camel(example0); // intentJs
+
+const example1 = 'quick brown fox jumps';
+Str.camel(example1); // quickBrownFoxJumps
+
+const example2 = "Hey_there, What's up?";
+Str.camel(example2); // heyThereWhatSUp
+```
 
 ### Contains [#str-contains]
+You can use `Str.contains` method to check if specified `str` is present in a given string.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+Str.contains(sentence, 'over'); // returns true
+
+Str.contains(sentence, 'over2'); // returns false
+```
 
 ### ContainsAll [#str-contains-all]
+If you want to search for all specified `str`s to be present in the given string, you can use `Str.containsAll` method.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+Str.containsAll(sentence, ['fox', 'dog']); // returns true
+
+Str.containsAll(sentence, ['fox', 'whale']); // returns false
+```
 
 ### EndsWith [#str-ends-with]
 
