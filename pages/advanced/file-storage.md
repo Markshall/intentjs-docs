@@ -160,8 +160,9 @@ await Storage.disk("invoices").put("order_23456.pdf", bufferContent, {
 
 If you want to check if a file exists
 
-<pre class="language-typescript"><code class="lang-typescript"><strong>await Storage.disk('invoices').exists('order_23456.pdf') // returns true or false
-</strong></code></pre>
+```ts
+await Storage.disk("invoices").exists("order_23456.pdf"); // returns true or false
+```
 
 Also, if you want to check if a file is missing or doesn't exists
 

@@ -10,12 +10,13 @@ IntentJS provides powerful and consistent set of APIs for interacting with frequ
 
 By default, all of the configurations for Queues are stored inside `config/queue.ts` . You would see a similar configuration as below
 
-<pre class="language-typescript"><code class="lang-typescript"><strong>import { registerAs } from '@nestjs/config';
-</strong>import { SyncQueueDriver, QueueOptions } from '@intentjs/core/queue';
+```ts
+import { registerAs } from "@nestjs/config";
+import { SyncQueueDriver, QueueOptions } from "@intentjs/core/queue";
 
-export default registerAs('queue', () => {
+export default registerAs("queue", () => {
   return {
-    default: 'notifications',
+    default: "notifications",
     connections: {
       notifications: {
         driver: SyncQueueDriver,
@@ -23,26 +24,26 @@ export default registerAs('queue', () => {
     },
   } as QueueOptions;
 });
-</code></pre>
+```
 
 Let's say you want to use AWS SQS as your message queue, you can use the below mentioned configuration
 
 ```typescript
-import { registerAs } from '@nestjs/config';
-import { SyncQueueDriver, QueueOptions } from '@intentjs/core/queue';
+import { registerAs } from "@nestjs/config";
+import { SyncQueueDriver, QueueOptions } from "@intentjs/core/queue";
 
-export default registerAs('queue', () => {
+export default registerAs("queue", () => {
   return {
-    default: 'notifications',
+    default: "notifications",
     connections: {
       notifications: {
         driver: SqsQueueDriver,
-        apiVersion: '2012-11-05',
-        profile: 'default',
-        prefix: 'https://sqs.us-east-1.amazonaws.com/123456789012',
-        queue: 'MyQueue',
-        suffix: '',
-        region: 'us-east-1',
+        apiVersion: "2012-11-05",
+        profile: "default",
+        prefix: "https://sqs.us-east-1.amazonaws.com/123456789012",
+        queue: "MyQueue",
+        suffix: "",
+        region: "us-east-1",
       },
     },
   } as QueueOptions;
@@ -60,20 +61,20 @@ After you are done configuring the queue, you will now need to create a job whic
 To create a job, we will make use of `@Job` decorator from the `@injentjs/core/queue` . Note that, the job should be defined inside an Injectable only.
 
 ```typescript
-import { Job } from '@intentjs/core/queue';
-import { Injectable } from '@nestjs/common';
+import { Job } from "@intentjs/core/queue";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class NotificationService {
-  @Job('SEND_MAIL')
+  @Job("SEND_MAIL")
   sampleMethod(data: Record<string, any>) {
-    console.log('data coming ===> ', data);
+    console.log("data coming ===> ", data);
     // ...add your logic here
   }
 }
 ```
 
-Notice the `@Job('SEND_MAIL')`. **SEND\_MAIL** is the job name which we will be using when dispatching jobs.
+Notice the `@Job('SEND_MAIL')`. **SEND_MAIL** is the job name which we will be using when dispatching jobs.
 
 ### Options
 
@@ -120,28 +121,28 @@ To dispatch a job, you can simply do:
 ### Using helper function
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import { Dispatch } from '@intentjs/core/queue';
+import { Injectable } from "@nestjs/common";
+import { Dispatch } from "@intentjs/core/queue";
 
 @Injectable()
 export class PaymentService {
-    async verify(inputs: Record<string, any>): Promise<Record<string, any>> {
-        // ...your custom code here
-        Dispatch({
-            job: 'SEND_MAIL',
-            data: {
-                email: 'abcdefgh@gmail.com',
-                subject: 'Yay! Your payment is succesful!',
-            },
-        });
-    }
+  async verify(inputs: Record<string, any>): Promise<Record<string, any>> {
+    // ...your custom code here
+    Dispatch({
+      job: "SEND_MAIL",
+      data: {
+        email: "abcdefgh@gmail.com",
+        subject: "Yay! Your payment is succesful!",
+      },
+    });
+  }
 }
 ```
 
 Notice the `Dispatch` function call, we are passing two attributes:
 
-* **job**: Name of the job that we want to run when this payload is received by the queue worker. In our case, 'SEND\_MAIL'
-* **data**: Payload that we want to pass to the job. Any data that you pass here will be received by the job as its argument.
+- **job**: Name of the job that we want to run when this payload is received by the queue worker. In our case, 'SEND_MAIL'
+- **data**: Payload that we want to pass to the job. Any data that you pass here will be received by the job as its argument.
 
 Since, the payload is serialized while pushing it to the queue, whatever type of object that you are passing will be serialized and pushed. Jobs will receive POJO/string/number as their argument.
 
@@ -152,21 +153,21 @@ For example, if you are passing a class instance, that will be converted into a 
 You can use class, to dispatch jobs in a more declarative way
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import { Queue } from '@intentjs/core/queue';
+import { Injectable } from "@nestjs/common";
+import { Queue } from "@intentjs/core/queue";
 
 @Injectable()
 export class PaymentService {
-    async verify(inputs: Record<string, any>): Promise<Record<string, any>> {
-        // ...your custom code here
-        Queue.dispatch({
-            job: 'SEND_MAIL',
-            data: {
-                email: 'abcdefgh@gmail.com',
-                subject: 'Yay! Your payment is succesful!',
-            },
-        });
-    }
+  async verify(inputs: Record<string, any>): Promise<Record<string, any>> {
+    // ...your custom code here
+    Queue.dispatch({
+      job: "SEND_MAIL",
+      data: {
+        email: "abcdefgh@gmail.com",
+        subject: "Yay! Your payment is succesful!",
+      },
+    });
+  }
 }
 ```
 
@@ -182,12 +183,12 @@ We understand that you may have multiple queue connections to handle in your app
 
 ```typescript
 Dispatch({
-    job: 'SEND_MAIL',
-    connection: 'transactional-emails',
-    data: {
-        email: 'abcdefgh@gmail.com',
-        subject: 'Yay! Your payment is succesful!',
-    },
+  job: "SEND_MAIL",
+  connection: "transactional-emails",
+  data: {
+    email: "abcdefgh@gmail.com",
+    subject: "Yay! Your payment is succesful!",
+  },
 });
 ```
 
@@ -197,12 +198,12 @@ If you want to dispatch job to a different queue but on `default` connection, yo
 
 ```typescript
 Dispatch({
-    job: 'SEND_MAIL',
-    queue: 'payment-emails',
-    data: {
-        email: 'abcdefgh@gmail.com',
-        subject: 'Yay! Your payment is succesful!',
-    },
+  job: "SEND_MAIL",
+  queue: "payment-emails",
+  data: {
+    email: "abcdefgh@gmail.com",
+    subject: "Yay! Your payment is succesful!",
+  },
 });
 ```
 
@@ -212,12 +213,12 @@ This package provides out-of-the-box retrial logic, so that incase if any of the
 
 ```typescript
 Dispatch({
-    job: 'SEND_MAIL',
-    tries: 3,
-    data: {
-        email: 'abcdefgh@gmail.com',
-        subject: 'Yay! Your payment is succesful!',
-    },
+  job: "SEND_MAIL",
+  tries: 3,
+  data: {
+    email: "abcdefgh@gmail.com",
+    subject: "Yay! Your payment is succesful!",
+  },
 });
 ```
 
@@ -229,12 +230,12 @@ There can be some situations where you may want to delay the job for a while. Fo
 
 ```typescript
 Dispatch({
-    job: 'SEND_MAIL',
-    delay: 60, // in seconds
-    data: {
-        email: 'abcdefgh@gmail.com',
-        subject: 'Yay! Your payment is succesful!',
-    },
+  job: "SEND_MAIL",
+  delay: 60, // in seconds
+  data: {
+    email: "abcdefgh@gmail.com",
+    subject: "Yay! Your payment is succesful!",
+  },
 });
 ```
 
@@ -280,13 +281,13 @@ Following commands are available which you can use with `node intent`
 
 <table><thead><tr><th width="263">Command</th><th>Description</th></tr></thead><tbody><tr><td>queue:work</td><td>Command to run the queue worker, starts processing the jobs</td></tr><tr><td>queue:length</td><td>Command to get the length of the specified queue</td></tr><tr><td>queue:purge</td><td>Command to purge the queue</td></tr></tbody></table>
 
-While the `queue:work` command will be good enough for majority of the cases, however if you want to write your `queue:work` script, you can make use of  `QueueWorker` class, like below.
+While the `queue:work` command will be good enough for majority of the cases, however if you want to write your `queue:work` script, you can make use of `QueueWorker` class, like below.
 
 ```typescript
 const worker = QueueWorker.init({
-    connection: "default", 
-    queue:"default-queue", 
-    sleep: 10
+  connection: "default",
+  queue: "default-queue",
+  sleep: 10,
 });
 await worker.listen(); // this will run a forever running thread to listen to the incoming messages
 ```
@@ -304,7 +305,7 @@ Note that if any of the value is not passed, then default setting for the missin
 To start listening to the messages, you can simply do
 
 ```typescript
-await worker.listen()
+await worker.listen();
 ```
 
 #### Purge Queue
@@ -312,7 +313,7 @@ await worker.listen()
 You may want to clear(purge) the queue, you can do so by calling `purge` method.
 
 ```typescript
-await worker.purge()
+await worker.purge();
 ```
 
 ## Drivers
@@ -347,22 +348,22 @@ npm i aws-sdk
 Before using it, you need to configure it first like below:
 
 ```typescript
-import { registerAs } from '@nestjs/config';
-import { QueueOptions, SqsDriver } from '@intentjs/core/queue';
+import { registerAs } from "@nestjs/config";
+import { QueueOptions, SqsDriver } from "@intentjs/core/queue";
 
-export default registerAs('queue', () => {
+export default registerAs("queue", () => {
   return {
-    default: 'notifications',
+    default: "notifications",
     connections: {
       notifications: {
-        listenerType: 'poll',
+        listenerType: "poll",
         driver: SqsDriver,
-        apiVersion: '2012-11-05',
-        profile: 'default',
-        prefix: 'https://sqs.us-east-1.amazonaws.com/123456789012',
-        queue: 'MyQueue',
-        suffix: '',
-        region: 'us-east-1',
+        apiVersion: "2012-11-05",
+        profile: "default",
+        prefix: "https://sqs.us-east-1.amazonaws.com/123456789012",
+        queue: "MyQueue",
+        suffix: "",
+        region: "us-east-1",
       },
     },
   } as QueueOptions;
@@ -391,19 +392,19 @@ npm i ioredis
 Before using it, you need to configure it first like below:
 
 ```typescript
-import { registerAs } from '@nestjs/config';
-import { QueueOptions, RedisDriver } from '@intentjs/core/queue';
+import { registerAs } from "@nestjs/config";
+import { QueueOptions, RedisDriver } from "@intentjs/core/queue";
 
-export default registerAs('queue', () => {
+export default registerAs("queue", () => {
   return {
-    default: 'notifications',
+    default: "notifications",
     connections: {
       notifications: {
-        listenerType: 'poll',
+        listenerType: "poll",
         driver: RedisQueueDriver,
-        queue: 'MyQueue',
-        host: 'localhost',
-        port: '6379',
+        queue: "MyQueue",
+        host: "localhost",
+        port: "6379",
         database: 0,
       },
     },
@@ -431,24 +432,23 @@ npm i kafkajs @kafkajs/confluent-schema-registry --save
 Now you can configure it like below
 
 ```typescript
-import { registerAs } from '@nestjs/config';
-import { QueueOptions, KafkaDriver } from '@intentjs/core/queue';
+import { registerAs } from "@nestjs/config";
+import { QueueOptions, KafkaDriver } from "@intentjs/core/queue";
 
-export default registerAs('queue', () => {
+export default registerAs("queue", () => {
   return {
-    default: 'kafka',
+    default: "kafka",
     connections: {
       kafka: {
-        listenerType: 'subscribe',
+        listenerType: "subscribe",
         driver: KafkaDriver,
-        clientId: 'listener-client-id',
-        brokers: process.env.KAFKA_BROKERS.split(','),
+        clientId: "listener-client-id",
+        brokers: process.env.KAFKA_BROKERS.split(","),
         registryHost: process.env.KAFKA_SCHEMA_REGISTRY_HOST,
       },
     },
   } as QueueOptions;
 });
-
 ```
 
 ### Custom Driver
@@ -464,6 +464,7 @@ node intent make:queue-driver MyCustomQueueDriver
 Now, you need to create two classes `MyCustomQueueDriver` and `MyCustomQueueJob`. Here for understanding purpose we will use AWS AQS in our `MyCustom` driver.
 
 {% code title="MyCustomDriver.ts" %}
+
 ```typescript
 import { QueueDriver, InternalMessage } from "@intentjs/core";
 import AWS = require("aws-sdk");
@@ -536,4 +537,5 @@ export class MyCustomQueueDriver implements QueueDriver {
   }
 }
 ```
+
 {% endcode %}
