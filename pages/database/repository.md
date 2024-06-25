@@ -14,10 +14,9 @@ Let's say you want to get count of all successful orders for all users list with
 
 ```typescript
 // without repository pattern
-const users = await UserModel.query()
-  .select(
-    'users.*', 
-    User.relatedQuery('orders').count().as('ordersCount')
+const users = await UserModel.query().select(
+  "users.*",
+  User.relatedQuery("orders").count().as("ordersCount")
 );
 
 // with repository pattern
@@ -29,13 +28,13 @@ If you notice, you can clearly see the abstraction happening under the hood. Whi
 In IntentJS application, creating your own repository is pretty straight forward. You can create your own repo like below
 
 ```typescript
-import { Injectable } from '@nestjs/core';
-import { UserModel } from '../models/user';
+import { Injectable } from "@nestjs/core";
+import { UserModel } from "../models/user";
 
 @Injectable()
 export class UserRepository<UserModel> extends DatabaseRepository<UserModel> {
-    @InjectModel(UserModel)
-    model: UserModel;
+  @InjectModel(UserModel)
+  model: UserModel;
 }
 ```
 
@@ -43,7 +42,7 @@ After you create your repository, now we you need to register this repo as a pro
 
 ```typescript
 @Module({
-    providers: [{ provide: 'USER_REPO', useClass: UserRepository }, UserService]
+  providers: [{ provide: "USER_REPO", useClass: UserRepository }, UserService],
 })
 export class UserModule {}
 ```
@@ -53,9 +52,7 @@ After registering the repo inside the provider, you can now inject it inside you
 ```typescript
 @Injectable()
 export class UserService {
-    constructor(
-        @Inject('USER_REPO') private userRepo: UserRepository
-    ) {}
+  constructor(@Inject("USER_REPO") private userRepo: UserRepository) {}
 }
 ```
 
@@ -68,7 +65,10 @@ const usersList = await this.userRepo.all(); // returns list of all users
 If you want to only search for one user with some where condition.
 
 ```typescript
-const users = await this.users.firstWhere({ contactNumber: "XXXXXXXXXX" }, false);
+const users = await this.users.firstWhere(
+  { contactNumber: "XXXXXXXXXX" },
+  false
+);
 ```
 
 If you want to search for all users with matching where conditions.
@@ -105,8 +105,8 @@ Get the first model with the matching criterias. If not found, it will throw an 
 
 | Parameter | Required? |              Description              |  Default  |
 | :-------: | :-------: | :-----------------------------------: | :-------: |
-|   inputs  |     Y     |  Where condition that is to be added  | undefined |
-|   error   |     N     | Throw exception if model is not found |    true   |
+|  inputs   |     Y     |  Where condition that is to be added  | undefined |
+|   error   |     N     | Throw exception if model is not found |   true    |
 
 ```typescript
 /**
@@ -134,8 +134,8 @@ Get all models with the matching criterias. If not found, it will throw an `Mode
 
 | Parameter | Required? |              Description              | Default |
 | :-------: | :-------: | :-----------------------------------: | :-----: |
-|   inputs  |     Y     |  Where condition that is to be added  |    --   |
-|   error   |     N     | Throw exception if model is not found |   true  |
+|  inputs   |     Y     |  Where condition that is to be added  |   --    |
+|   error   |     N     | Throw exception if model is not found |  true   |
 
 ```typescript
 /**
@@ -157,7 +157,7 @@ Create the model in DB and return it's model equivalent instance.
 
 | Parameter | Required? |       Description       | Default |
 | :-------: | :-------: | :---------------------: | :-----: |
-|   inputs  |     Y     | Column values as object |    --   |
+|  inputs   |     Y     | Column values as object |   --    |
 
 ```typescript
 /**
@@ -174,8 +174,8 @@ Update or create a model with given condition and values.
 
 | Parameter | Required? |                           Description                           | Default |
 | :-------: | :-------: | :-------------------------------------------------------------: | :-----: |
-| condition |     Y     |        Existence of any model is checked using the object       |    --   |
-|   values  |     Y     | If the model is not found, `values` will be used to add columns |    --   |
+| condition |     Y     |       Existence of any model is checked using the object        |   --    |
+|  values   |     Y     | If the model is not found, `values` will be used to add columns |   --    |
 
 ```typescript
 /**
@@ -197,8 +197,8 @@ First or Create model with given condition and values
 
 | Parameter | Required? |                           Description                           | Default |
 | :-------: | :-------: | :-------------------------------------------------------------: | :-----: |
-| condition |     Y     |        Existence of any model is checked using the object       |    --   |
-|   values  |     Y     | If the model is not found, `values` will be used to add columns |    --   |
+| condition |     Y     |       Existence of any model is checked using the object        |   --    |
+|  values   |     Y     | If the model is not found, `values` will be used to add columns |   --    |
 
 ```typescript
 /**
@@ -218,14 +218,15 @@ Update the given model with values.
 
 **Parameters:**
 
-| Parameter | Required? |           Description          | Default |
+| Parameter | Required? |          Description           | Default |
 | :-------: | :-------: | :----------------------------: | :-----: |
-|   model   |     Y     |         To update model        |    --   |
-|   values  |     Y     | Columns to update in the model |    --   |
+|   model   |     Y     |        To update model         |   --    |
+|  values   |     Y     | Columns to update in the model |   --    |
 
-<pre class="language-typescript"><code class="lang-typescript">const users = await this.users.firstWhere({ contactNumber: "XXXXXXXXXX" });
-<strong>await this.users.update(user, { firstName: "New Name" });
-</strong></code></pre>
+```ts
+const users = await this.users.firstWhere({ contactNumber: "XXXXXXXXXX" });
+await this.users.update(user, { firstName: "New Name" });
+```
 
 New first name of the user will be, 'New Name'.
 
@@ -235,10 +236,10 @@ Update all models where criterias are matched.
 
 **Parameters:**
 
-| Parameter | Required? |           Description          | Default |
+| Parameter | Required? |          Description           | Default |
 | :-------: | :-------: | :----------------------------: | :-----: |
-|   where   |     Y     |        where conditions        |    --   |
-|   values  |     Y     | Columns to update in the model |    --   |
+|   where   |     Y     |        where conditions        |   --    |
+|  values   |     Y     | Columns to update in the model |   --    |
 
 ```typescript
 await this.users.update(
@@ -257,7 +258,7 @@ Check if model exists where criterias are matched.
 
 | Parameter | Required? |             Description             | Default |
 | :-------: | :-------: | :---------------------------------: | :-----: |
-|   inputs  |     Y     | Where condition that is to be added |    --   |
+|  inputs   |     Y     | Where condition that is to be added |   --    |
 
 ```typescript
 /**
@@ -274,7 +275,7 @@ Get count of models matching the criterias
 
 | Parameter | Required? |             Description             | Default |
 | :-------: | :-------: | :---------------------------------: | :-----: |
-|   inputs  |     Y     | Where condition that is to be added |    --   |
+|  inputs   |     Y     | Where condition that is to be added |   --    |
 
 ```typescript
 /**
@@ -291,7 +292,7 @@ Refresh the given model.
 
 | Parameter | Required? |      Description      | Default |
 | :-------: | :-------: | :-------------------: | :-----: |
-|   model   |     Y     | Model to be refreshed |    --   |
+|   model   |     Y     | Model to be refreshed |   --    |
 
 ```typescript
 /**
@@ -310,7 +311,7 @@ Delete the given model.
 
 | Parameter | Required? |      Description      | Default |
 | :-------: | :-------: | :-------------------: | :-----: |
-|   model   |     Y     | Model to be refreshed |    --   |
+|   model   |     Y     | Model to be refreshed |   --    |
 
 ```typescript
 /**
@@ -342,11 +343,11 @@ Attach relation's ids to a model via `relation`.
 
 **Parameters:**
 
-| Parameter | Required? |       Description      | Default |
+| Parameter | Required? |      Description       | Default |
 | :-------: | :-------: | :--------------------: | :-----: |
-|   model   |     Y     |          model         |    --   |
-|  relation |     Y     | relation to be updated |    --   |
-|  payload  |     Y     | Payload to be attached |    --   |
+|   model   |     Y     |         model          |   --    |
+| relation  |     Y     | relation to be updated |   --    |
+|  payload  |     Y     | Payload to be attached |   --    |
 
 ```typescript
 await this.roles.attach(role, "permissions", 1);
@@ -362,11 +363,11 @@ Works like `attcach` only, but trashes the old pre-established relations and cre
 
 **Parameters:**
 
-| Parameter | Required? |       Description      | Default |
+| Parameter | Required? |      Description       | Default |
 | :-------: | :-------: | :--------------------: | :-----: |
-|   model   |     Y     |          model         |    --   |
-|  relation |     Y     | relation to be updated |    --   |
-|  payload  |     Y     | Payload to be attached |    --   |
+|   model   |     Y     |         model          |   --    |
+| relation  |     Y     | relation to be updated |   --    |
+|  payload  |     Y     | Payload to be attached |   --    |
 
 ```typescript
 await this.roles.sync(role, "permissions", 1);
@@ -382,11 +383,11 @@ Fetch models in chunks from a large table, and perform passed `cb` function. The
 
 **Parameters:**
 
-| Parameter | Required? |                            Description                           | Default |
+| Parameter | Required? |                           Description                            | Default |
 | :-------: | :-------: | :--------------------------------------------------------------: | :-----: |
-|   where   |     Y     |                         where conditions                         |    --   |
-|    size   |     Y     |                  Chunk size to be loaded from db                 |    --   |
-|     cb    |     Y     | Callback function to be called, after each successful chunk load |    --   |
+|   where   |     Y     |                         where conditions                         |   --    |
+|   size    |     Y     |                 Chunk size to be loaded from db                  |   --    |
+|    cb     |     Y     | Callback function to be called, after each successful chunk load |   --    |
 
 ```typescript
 await this.users.sync({ isActive: true }, 500, (users) => console.log(users));
@@ -411,8 +412,7 @@ If you wish to use the repository to perform some transactions, you can do so li
 
 ```typescript
 const trx = await this.repo.startTransaction();
-const users = await trx.forUpdate()
-  .firstWhere({ id: 1 });
+const users = await trx.forUpdate().firstWhere({ id: 1 });
 await trx.commit();
 // alternatively, you can also call trx.rollback();
 ```
@@ -427,9 +427,9 @@ To change, you can change the connection of your repository using `bindCon` meth
 
 **Parameters:**
 
-| Parameter | Required? |                                        Description                                       | Default |
+| Parameter | Required? |                                       Description                                        | Default |
 | :-------: | :-------: | :--------------------------------------------------------------------------------------: | :-----: |
-|  conName  |     Y     | Connection name, similar to any one of the connection name provided during configuration |    --   |
+|  conName  |     Y     | Connection name, similar to any one of the connection name provided during configuration |   --    |
 
 **Example**
 
