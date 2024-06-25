@@ -120,6 +120,35 @@ const objEntries = Obj.entries(obj);
 ### Obj.isNotEmpty [#obj-is-not-empty]
 
 ### Obj.pick [#obj-pick]
+There will be cases where you would like to access multiple keys at once using dot notation. To do so you can use `Obj.pick` method.
+
+```ts
+const obj = {
+  firstName: 'Vinayak',
+  lastName: 'Sarawagi',
+  email: 'vinayak@tryintent.com',
+  wishlist: [
+    { id: 1, name: 'Product 1' },
+    { id: 2, name: 'Product 2' },
+    { id: 3, name: 'Product 3' },
+  ],
+  address: {
+    line1: 'Somewhere',
+    line2: 'Far Far Away',
+    city: 'Delhi',
+    country: { code: 'IN', name: 'India' },
+  },
+};
+
+Obj.pick(obj, ['firstName', 'lastName', 'wishlist.*.id']);
+/**
+ *  {
+ *    firstName: 'Vinayak',
+ *    lastName: 'Sarawagi',
+ *    wishlist: [ { id: 1 }, { id: 2 }, { id: 3 } ]
+ *  }
+ */
+```
 
 ## Number Helper Methods
 
@@ -444,29 +473,70 @@ Str.limit(sentence, 50);
 `Str.lower` transforms the given string into lower case.
 
 ```ts
+Str.lower('VINAYAK SARAWAGI');
+// vinayak sarawagi
 ```
 
 ### Mask [#str-mask]
-You can use `Str.mask` method to mask a given string.
+You can use `Str.mask` method to mask a given string. 
+First argument accepts a string, 2nd argument accepts the masked character, 
+and the 3rd one accepts the number of characters which should be left as it is, 
+the rest of it will be masked.
 
 ```ts
+Str.mask('hi@tryintent.com', '*', 7);
+// hi@tryi*********
 ```
 
 ### PadBoth [#str-pad-both]
+You can use `Str.padBoth` method to pad your strings from both the ends with given `char` to a defined length.
+```ts
+Str.padBoth('intent', 10, '~');
+// ~~intent~~
+```
 
 ### PadLeft [#str-pad-left]
+Similar to `Str.padBoth`, but if you want to just pad the left side of the string, you can use `Str.padLeft` method.
+
+```ts
+Str.padLeft('intent', 10, '~')
+// ~~~~intent
+```
 
 ### PadRight [#str-pad-right]
+Similar to `Str.padBoth`, but if you want to just pad the right side of the string, you can use `Str.padRight` method.
+```ts
+Str.padRight('intent', 10, '~')
+// intent~~~~
+```
 
 ### Plural [#str-plural]
 
+```ts
+
+```
+
 ### Position [#str-position]
 
-### Random [#str-random]
+```ts
+
+```
 
 ### Remove [#str-remove]
+If you want to just remove certain characters from a given string, `Str.remove` can do that for you.
+
+```ts
+Str.remove('New OSS NodeJS Framework', 'OSS ');
+// New NodeJS Framework
+```
 
 ### Repeat [#str-repeat]
+`Str.repeat` method returns a new string with `repeat` string for `x` times.
+
+```ts
+Str.repeat('chug ', 5);
+// chug chug chug chug chug
+```
 
 ### Replace [#str-replace]
 
@@ -480,38 +550,126 @@ You can use `Str.mask` method to mask a given string.
 
 ### Reverse [#str-reverse]
 
+`Str.reverse` reverses the string.
+
+```ts
+Str.reverse('wtf! why reverse?');
+// ?esrever yhw !ftw
+```
+
 ### Singular [#str-singular]
+
+You can use `Str.singular` to convert a given word in a singular form.
 
 ### Slug [#str-slug]
 
+You can use `Str.slug` method to convert any string to a slug form.
+
+```ts
+const title = 'How to get started with IntentJS? 🤨';
+
+Str.slug(title);
+// how-to-get-started-with-intent
+
+Str.slug('hello there');
+// hello-there
+Str.slug("Hey_there, What's up?");
+// hey-there-what-s-up
+
+Str.slug('@@@@@@jell----fw  fed');
+// jell-fw-fed
+```
+
 ### Snake [#str-snake]
 
-### Squish [#str-squish]
+`Str.snake` transforms the given string into `snake_case`.
+
+```ts
+const title = 'How to get started with IntentJS? 🤨';
+
+Str.snake(title);
+// how_to_get_started_with_intent
+```
 
 ### StartsWith [#str-starts-with]
 
-### Studly [#str-studly]
+If you want to check if any string starts with a `substr` or not.
 
-### Inject [#str-inject]
+```ts
+Str.startsWith('A Product Stack Framework', 'A Product')
+// true
+```
 
 ### Swap [#str-swap]
 
+You can use `Str.swap` method to swap multiple words with some other words.
+
+```ts
+Str.swap('Butter Chicken', { Butter: 'Chilli', Chicken: 'Paneer' });
+// Chilli Paneer
+```
+
 ### Take [#str-take]
 
+The `Str.take` method returns the specified number of chars from the beginning of the string.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+Str.take(sentence, 9);
+// The quick
+```
+
 ### Title [#str-title]
+The `Str.title` converts the given string into `Title` format.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+Str.title(sentence);
+// The Quick Brown Fox Jumps Over A Lazy Dog.
+```
 
 ### ToBase64 [#str-to-base64]
+The `Str.toBase64` converts the string into base64 format.
+
+```ts
+const sentence = 'The quick brown fox jumps over a lazy dog.';
+
+Str.toBase64(sentence);
+// VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIGEgbGF6eSBkb2cu
+```
 
 ### Ucfirst [#str-ucfirst`]
 
-### Ulid [#str-ulid]
+The `Str.ucFirst` returns the string with it's first character capitalized.
 
-### Unwrap [#str-unwrap]
-
-### WordCount [#str-word-count]
-
-### WordWrap [#str-word-wrap]
+```ts
+Str.ucfirst('hey intent');
+// Hey intent
+```
 
 ### Words [#str-words]
+The `Str.words` method returns the words present in the given sentence. It can also ignore the special characters, and unicodes.
+
+```ts
+const sentence = 'fox & dog';
+Str.words('fox & dog');
+//  [ 'fox', '&', 'dog' ]
+
+Str.words('fox@&@dog', true); // <- strips all special characters and unicodes
+// [ 'fox', 'dog' ]
+
+Str.words('fox🤨and🤨dog', true);
+// [ 'fox', 'and', 'dog' ]
+```
 
 ### Wrap [#str-wrap]
+
+The `Str.wrap` function wraps the strings in `prefix` and `suffix`.
+
+```ts
+Str.wrap(' Love ', 'I', 'Intent');
+
+// I Love Intent
+```
