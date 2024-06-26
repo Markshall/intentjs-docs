@@ -6,6 +6,12 @@ const GITHUB_REPO_STAR = <GithubStar />;
 export default {
   primaryHue: 80,
   logo: <span className="text-3xl">IntentJs</span>,
+  toc: {
+    backToTop: true,
+  },
+  chat: {
+    link:'https://google.com',
+  },
   project: {
     link: "https://github.com/intentjs/core",
     icon: (
