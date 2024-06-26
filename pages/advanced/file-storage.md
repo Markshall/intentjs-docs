@@ -1,8 +1,10 @@
 ---
+title: File Storage
 description: >-
   IntentJS provides a useful file storage abstraction for various file systems
   like Local (Linux, Mac, Windows), AWS S3, Azure Storage Account. It provides
   simple drivers to work with your files.
+image:
 ---
 
 # File Storage

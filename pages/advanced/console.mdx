@@ -1,3 +1,9 @@
+---
+title: Console
+description:
+image:
+---
+
 import { Callout } from "nextra/components";
 
 # Console
@@ -271,10 +277,10 @@ const choice = await _cli.select(
  * Multiple choices example.
  * Returns an array of the selected options.
  */
-const choice = await _cli.multiSelect(
-  "Please select one superhero", 
-  [ "Batman", "Ironman", ]
-);
+const choice = await _cli.multiSelect("Please select one superhero", [
+  "Batman",
+  "Ironman",
+]);
 ```
 
 Lastly, sometimes you may want to ask for confirmation from the user before doing any execution. You can do so by using `confirm` method.

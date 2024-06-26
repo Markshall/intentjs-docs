@@ -1,9 +1,54 @@
 import { useRouter } from "next/router";
+import { useConfig } from "nextra-theme-docs";
 import GithubStar from "./src/components/utils/githubstar";
+import { iconMap } from "./src/components/utils/iconmap";
+import Community from "./src/components/Community";
 
 const GITHUB_REPO_STAR = <GithubStar />;
 
 export default {
+  head: () => {
+    const { asPath, defaultLocale, locale } = useRouter();
+    const { frontMatter } = useConfig();
+    const url =
+      "https://tryintent.com" +
+      (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
+
+    return (
+      <>
+        <meta property="og:url" content={url} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={frontMatter.title || "IntentJs"} />
+        <meta
+          property="og:description"
+          content={frontMatter.description || "The next site builder"}
+        />
+        <meta
+          property="og:image"
+          content={
+            frontMatter.image ||
+            "https://docs.intentjs.dev/~gitbook/ogimage/c54x0ZXLzB17lOdopIfm"
+          }
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="docs.intentjs.dev" />
+        <meta property="twitter:url" content={url} />
+        <meta name="twitter:title" content={frontMatter.title || "IntentJs"} />
+        <meta
+          name="twitter:description"
+          content={frontMatter.description || "The next site builder"}
+        />
+        <meta
+          name="twitter:image"
+          content={
+            frontMatter.image ||
+            "https://docs.intentjs.dev/~gitbook/ogimage/c54x0ZXLzB17lOdopIfm"
+          }
+        />
+      </>
+    );
+  },
   primaryHue: 80,
   logo: <span className="text-3xl">IntentJs</span>,
   project: {
@@ -32,6 +77,23 @@ export default {
         🎉 Intent 1.0 is released. Read more →
       </a>
     ),
+  },
+  sidebar: {
+    titleComponent({ title }) {
+      const IconComponent = iconMap[title] || null;
+      return (
+        <div className="flex flex-row items-center gap-3">
+          {IconComponent ? <IconComponent /> : null}
+          {title}
+        </div>
+      );
+    },
+  },
+  feedback: {
+    content: "Give us feedback",
+  },
+  editLink: {
+    component: <Community />,
   },
   footer: {
     text: (

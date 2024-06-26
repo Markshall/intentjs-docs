@@ -1,3 +1,9 @@
+---
+title: Database Geting Started
+description:
+image:
+---
+
 # Getting Started
 
 Intent comes integrated with support for database by default. It is made possible with the ORM \`ObjectionJS\`.
@@ -41,4 +47,3 @@ Intent comes integrated with support for database by default. It is made possibl
 ## Configuration
 
 The configuration for the databases is located at `config/database.ts`.
-

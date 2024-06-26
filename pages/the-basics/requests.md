@@ -1,3 +1,9 @@
+---
+title: Requests
+description:
+image:
+---
+
 # Requests
 
 IntentJS provides a useful `Request` class over express' Request object. It automatically parses the incoming data, headers.

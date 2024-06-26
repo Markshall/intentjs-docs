@@ -1,3 +1,9 @@
+---
+title: Logging
+description:
+image:
+---
+
 # Logging
 
 ## Introduction

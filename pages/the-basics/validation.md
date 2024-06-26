@@ -1,3 +1,9 @@
+---
+title: Validation
+description:
+image:
+---
+
 # Validation
 
 While building REST APIs, validating input data becomes and important practice to validate the incoming data.

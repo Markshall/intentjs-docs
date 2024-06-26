@@ -1,3 +1,9 @@
+---
+title: Events
+description:
+image:
+---
+
 # Events
 
 IntentJS events offer a simple implementation of the observer pattern, allowing you to listen to various events that occur within your application. Event classes are typically stored in the `app/events` directory, and listeners are stored in the `app/listeners` directory. When you create your first event and listeners, these directories will get created automatically.
@@ -31,21 +37,21 @@ Since Listener classes make use of `@Listener` decorator to see if a particular 
 Let's look at the listener.
 
 ```typescript
-import { ListenTo } from '@intentjs/core';
+import { ListenTo } from "@intentjs/core";
 
-@ListensTo('order_placed_event')
+@ListensTo("order_placed_event")
 export class SendOrderNotification {
-    async handle(payload: Record<string,any>) {
-        // ...
-    }
+  async handle(payload: Record<string, any>) {
+    // ...
+  }
 }
 ```
 
 ```typescript
-import { SendOrderNotification } from './listeners';
+import { SendOrderNotification } from "./listeners";
 
 @Module({
-    providers: [ SendOrderNotification ]
+  providers: [SendOrderNotification],
 })
 export class AppModule {}
 ```
@@ -61,12 +67,12 @@ Since event classes are just normal class, we don't need to register them anywhe
 To define an Event, you can create an event class like below in the `app/events` directory. An event class is a data container which holds the information related to the event.
 
 ```typescript
-import { Event } from '@intentjs/core';
+import { Event } from "@intentjs/core";
 
 export class OrderPlacedEvent extends Event {
-    constructor(public order: OrderModel) {
-        // ..
-    }
+  constructor(public order: OrderModel) {
+    // ..
+  }
 }
 ```
 
@@ -79,14 +85,14 @@ All of the listeners only receive the normalised form of the all the data passed
 IntentJS converts the name of the event classes into snake case and looks for the listeners which are listening to the event. For example if the name of your event class is `OrderPlacedEvent`, IntentJS would trigger the event with the name of `order_placed_event`. If you would like to pass some custom name of the event, you can make use of the static `name` variable inside the event class.
 
 ```typescript
-import { Event } from '@intentjs/core';
+import { Event } from "@intentjs/core";
 
 export class OrderPlacedEvent extends Event {
-    static name = 'custom_order_placed_event';
-    
-    constructor(public order: OrderModel) {
-        // ..
-    }
+  static name = "custom_order_placed_event";
+
+  constructor(public order: OrderModel) {
+    // ..
+  }
 }
 ```
 
@@ -97,22 +103,22 @@ Now after specificing the event name, you will also need to update the listeners
 Now, let's take a look at the listeners. Listeners receive the a single variable `payload` which encapsulates all of the data we passed inside the event which it is listening to.
 
 ```typescript
-import { ListenTo } from '@intentjs/core';
+import { ListenTo } from "@intentjs/core";
 
-@ListensTo('order_placed_event')
+@ListensTo("order_placed_event")
 export class SendOrderNotification {
-    async handle(payload: Record<string,any>) {
-        // ...
-    }
+  async handle(payload: Record<string, any>) {
+    // ...
+  }
 }
 ```
 
 You can also use \`Listener\` class to register a closure based listener. These listeners are simple and straight-forward in the implementation, hence you can use them if your listener doesn't contain complex business logic.
 
 ```typescript
-import { Listener } from '@intentjs/core';
+import { Listener } from "@intentjs/core";
 
-Listener.on('order_placed_event')
+Listener.on("order_placed_event");
 ```
 
 ## Dispatching Events
@@ -122,7 +128,7 @@ To dispatch an event, we can make use of the `emit` method on the event class. T
 Let's take a look on how to use the `emit` method.
 
 ```typescript
-const order = { id: 123, product: "A book" }
+const order = { id: 123, product: "A book" };
 const event = new OrderPlacedEvent(order);
 event.emit();
 ```
@@ -130,13 +136,13 @@ event.emit();
 If you would like to conditionally dispatch an event, you can make use of `emitIf` or `emitUnless` method.&#x20;
 
 ```typescript
-const order = { id: 123, product: "A book" }
+const order = { id: 123, product: "A book" };
 const event = new OrderPlacedEvent(order);
 event.emitIf(condition);
 ```
 
 ```typescript
-const order = { id: 123, product: "A book" }
+const order = { id: 123, product: "A book" };
 const event = new OrderPlacedEvent(order);
 event.emitUnless(condition);
 ```
@@ -177,29 +183,29 @@ If your listeners are going to perform slow tasks like sending notifications, em
 Making an events queueable means it will be processed automatically via the configured queue. To make an event to go through queue, you will need to implement `ShouldQueue` interface. Doing so, you may define `connection`, `queue`, or `delay` properties.
 
 ```typescript
-import { Event } from '@intentjs/core';
+import { Event } from "@intentjs/core";
 
 export class OrderPlacedEvent extends Event implements ShouldQueue {
-    /**
-     * The name of the connection on which the event should be sent to.
-     * Leave it blank to use the configured queue for the connection.
-     */
-    public connection = 'sqs';
-    
-    /**
-     * The name of the queue on which the event should be sent to.
-     * Leave it blank to use the configured queue for the connection.
-     */
-    public queue = 'order_notifications';
-    
-    /**
-     * The delay(in seconds) before the job should be processed.
-     */
-    public delay = 50;
-    
-    constructor(public order: OrderModel) {
-        // ..
-    }    
+  /**
+   * The name of the connection on which the event should be sent to.
+   * Leave it blank to use the configured queue for the connection.
+   */
+  public connection = "sqs";
+
+  /**
+   * The name of the queue on which the event should be sent to.
+   * Leave it blank to use the configured queue for the connection.
+   */
+  public queue = "order_notifications";
+
+  /**
+   * The delay(in seconds) before the job should be processed.
+   */
+  public delay = 50;
+
+  constructor(public order: OrderModel) {
+    // ..
+  }
 }
 ```
 
@@ -209,22 +215,22 @@ If you would like to define the event's queue connection, queue name, or delay a
 /**
  * Return the name of the listener's queue connection.
  */
-public function viaConnection(): string {
- return 'sqs';
+function viaConnection(): string {
+  return "sqs";
 }
 
 /**
  * Return the queue's name.
  */
-public function viaQueue(): string {
- return 'order_notifications';
+function viaQueue(): string {
+  return "order_notifications";
 }
 
 /**
  * Return the delay(in seconds) before the job should be processed.
  */
-public function withDelay(): number {
- return 60;
+function withDelay(): number {
+  return 60;
 }
 ```
 
@@ -233,8 +239,7 @@ public function withDelay(): number {
 Just like `emitIf` method, you can make use of `shouldQueue` method inside the event class to determine if the event should be queued and processed or not. Returning `true` will mean the event will be queued and processed, and `false` means it will neither be queued, nor be processed.
 
 ```typescript
-public function shouldQueue(): boolean {
-    return this.order.isConfirmed;
+function shouldQueue(): boolean {
+  return this.order.isConfirmed;
 }
 ```
-

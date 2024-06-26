@@ -1,5 +1,7 @@
 ---
+title: Models
 description: Create powerful Database Models using IntentJS + ObjectionJS
+image:
 ---
 
 # Models
@@ -12,18 +14,18 @@ Just like any other ORM, ObjectionJS also provides support for models. We have a
 
 We have added a `BaseModel` which you can use to create your models.
 
-* Uses Custom Query Builder which offers some powerful query methods.
-* Already tuned for high performance.
-* `$load` function for better performance, only loads the relation if it is not already loaded
-* `$forceLoad` function for reloading the requested relation forcefully.
+- Uses Custom Query Builder which offers some powerful query methods.
+- Already tuned for high performance.
+- `$load` function for better performance, only loads the relation if it is not already loaded
+- `$forceLoad` function for reloading the requested relation forcefully.
 
 Let's take a look at how to create our own model.
 
 ```typescript
-import { BaseModel } from '@intentjs/core';
+import { BaseModel } from "@intentjs/core";
 
 export class UserModel extends BaseModel {
-    static tableName = 'users';
+  static tableName = "users";
 }
 ```
 

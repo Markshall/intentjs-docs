@@ -1,3 +1,9 @@
+---
+title: Migrations
+description:
+image:
+---
+
 # Migrations
 
 ### Introduction
@@ -18,7 +24,7 @@ To create a new migration file, run the command mentioned below:
 node intent make:migration create_users_table
 ```
 
-This will create a new migration file in `database/migrations/20200829220336_create_users_table.js`, the random number before the _create\_users\_table_ is the micro timestamp.
+This will create a new migration file in `database/migrations/20200829220336_create_users_table.js`, the random number before the _create_users_table_ is the micro timestamp.
 
 {% hint style="info" %}
 All migrations are stored in `database/migrations` folder.

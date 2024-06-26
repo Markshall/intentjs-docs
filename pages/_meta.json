@@ -8,9 +8,10 @@
   "database": "Database",
   "packages": "Packages",
   "out-of-context": "Out of Context",
-  "blog": {
-    "title": "Blog",
-    "type": "page"
+  "home": {
+    "title": "Home",
+    "type": "page",
+    "href": "https://intentjs-doc-intentjs.vercel.app/"
   },
   "support": {
     "title": "Support",
