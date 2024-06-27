@@ -83,14 +83,6 @@ export default {
     ),
   },
   docsRepositoryBase: "https://github.com/intentjs/docs",
-  banner: {
-    key: "1.0-release",
-    text: (
-      <a href="https://intentjs-doc-intentjs.vercel.app/" target="_blank">
-        🎉 Intent 1.0 is released. Read more →
-      </a>
-    ),
-  },
   sidebar: {
     titleComponent({ title }) {
       const IconComponent = iconMap[title] || null;
