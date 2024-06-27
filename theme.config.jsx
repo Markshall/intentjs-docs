@@ -3,6 +3,8 @@ import { useConfig } from "nextra-theme-docs";
 import GithubStar from "./src/components/utils/githubstar";
 import { iconMap } from "./src/components/utils/iconmap";
 import Community from "./src/components/Community";
+import Footer from "./src/components/Footer";
+import { Logo } from "./src/components/images/providers";
 
 const GITHUB_REPO_STAR = <GithubStar />;
 
@@ -50,12 +52,17 @@ export default {
     );
   },
   primaryHue: 80,
-  logo: <span className="text-3xl"><></>IntentJs</span>,
+  logo: (
+    <div className="flex flex-row gap-2 items-center">
+      <Logo />
+      <span className="text-3xl">IntentJs</span>
+    </div>
+  ),
   toc: {
     backToTop: true,
   },
   chat: {
-    link:'https://google.com',
+    link: "https://google.com",
   },
   project: {
     link: "https://github.com/intentjs/core",
@@ -96,49 +103,13 @@ export default {
     },
   },
   feedback: {
-    content: "Give us feedback",
+    content: "",
+  },
+  footer: {
+    component: <Footer />,
   },
   editLink: {
     component: <Community />,
-  },
-  footer: {
-    text: (
-      <div className="flex flex-col w-full">
-        <div className="flex flex-col w-full">
-          <div className="grid grid-cols-1 grid-rows-4 md:grid-cols-2 md:grid-rows-2 xl:grid-cols-4 xl:grid-rows-1 mt-5 gap-5">
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">Features</span>
-              <span className="mt-2 text-sm">Home</span>
-              <span className="mt-2 text-sm">Docs</span>
-              <span className="mt-2 text-sm">Blog</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">Support</span>
-              <span className="mt-2 text-sm">tryhanalabs.com</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">Support</span>
-              <span className="mt-2 text-sm">tryhanalabs.com</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">Social Link</span>
-              <span className="mt-2 text-sm">Github</span>
-              <span className="text-sm">Twitter</span>
-              <span className="text-sm">LinkedIn</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center mt-10">
-          <span className="font-semibold">
-            {new Date().getFullYear()} ©{" "}
-            <a href="https://tryintent.com" target="_blank">
-              Intent
-            </a>
-          </span>
-        </div>
-      </div>
-    ),
   },
   navigation: {
     prev: true,
