@@ -59,7 +59,8 @@ export default {
     </div>
   ),
   toc: {
-    backToTop: true,
+    float:true,
+    backToTop: false,
   },
   chat: {
     link: "https://google.com",

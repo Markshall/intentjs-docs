@@ -28,13 +28,15 @@
     "title": "Advanced",
     "type": "separator"
   },
-  "console": "Console",
+  "console": {
+    "title": "Console"
+  },
   "cache": "Cache",
   "file-storage": "File Storage",
   "queues": "Queues",
   "helpers": "Helpers",
   "events": "Events",
-  "mailer": "Mailers",
+  "mailers": "Mailers",
   "localization": "Localization",
 
   "Database": {

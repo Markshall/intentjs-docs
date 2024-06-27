@@ -65,7 +65,7 @@ const Community = () => {
 
             <div className="flex flex-col px-2 py-4 text-center">
               <span className="nx-text-gray-400 text-md font-semibold">
-                Premium Vue Components for Nuxt applications.
+                Need custom development or support? Contact us.
               </span>
             </div>
           </div>
