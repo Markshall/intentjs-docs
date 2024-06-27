@@ -2,9 +2,28 @@
   "index": {
     "display": "hidden"
   },
-  "getting-started": "Getting Started",
-  "the-basics": "The Basics",
-  "---": {
+  "Getting Started": {
+    "title": "Getting Started",
+    "type": "separator"
+  },
+  "installation": "Installation",
+  "configuration": "Configuration",
+  "directory-structure": "Directory Structure",
+
+  "Basics": {
+    "title": "Basics",
+    "type": "separator"
+  },
+
+  "routing": "Routing",
+  "requests": "Requests",
+  "response": "Response",
+  "transformers": "Transformers",
+  "validation": "Validation",
+  "logging": "Logging",
+  "error-handling": "Error Handling",
+
+  "Advanced": {
     "title": "Advanced",
     "type": "separator"
   },
@@ -16,6 +35,7 @@
   "events": "Events",
   "mailer": "Mailers",
   "localization": "Localization",
+
   "Database": {
     "title": "Database",
     "type": "separator"

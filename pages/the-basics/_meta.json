@@ -1,9 +1,0 @@
-{
-  "routing": "Routing",
-  "requests": "Requests",
-  "response": "Response",
-  "transformers": "Transformers",
-  "validation": "Validation",
-  "logging": "Logging",
-  "error-handling": "Error Handling"
-}

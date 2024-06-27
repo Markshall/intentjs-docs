@@ -1,23 +1,31 @@
 import {
-  PiRocketLaunchBold,
+  PiRocketLaunchDuotone,
   PiTerminalWindowDuotone,
   PiFunctionLight,
   PiFilesDuotone,
   PiMemoryDuotone,
   PiQueueDuotone,
   PiDatabase,
+  PiGearSixDuotone,
+  PiTreeViewDuotone,
+  PiListChecksDuotone,
 } from "react-icons/pi";
-import { TbTimelineEventPlus } from "react-icons/tb";
+import {
+  TbTimelineEventPlus,
+  TbRoute2,
+  TbTransform,
+  TbWood,
+  TbHttpConnect,
+} from "react-icons/tb";
 import { MdAlternateEmail } from "react-icons/md";
 import { LuLanguages } from "react-icons/lu";
 import { BsDatabaseUp } from "react-icons/bs";
 import { RxBoxModel } from "react-icons/rx";
 import { RiGitRepositoryLine } from "react-icons/ri";
+import { VscBracketError, VscJson } from "react-icons/vsc";
 
 export const iconMap = {
-  Installation: PiRocketLaunchBold,
-  Configuration: PiRocketLaunchBold,
-  "Directory Structure": PiRocketLaunchBold,
+  Installation: PiRocketLaunchDuotone,
   Cache: PiMemoryDuotone,
   Console: PiTerminalWindowDuotone,
   "File Storage": PiFilesDuotone,
@@ -30,4 +38,14 @@ export const iconMap = {
   Migrations: BsDatabaseUp,
   Models: RxBoxModel,
   Repository: RiGitRepositoryLine,
+  Configuration: PiGearSixDuotone,
+  "Directory Structure": PiTreeViewDuotone,
+
+  Routing: TbRoute2,
+  Requests: TbHttpConnect,
+  Response: VscJson,
+  Transformers: TbTransform,
+  Validation: PiListChecksDuotone,
+  Logging: TbWood,
+  "Error Handling": VscBracketError,
 };
