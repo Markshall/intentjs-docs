@@ -6,6 +6,7 @@ import { PiHandHeart } from "react-icons/pi";
 import { PiNote } from "react-icons/pi";
 import { PiArrowUpRightBold } from "react-icons/pi";
 import { Enterprise } from "../components/images/providers";
+import Link from "next/link";
 
 const CommunityData = [
   {
@@ -53,14 +54,22 @@ const Community = () => {
         ))}
       </ul>
 
-      <div className="mt-2">
+      <div className="mt-3 w-40">
         <p className="nx-mb-3.5 nx-font-semibold nx-tracking-tight">
           Enterprise
         </p>
 
-        <div className="flex flex-col nx-my-2">
-          <Enterprise />
-        </div>
+        <Link href={"https://tryhanalabs.com/"} target="_blank">
+          <div className="flex flex-col nx-my-2 bg-[#1d2429] border border-[#282829] rounded-md hover:border-primary cursor-pointer">
+            <Enterprise />
+
+            <div className="flex flex-col px-2 py-4 text-center">
+              <span className="nx-text-gray-400 text-md font-semibold">
+                Premium Vue Components for Nuxt applications.
+              </span>
+            </div>
+          </div>
+        </Link>
       </div>
     </div>
   );
