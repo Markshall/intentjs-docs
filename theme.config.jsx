@@ -50,7 +50,7 @@ export default {
     );
   },
   primaryHue: 80,
-  logo: <span className="text-3xl">IntentJs</span>,
+  logo: <span className="text-3xl"><></>IntentJs</span>,
   toc: {
     backToTop: true,
   },
@@ -89,7 +89,7 @@ export default {
       const IconComponent = iconMap[title] || null;
       return (
         <div className="flex flex-row items-center gap-3">
-          {IconComponent ? <IconComponent /> : null}
+          {IconComponent ? <IconComponent size={18}/> : null}
           {title}
         </div>
       );
