@@ -1,28 +1,23 @@
 ---
 title: Transformers
-description:
+description: Data Transformers for your IntentJS applications.
 image:
 ---
-
 import { Callout } from "nextra/components";
 
----
-
-## description: Data Transformers for your IntentJS applications.
-
 # Transformers
-
-## Introduction
 
 Often when you develop REST APIs, you would come across instances when you would want to transform your response before you send it out. IntentJS ships a simple yet powerful `Transformer` class which let's you dynamically prepare your response. Let's understand this in detail.
 
 Transformer provides a presentation and transformation layer for complex data output, for example JSON response in REST APIs. Let's see an example of how it works.
 
-We have added a base `Transformer` abstract class inside the `core` module, the driver of our logic.
+## Getting Started
+
+To start using transformers, you need to create a transformer class, say `BookTransformer` which extends the abstract `Transformer` imported from `@intentjs/core`.
 
 Let's create a `BookTransformer` for a model, say `Book`.
 
-```javascript
+```ts
 // src/transformers/book.ts
 import { Transformer } from "@intentjs/core";
 import { BookModel } from "@app/models";
@@ -41,7 +36,7 @@ export class BookTransformer extends Transformer {
 
 Now to use the transformer, follow the steps below:
 
-```typescript
+```ts
 //BookController.ts
 import { Controller, Get } from '@nestjs/common';
 import { BookTransformer } from '@app/transformers/book';
@@ -73,12 +68,13 @@ export class BookController {
  */
 ```
 
-<Callout type="info" emoji="ℹ️">
+<Callout type="info">
   Supports only JSON response for now
 </Callout>
 
-_Wait_, transformer provide much more than a wrapper class.
+_Wait_, transformer provide much more than just a wrapper class.
 
+## Optional Includes
 While creating REST APIs, you may want to fetch some related data with each transformable object.
 
 For example, you may want to fetch author details along with the details of the book's detail that you requested. Let's create an include in our transformer.
@@ -90,7 +86,7 @@ Transformer provides two options define your includes.
 
 Below example gives you a peek on how you can create in include in the transformer.
 
-```javascript
+```ts
 import { Transformer } from "@intentjs/core";
 
 export class BookTransformer extends Transformer {
