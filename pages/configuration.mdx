@@ -3,7 +3,6 @@ title: Configuration
 description:
 image:
 ---
-
 import { Callout } from "nextra/components";
 
 # Configuration
@@ -12,30 +11,13 @@ All of the configurations for your application are stored inside `config` direct
 
 IntentJS comes packed with pre-defined configurations for databases, caches, filesystems, http settings, etc. You can use the same folder to create your own configurations and use them as needed in the application.
 
-## Overview&#x20;
-
-You can use the following commands to get configurations for a particular namespace in your application.
-
-```bash
-node intent config:view {namespace}
-```
-
 ## Environment Variables
 
 IntentJS makes use of `dotenv` package to read environment variables from your .env files. Environment variables are useful when you are building application for multi-environments, this gives you the flexibility to keep your environment specific values isolated. For example, you can run a db on localhost when developing the app on your system, whereas in Prod it is likely that you will be using some server to host your db.
 
 One added advantage of using Environment Variables is that it helps you keep your sensitive values as hidden and keep them away from unnecessary access.
 
-IntentJS already makes use of some environment variables to configure database, cache, filesystems, queue, http, mailers etc. It should be already setup when you created your application using `create-intent-app` command. You can see all of the environment variables inside `.env` file.
-
-<Callout type="info" emoji="ℹ️">
-  We recommend keeping the usage of `process.env` limited to the `config` directory
-  only. You can then read the values from the IntentConfig class.
-
-Another reason of doing this is that reading process.env will be a little slow
-as compared to reading the value from `IntentConfig` class.
-
-</Callout>
+IntentJS already makes use of some environment variables to configure database, cache, filesystems, queue, http, mailers etc. It should be already setup when you created your application using `create-intent-app` command. You can see all of the environment variables inside `.env`, and `.env.example` files.
 
 ## Create a custom configuration
 
@@ -72,7 +54,7 @@ export class AppService {
 
 Following namespaces are reserved for IntentJS.
 
-<Callout type="info" emoji="ℹ️">
+<Callout type="warning" emoji="⚠️">
   Changing the namespaces can potentially cause some unexpected behaviour in the
   code, and ultimately result in some functionality not working.
 </Callout>
@@ -85,3 +67,11 @@ Following namespaces are reserved for IntentJS.
 - `logger`
 - `cron`
 - `locale`
+
+## Best Practices
+
+This section mentions some of the best practices when it comes to managing and accessing configurations in your applications.
+
+✅ We recommend keeping the usage of `process.env` limited to the `config` directory only. You can then read the values from the IntentConfig class. Another reason of doing this is that reading process.env will be a little slow as compared to reading the value from `IntentConfig` class.
+
+✅ Use `IntentConfig` wherever possible, it comes with an internal caching which automatically caches the keys you are accessing during run-time.
