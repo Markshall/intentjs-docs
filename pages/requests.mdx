@@ -3,23 +3,24 @@ title: Requests
 description:
 image:
 ---
+import { Callout } from "nextra/components";
 
 # Requests
 
-IntentJS provides a useful `Request` class over express' Request object. It automatically parses the incoming data, headers.
+IntentJS provides a useful `Request` class over express' Request object. It automatically parses the incoming data, headers, and comes packed with many utilities.
 
 ## Interacting With The Request
 
 ### Using the Request
 
-To get the object the IntentRequest, you will need to type-hint the `IntentRequest` class from `@intentjs/core` . The incoming request will automatically be injected
+To get the `Request` object, you will need to type-hint the `Request` class from `@intentjs/core`. The incoming request will automatically be injected into the controller's method.
 
 ```ts
-import { IRequest, IntentRequest, Controller } from "@intentjs/core";
+import { Req, Request, Controller } from "@intentjs/core";
 
 @Controller()
 export class BookController {
-  async create(@IRequest() req: IntentRequest) {
+  async create(@Req() req: Request) {
     const name = req.input("name");
     return { msg: "Book Created Successfully!" };
   }
@@ -28,41 +29,55 @@ export class BookController {
 
 ## Request Inputs, Host, Path and Methods
 
-The `IntentRequest` instance comes packed with variety of methods.
+The `Request` instance comes packed with variety of methods.
 
 ### Retrieving Inputs from Payload
 
-To retrieve input for a particular key from the `IntentRequest` instance, you can use `input` method.
+To retrieve input for a particular key from the `Request` instance, you can use `input` method.
 
-```typescript
-const name = req.input("name");
+```ts
+const name = req.input("sportsperson");
+// Virat Kohli
 ```
 
-You can also pass the second argument as the default value to the `input` method. If the passed key is not present inside the payload, it will return the default value.&#x20;
+You can also pass the second argument as the default value to the `input` method. If the passed key is not present inside the payload, it will return the default value.
 
-If you want to get the complete payload from the `req` object, you can use `all` method, this would give you a combination of path parameters, query params, and body combined in one single object.
+```ts
+const name = req.input("sportsperson", 'Rohit Sharma');
+// Rohit Sharma
+```
 
-```typescript
+If you want to get the complete payload from the `req` object, you can use `all` method, this would give you a unified object of `path`, `query` and `body` params.
+
+<Callout type="info">
+The objects are spread in the order of `path`, `query` and `body`. So all the keys present in the body will be overriding the intersecting keys present in `query` and `path` params.
+</Callout>
+
+```ts
 const inputs = req.all();
 ```
 
 If you want to fetch a value as a string, you can use `string` method
 
-```typescript
+```ts
 const str = req.string("name");
 ```
 
 Alternatively, if you want to fetch a value parsed as a number, you can use the `number` method
 
-```typescript
+```ts
 const num = req.number("amount");
 ```
 
 If you would to fetch a value as a boolean, you can use the `boolean` method, this method returns `true` for all "truthy" values. It would return `true` for 1, "1", true, "true", "yes", "on", for all other values it would return `false`;
 
-```typescript
+```ts
 const bool = req.boolean("tncAgreed");
 ```
+
+<Callout type="warning">
+If you try to access values which cannot be typed by `Request`, it will return `undefined`. It doesn't throw error because it can cause errors at runtime.
+</Callout>
 
 ### Accessing Query Parameters
 
@@ -98,7 +113,7 @@ if (req.has("email", "phone")) {
 
 ### Accessing the Headers
 
-Headers are important if you are building a REST API as they provide lots of meta information which you can use in your application. `IntentRequest` offers useful methods for headers which you can use.
+Headers are important if you are building a REST API as they provide lots of meta information which you can use in your application. `Request` offers useful methods for headers which you can use.
 
 To get a header by it's key, you can use the `header` method
 
@@ -114,7 +129,7 @@ If you want to get all of the headers, you can use the `headers` method.
 const headers = req.headers();
 ```
 
-As most of the REST APIs, use `JWT` for authentication, `IntentRequest` comes with a `bearerToken` method to help you easily fetch the bearer token without doing the hassle of parsing the header yourself. You can use the method like below
+As most of the REST APIs, use `JWT` for authentication, `Request` comes with a `bearerToken` method to help you easily fetch the bearer token without doing the hassle of parsing the header yourself. You can use the method like below
 
 ```typescript
 const token = req.bearerToken();
@@ -138,7 +153,7 @@ if (req.hasHeader("authroization", "cookie")) {
 
 ### Playing with Content Types
 
-`IntentRequest` comes with variety of methods through which you can use to fetch and check for certain content types in your application.
+`Request` comes with variety of methods through which you can use to fetch and check for certain content types in your application.
 
 To check if a particular request expects JSON, you can use `expectsJson` method.
 

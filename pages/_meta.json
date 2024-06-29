@@ -12,7 +12,6 @@
     "type": "separator"
   },
 
-  "controllers": "Controller",
   "requests": "Requests",
   "response": "Response",
   "transformers": "Transformers",
