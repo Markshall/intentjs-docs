@@ -8,8 +8,8 @@ module.exports = withNextra({
   async redirects() {
     return [
       {
-        source: "/docs",
-        destination: "/docs/installation",
+        source: "/",
+        destination: "/installation",
         permanent: true,
       },
     ];

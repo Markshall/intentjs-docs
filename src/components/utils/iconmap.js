@@ -9,6 +9,7 @@ import {
   PiGearSixDuotone,
   PiTreeViewDuotone,
   PiListChecksDuotone,
+  PiGameControllerDuotone,
 } from "react-icons/pi";
 import {
   TbTimelineEventPlus,
@@ -25,6 +26,7 @@ import { RiGitRepositoryLine } from "react-icons/ri";
 import { VscBracketError, VscJson } from "react-icons/vsc";
 
 export const iconMap = {
+  Controller: PiGameControllerDuotone,
   Installation: PiRocketLaunchDuotone,
   Cache: PiMemoryDuotone,
   Console: PiTerminalWindowDuotone,
