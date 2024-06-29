@@ -5,6 +5,15 @@ const withNextra = require("nextra")({
 
 module.exports = withNextra({
   basePath: "/docs",
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/installation",
+        permanent: true,
+      },
+    ];
+  },
 });
 
 // If you have other Next.js configurations, you can pass them as the parameter:
