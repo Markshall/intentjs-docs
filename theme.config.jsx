@@ -59,8 +59,6 @@ export default {
     </div>
   ),
   toc: {
-    float:true,
-    backToTop: false,
   },
   chat: {
     link: "https://google.com",
@@ -107,8 +105,8 @@ export default {
   navigation: {
     prev: true,
     next: true,
-    gitTimestamp: true,
   },
+  gitTimestamp: true,
   useNextSeoProps() {
     const { asPath } = useRouter();
     if (asPath !== "/") {
