@@ -12,12 +12,7 @@ Logging is very crucial for any application. It is used to record any event when
 
 Application logging is the process of saving application events. With this information in hand, tech pros can assess threats and analyze errors before they disrupt broader business workflows. This functionality is provided via the Logger class in the @nestjs/common package. You can fully control the behavior of the logging system.
 
-**Supported Transports**
-
-- Console
-- File
-- HTTP
-- Stream
+IntentJs comes with simple methods to store all your application logs in the format and storage of your choice which is currently built on top of `winston`.
 
 ## Configuration
 
@@ -53,7 +48,61 @@ export default registerAs(
 );
 ```
 
-Let's say you want to save your logs in a file.
+### Log Levels
+
+Log `level` can have following values:
+
+`error`: Whenever you encounter any Exception preventing one or more functionalities from properly functioning and want to log the information about that event.
+
+`warn`: The log level that indicates that something unexpected happened in the application, a problem, or a situation that might disturb one of the processes. But that doesn’t mean that the application failed.
+
+`info`: The standard log level for logs indicating something happened,the application entered a certain state, some API called, etc.
+
+`http`: This level is used to log HTTP request-related messages. HTTP transactions ranging from the host, path, response, requests, etc.
+
+`verbose`: The Verbose level logs a message for both the activity start and end, plus the values of the variables and arguments that are used.
+
+`debug`: The DEBUG log level should be used for information that may be needed for diagnosing issues and troubleshooting or when running application in the test environment for the purpose of making sure everything is running correctly.
+
+`silly`: The current stack trace of the calling function should be printed out when silly messages are called. This information can be used to help developers and internal teams debug problems.
+
+Whichever value you select, the logs having level lower than that will be silenced.
+
+**Supported Transports**
+
+- `Default`:
+  This is the default transport and logs are saved in cli.
+- `Console`:
+  This transport is used to store all your logs in a cli.
+- `File`:
+  This transport is used to store all your logs in a file.
+- `HTTP`:
+  This transport is used to pass an Http url to send all your logs to some host.
+- `Stream`:
+  This transport is used to create a stream of logs and pass/save it according to your accord.
+
+**Supported Formats**
+
+`Default`
+`Simple`
+`Align`
+`Cli`
+`Colorize`
+`Combine`
+`Errors`
+`Json`
+`Label`
+`Logstash`
+`Metadata`
+`Ms`
+`PadLevels`
+`PrettyPrint`
+`Printf`
+`Splat`
+`Timestamp`
+`Uncolorize`
+
+Let's say you want to save your logs in a file with basic format.
 
 ```typescript
 import {
@@ -85,16 +134,6 @@ export default registerAs(
     } as IntentLoggerOptions)
 );
 ```
-
-Log `level` can have following values:
-`error`
-`warn`
-`info`
-`http`
-`verbose`
-`debug`
-`silly`
-Whichever value you select, the logs having level lower than that will be silenced.
 
 ## Usage
 
