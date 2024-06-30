@@ -3,10 +3,9 @@ title: Queues
 description:
 image:
 ---
+import { Callout } from "nextra/components";
 
 # Queues
-
-## Introduction
 
 When you want to build scalable applications, you need a framework which helps you scale as your product scales. This is where IntentJS Queues come in the picture. Queues are a form of asynchronous service-to-service communication used in backend architecture. You can use queues to decouple or defer compute heavy tasks such as Sending Mails, Processing large files, etc. Messages are kept in queue until processed. Separating these heavy time consuming tasks drastically improves your application's performance and also helps you keep your code clean.
 
@@ -245,17 +244,18 @@ Dispatch({
 });
 ```
 
-{% hint style="warning" %}
-If you are using AWS SQS as the driver, the maximum allowed delay is 15 mins.&#x20;
-{% endhint %}
+<Callout type="warning">
+  If you are using AWS SQS as the driver, the maximum allowed delay is 15
+  mins.&#x20;
+</Callout>
 
 ## Running a Queue Worker
 
 Now that we have seen how to create a job and dispatching it. We need to run a worker as well to listen to the incoming messages from the queue and process them.
 
-{% hint style="info" %}
-You don't need to run QueueWorker if you are using Sync driver.
-{% endhint %}
+<Callout>
+  You don't need to run QueueWorker if you are using Sync driver.
+</Callout>
 
 IntentJS comes with a command which you can use to run the \`QueueWorker\`
 
@@ -285,7 +285,11 @@ node intent queue:work --sleep=20 # in seconds
 
 Following commands are available which you can use with `node intent`
 
-<table><thead><tr><th width="263">Command</th><th>Description</th></tr></thead><tbody><tr><td>queue:work</td><td>Command to run the queue worker, starts processing the jobs</td></tr><tr><td>queue:length</td><td>Command to get the length of the specified queue</td></tr><tr><td>queue:purge</td><td>Command to purge the queue</td></tr></tbody></table>
+| Command      | Description                                                 |
+| ------------ | ----------------------------------------------------------- |
+| queue:work   | Command to run the queue worker, starts processing the jobs |
+| queue:length | Command to get the length of the specified queue            |
+| queue:purge  | Command to purge the queue                                  |
 
 While the `queue:work` command will be good enough for majority of the cases, however if you want to write your `queue:work` script, you can make use of `QueueWorker` class, like below.
 
@@ -300,9 +304,10 @@ await worker.listen(); // this will run a forever running thread to listen to th
 
 Note that if any of the value is not passed, then default setting for the missing property will be used as fallback.
 
-{% hint style="success" %}
-&#x20;If you are using multiple queues/connections in your application, then you will have to run different queue worker instances for each queue/connection.
-{% endhint %}
+<Callout type="success">
+  If you are using multiple queues/connections in your application, then you
+  will have to run different queue worker instances for each queue/connection.
+</Callout>
 
 ### Functions
 
@@ -339,9 +344,10 @@ This package supports the following drivers as of now
 
 This is the easiest driver of all. There can be some cases where you may want to run your code synchronously for testing or debugging purposes. So, to keep it simple, this package provides out-of-the box support for running your `Jobs` synchronously.
 
-{% hint style="info" %}
-If you are using a SyncDriver, you will have to ensure that you you are dispatching and consuming jobs in the same app.
-{% endhint %}
+<Callout>
+  If you are using a SyncDriver, you will have to ensure that you you are
+  dispatching and consuming jobs in the same app.
+</Callout>
 
 ### SQS Driver
 
@@ -469,8 +475,6 @@ node intent make:queue-driver MyCustomQueueDriver
 
 Now, you need to create two classes `MyCustomQueueDriver` and `MyCustomQueueJob`. Here for understanding purpose we will use AWS AQS in our `MyCustom` driver.
 
-{% code title="MyCustomDriver.ts" %}
-
 ```typescript
 import { QueueDriver, InternalMessage } from "@intentjs/core";
 import AWS = require("aws-sdk");
@@ -543,5 +547,3 @@ export class MyCustomQueueDriver implements QueueDriver {
   }
 }
 ```
-
-{% endcode %}

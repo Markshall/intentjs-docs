@@ -24,6 +24,7 @@ import { BsDatabaseUp } from "react-icons/bs";
 import { RxBoxModel } from "react-icons/rx";
 import { RiGitRepositoryLine } from "react-icons/ri";
 import { VscBracketError, VscJson } from "react-icons/vsc";
+import { BiInjection } from "react-icons/bi";
 
 export const iconMap = {
   Controller: PiGameControllerDuotone,
@@ -50,4 +51,5 @@ export const iconMap = {
   Validation: PiListChecksDuotone,
   Logging: TbWood,
   "Error Handling": VscBracketError,
+  Providers: BiInjection,
 };

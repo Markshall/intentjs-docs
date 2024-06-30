@@ -3,6 +3,7 @@ title: Events
 description:
 image:
 ---
+import { Callout } from "nextra/components";
 
 # Events
 
@@ -78,9 +79,9 @@ export class OrderPlacedEvent extends Event {
 
 As you can see, the event class doesn't contain any logic, and whatever data we pass to this event shall automatically be passed to all listeners.
 
-{% hint style="info" %}
+<Callout>
 All of the listeners only receive the normalised form of the all the data passed to the event.
-{% endhint %}
+</Callout>
 
 IntentJS converts the name of the event classes into snake case and looks for the listeners which are listening to the event. For example if the name of your event class is `OrderPlacedEvent`, IntentJS would trigger the event with the name of `order_placed_event`. If you would like to pass some custom name of the event, you can make use of the static `name` variable inside the event class.
 

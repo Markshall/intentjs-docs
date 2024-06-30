@@ -6,4 +6,23 @@ image:
 
 # Error Handling
 
-IntentJS utilises `ExceptionFilter` by NestJS. When you create a new app, it comes with an HTTP Exception Filter which you can customise as per your need.
+Intent utilises `ExceptionFilter` by NestJS. When you create a new app, it comes with an HTTP Exception Filter which you can customise as per your need. You can make changes to the `catch` method as per your need.
+
+When you start a new Intent application, it comes pre-configured with an `Exception Filters` located inside `app/errors` directory.
+
+## Configuration
+
+You can configure your exception filter by changing settings inside the `config/error.ts` file. It comes with a few default configuration which provides elegant error handlings in your application.
+
+The `debug` option in `config/error.ts` file determines how much information shall be exposed in the response. By default, this settings is based on `APP_DEBUG` environment variable.
+
+Using the `validationErrorSerializer` config you can customise the validation error object which is passed to the client whenever there is a `422` exception.
+It comes with a default serializer which should be good enough, however you can change it by providing a class extending `BaseValidationErrorSerializer`.
+
+## Handling Exceptions
+
+### Reporting Exceptions
+
+### Debugging Exceptions
+
+### Validation Error Serializer
