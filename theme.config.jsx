@@ -5,6 +5,7 @@ import { iconMap } from "./src/components/utils/iconmap";
 import Community from "./src/components/Community";
 import Footer from "./src/components/Footer";
 import { Logo } from "./src/components/images/providers";
+import CodeSnippet from "./src/components/utils/CodeSnippet";
 
 const GITHUB_REPO_STAR = <GithubStar />;
 
@@ -58,8 +59,10 @@ export default {
       <span className="text-3xl">IntentJs</span>
     </div>
   ),
-  toc: {
-  },
+  // mdxComponet: {
+  //   pre: CodeSnippet,
+  // },
+  toc: {},
   chat: {
     link: "https://google.com",
   },
@@ -87,7 +90,7 @@ export default {
       const IconComponent = iconMap[title] || null;
       return (
         <div className="flex flex-row items-center gap-3">
-          {IconComponent ? <IconComponent size={18}/> : null}
+          {IconComponent ? <IconComponent size={18} /> : null}
           {title}
         </div>
       );
