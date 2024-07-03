@@ -1,10 +1,9 @@
 export const ArrayHelpersList = [
-  { label: "Arr.toObj", href: "#arr-to-obj" },
   { label: "Arr.collapse", href: "#arr-collapse" },
   { label: "Arr.except", href: "#arr-except" },
-  { label: "Arr.forget", href: "#arr-forget" },
   { label: "Arr.pick", href: "#arr-pick" },
   { label: "Arr.random", href: "#arr-random" },
+  { label: "Arr.toObj", href: "#arr-to-obj" },
 ];
 
 export const ObjectHelpersList = [

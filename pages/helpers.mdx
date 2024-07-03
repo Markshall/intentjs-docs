@@ -18,10 +18,10 @@ IntentJS comes packed with helper methods which you can use to abstract many tri
 
 IntentJS provides the following helpers
 
-- [Arrays](he#arrays)
-- [Objects](helpers.md#objects)
-- [Numbers](helpers.md#numbers)
-- [Strings](helpers.md#strings)
+- [Arrays](#arrays)
+- [Objects](#objects)
+- [Numbers](#numbers)
+- [Strings](#strings)
 
 ## Available Methods
 
@@ -43,6 +43,103 @@ IntentJS provides the following helpers
 
 ## Array Helper Methods
 
+### collapse [#arr-collapse]
+
+You can use `Arr.collapse` method to collapse a nested array into a single level.
+
+```ts
+Arr.collapse(['a', ['b', ['c'], 1], 2]);
+
+// [ 'a', 'b', 'c', 1, 2 ]
+```
+
+### except [#arr-except]
+The `Arr.except` is a method which you can use to remove some index, or keys from an array of objects.
+
+```ts
+const goats = [
+  { name: 'Saina Nehwal', sport: 'Badminton' },
+  { name: 'Sunil Chetri', sport: 'Football' },
+  { name: 'Rohit Sharma', sport: 'Cricket' },
+  { name: 'Virat Kohli', sport: 'Cricket' },
+];
+
+Arr.except(goats, ['*.sport']);
+/**
+  [
+    { name: 'Saina Nehwal' },
+    { name: 'Sunil Chetri' },
+    { name: 'Rohit Sharma' },
+    { name: 'Virat Kohli' }
+  ]
+*/
+
+Arr.except(goats, ['2.sport'])
+/**
+  [
+    { name: 'Saina Nehwal', sport: 'Badminton' },
+    { name: 'Sunil Chetri', sport: 'Football' },
+    { name: 'Rohit Sharma' },
+    { name: 'Virat Kohli', sport: 'Cricket' }
+  ]
+*/
+```
+
+### pick [#arr-pick]
+Unlike `Arr.except`, you can use `Arr.pick` method to only pick selected indices, keys from an array.
+
+```ts
+const goats = [
+  { name: 'Saina Nehwal', sport: 'Badminton' },
+  { name: 'Sunil Chetri', sport: 'Football' },
+  { name: 'Rohit Sharma', sport: 'Cricket' },
+  { name: 'Virat Kohli', sport: 'Cricket' },
+];
+
+Arr.pick(goats, ['*.name']);
+/**
+  [
+    { name: 'Saina Nehwal' },
+    { name: 'Sunil Chetri' },
+    { name: 'Rohit Sharma' },
+    { name: 'Virat Kohli' }
+  ]
+*/
+
+Arr.pick(goats, ['0.name', '1.sport', '2.name', '3.sport']);
+/**
+  [
+    { name: 'Saina Nehwal' },
+    { sport: 'Football' },
+    { name: 'Rohit Sharma' },
+    { sport: 'Cricket' }
+  ]
+*/
+```
+
+### random [#arr-random]
+The `Arr.random` method shuffles the elements of an array.
+
+```ts
+const goats = [
+  { name: 'Saina Nehwal', sport: 'Badminton' },
+  { name: 'Sunil Chetri', sport: 'Football' },
+  { name: 'Rohit Sharma', sport: 'Cricket' },
+  { name: 'Virat Kohli', sport: 'Cricket' },
+];
+
+Arr.random(goats);
+
+/**
+  [
+    { name: 'Virat Kohli', sport: 'Cricket' },
+    { name: 'Rohit Sharma', sport: 'Cricket' },
+    { name: 'Saina Nehwal', sport: 'Badminton' },
+    { name: 'Sunil Chetri', sport: 'Football' }
+  ]
+*/
+```
+
 ### toObj [#arr-to-obj]
 
 The `Arr.toObj` method transforms the array to an object.
@@ -62,16 +159,6 @@ const obj = Arr.toObj(array, ["book", "author"]);
   ]
 */
 ```
-
-### collapse [#arr-collapse]
-
-### except [#arr-except]
-
-### forget [#arr-forget]
-
-### pick [#arr-pick]
-
-### random [#arr-random]
 
 ## Object Helper Methods
 
