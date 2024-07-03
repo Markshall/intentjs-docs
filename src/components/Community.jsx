@@ -54,7 +54,7 @@ const Community = () => {
         ))}
       </ul>
 
-      <div className="mt-3 w-40">
+      <div className="mt-3">
         <p className="nx-mb-3.5 nx-font-semibold nx-tracking-tight">
           Enterprise
         </p>
@@ -63,7 +63,7 @@ const Community = () => {
           <div className="flex flex-col nx-my-2 bg-[#1d2429] border border-[#282829] rounded-md hover:border-primary cursor-pointer">
             <Enterprise />
 
-            <div className="flex flex-col px-2 py-4 text-center">
+            <div className="flex flex-col p-2 text-center">
               <span className="nx-text-gray-400 text-md font-semibold">
                 Need custom development or support? Contact us.
               </span>

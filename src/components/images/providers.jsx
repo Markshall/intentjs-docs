@@ -13,8 +13,8 @@ export const Enterprise = () => {
   return (
     <Image
       src="/docs/enterprise.png"
-      width={160}
-      height={210}
+      width={220}
+      height={200}
       alt="enterpriselogo"
       className="rounded-t-md border-b border-[#282829]"
     />
