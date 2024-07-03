@@ -13,7 +13,6 @@
   },
 
   "requests": "Requests",
-  "response": "Response",
   "providers": "Providers",
   "transformers": "Transformers",
   "validation": "Validation",
@@ -24,16 +23,14 @@
     "title": "Advanced",
     "type": "separator"
   },
-  "console": {
-    "title": "Console"
-  },
+  "console": "Console",
   "cache": "Cache",
-  "file-storage": "File Storage",
-  "queues": "Queues",
-  "helpers": "Helpers",
   "events": "Events",
-  "mailers": "Mailers",
+  "file-storage": "File Storage",
+  "helpers": "Helpers",
   "localization": "Localization",
+  "mailers": "Mailers",
+  "queues": "Queues",
 
   "Database": {
     "title": "Database",
