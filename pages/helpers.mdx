@@ -162,7 +162,7 @@ const obj = Arr.toObj(array, ["book", "author"]);
 
 ## Object Helper Methods
 
-### Obj.dot
+### dot [#obj-dot]
 
 The `Obj.dot` converts a nested object to dot notation object
 
@@ -183,7 +183,7 @@ const dotObj = Obj.dot(obj);
 */
 ```
 
-### Obj.entries
+### entries [#obj-entries]
 
 The `Obj.entries` method converts a deeply nested object into a \[key, value] array. If the object is nested, it would automatically convert the obj to dot notation.
 
@@ -206,11 +206,47 @@ const objEntries = Obj.entries(obj);
 */
 ```
 
-### Obj.except [#obj-except]
+### except [#obj-except]
 
-### Obj.forget [#obj-forget]
+The `Obj.except` method helps you quickly get a new object except the list of keys that you specify.
+```ts
+const obj = {
+  firstName: 'Vinayak',
+  lastName: 'Sarawagi',
+  email: 'vinayak@tryintent.com',
+  wishlist: [
+    { id: 1, name: 'Product 1' },
+    { id: 2, name: 'Product 2' },
+    { id: 3, name: 'Product 3' },
+  ],
+  address: {
+    line1: 'Somewhere',
+    line2: 'Far Far Away',
+    city: 'Delhi',
+    country: { code: 'IN', name: 'India' },
+  },
+};
 
-### Obj.get [#obj-get]
+Obj.except(obj, ['firstName', 'lastName', 'wishlist.*.id']);
+/**
+  {
+    email: 'vinayak@tryintent.com',
+    wishlist: [
+      { name: 'Product 1' },
+      { name: 'Product 2' },
+      { name: 'Product 3' }
+    ],
+    address: {
+      line1: 'Somewhere',
+      line2: 'Far Far Away',
+      city: 'Delhi',
+      country: { code: 'IN', name: 'India' }
+    }
+  }
+ */
+```
+
+### get [#obj-get]
 
 The `Obj.get` method can be used to fetch a value from an object by using dot notation.
 
@@ -242,11 +278,34 @@ Obj.get(obj, 'address.country.name');
 // India
 ```
 
-### Obj.isEmpty [#obj-is-empty]
+### isEmpty [#obj-is-empty]
+To check if an object is empty, you can make use of `Obj.isEmpty` method.
 
-### Obj.isNotEmpty [#obj-is-not-empty]
+```ts
+Obj.isEmpty({ name: 'Intent' });
+// false
 
-### Obj.pick [#obj-pick]
+Obj.isEmpty({});
+// true
+
+Obj.isEmpty([]);
+// true
+```
+
+### isNotEmpty [#obj-is-not-empty]
+Incase you want to check if an object is not empty, `Obj.isNotEmpty` can help you.
+
+```ts
+Obj.isNotEmpty({ name: 'Intent' });
+// true
+
+Obj.isNotEmpty({});
+// false
+
+Obj.isNotEmpty([]);
+// false
+```
+### pick [#obj-pick]
 
 There will be cases where you would like to access multiple keys at once using dot notation. To do so you can use `Obj.pick` method.
 
@@ -282,7 +341,7 @@ Obj.pick(obj, ["firstName", "lastName", "wishlist.*.id"]);
 
 All of the number helpers are exported from `import { Num } from '@intentjs/core'`
 
-### Num.abbreviate [#num-abbreviate]
+### abbreviate [#num-abbreviate]
 
 The abbreviate method returns the human-readable format of the provided numerical value.
 
@@ -299,7 +358,7 @@ Num.abbreviate(1200, { locale: "hi" });
 // 1.2 हज़ार
 ```
 
-### Num.clamp [#num-clamp]
+### clamp [#num-clamp]
 
 Clamp helper allows you to ensure that the given number remains within the specified range. f the number is lower than the minimum, the minimum value is returned. If the number is higher than the maximum, the maximum value is returned:
 
@@ -317,7 +376,7 @@ Num.clamp(110, 20, 100);
 // 100
 ```
 
-### Num.currency [#num-currency]
+### currency [#num-currency]
 
 Currency helper returns the currency format of a given number.
 
@@ -329,7 +388,7 @@ Num.currency(12300, { currency: "USD" });
 // $12,300.00
 ```
 
-### Num.fileSize [#num-file-size]
+### fileSize [#num-file-size]
 
 The `fileSize` method returns the file size representation of the number passed.
 
@@ -344,7 +403,7 @@ Num.fileSize(1024 * 1024 * 1.5, { precision: 2 });
 // 1.57MB
 ```
 
-### Num.forHumans [#num-for-humans]
+### forHumans [#num-for-humans]
 
 `forHumans` method returns the expanded human-readable format of the given number.
 
@@ -362,7 +421,7 @@ Num.forHumans(1230, { locale: "en" });
 // 1,2 millier
 ```
 
-### Num.format [#num-format]
+### format [#num-format]
 
 The `format` method formats the number into the given locale string.
 
@@ -377,7 +436,7 @@ Num.format(1200);
 // 1,200
 ```
 
-### Num.ordinal [#num-ordinal]
+### ordinal [#num-ordinal]
 
 Ordinal method returns the ordinal format of a number.
 
@@ -395,7 +454,7 @@ Num.ordinal(20);
 // 20th
 ```
 
-### Num.percentage [#num-percentage]
+### percentage [#num-percentage]
 
 `Num.percentage` method formats the given value into a percentage string.
 
@@ -412,7 +471,7 @@ Num.percentage(10.123, { precision: 2 });
 
 ## String Helper Methods
 
-### After [#str-after]
+### after [#str-after]
 
 The `Str.after` method returns the string after the specified `substr`.
 
@@ -423,7 +482,7 @@ const result = Str.after(sentence, "fox");
 // jumps over a lazy dog.
 ```
 
-### Before [#str-before]
+### before [#str-before]
 
 The `Str.after` method returns the string before the specified `substr`, excluding the `subtr`.
 
@@ -434,7 +493,7 @@ const result = Str.before(sentence, "fox");
 // The quick brown
 ```
 
-### Between [#str-between]
+### between [#str-between]
 
 The `Str.between` method returns the string present between the specified `start` and `end`.
 
@@ -662,19 +721,24 @@ Str.padRight("intent", 10, "~");
 // intent~~~~
 ```
 
-### Plural [#str-plural]
+### Plural [#str-pluralize]
+The `Str.plural` method converts a given method to a plural form.
 
 ```ts
+Str.pluralize('apple');
+// apples
 
+Str.pluralize('child');
+// children
+
+Str.pluralize('index');
+// indices
+
+Str.pluralize('alumnus');
+// alumni
 ```
 
-### Position [#str-position]
-
-```ts
-
-```
-
-### Remove [#str-remove]
+### remove [#str-remove]
 
 If you want to just remove certain characters from a given string, `Str.remove` can do that for you.
 
@@ -683,7 +747,7 @@ Str.remove("New OSS NodeJS Framework", "OSS ");
 // New NodeJS Framework
 ```
 
-### Repeat [#str-repeat]
+### repeat [#str-repeat]
 
 `Str.repeat` method returns a new string with `repeat` string for `x` times.
 
@@ -692,17 +756,48 @@ Str.repeat("chug ", 5);
 // chug chug chug chug chug
 ```
 
-### Replace [#str-replace]
+### replace [#str-replace]
+The `Str.replace` method can be used to replace a given string with another string.
 
-### ReplaceArray [#str-replace-array]
+```ts
+Str.replace('I hate intent!', 'hate', 'love');
+// I love intent!
 
-### ReplaceFirst [#str-replace-first]
+Str.replace('I Hate intent!', 'hate', 'love', true);
+// I love intent!
+```
 
-### ReplaceLast [#str-replace-last]
+### replaceArray [#str-replace-array]
+The `Str.replaceArray` method replaces the matching string sequentially with the string array.
 
-### ReplaceMatches [#str-replace-matches]
+```ts
+const str = 'I will be there between ? and ?';
 
-### Reverse [#str-reverse]
+Str.replaceArray(str, '?', ['8:30', '9:30PM']);
+// I will be there between 8:30 and 9:30PM;
+```
+
+### replaceFirst [#str-replace-first]
+The `Str.replaceFirst` method replaces only the first matching string with the replacement string.
+
+```ts
+const sentence = 'the quick brown fox jumps over the lazy dog.';
+
+Str.replaceFirst(sentence, 'the', 'a');
+// a quick brown fox jumps over a lazy dog.
+```
+
+### replaceLast [#str-replace-last]
+The `Str.replaceLast` method can be used to replace only the last matching string with the replacement string.
+
+```ts
+const sentence = 'the quick brown fox jumps over the lazy dog.';
+
+Str.replaceLast(sentence, 'the', 'a');
+// the quick brown fox jumps over a lazy dog.
+```
+
+### reverse [#str-reverse]
 
 `Str.reverse` reverses the string.
 
@@ -711,11 +806,25 @@ Str.reverse("wtf! why reverse?");
 // ?esrever yhw !ftw
 ```
 
-### Singular [#str-singular]
+### singular [#str-singular]
 
 You can use `Str.singular` to convert a given word in a singular form.
 
-### Slug [#str-slug]
+```ts
+Str.singular('apples');
+// apple
+
+Str.singular('children');
+// child
+
+Str.singular('indices');
+// index
+
+Str.singular('matrices');
+// matrix
+```
+
+### slug [#str-slug]
 
 You can use `Str.slug` method to convert any string to a slug form.
 
@@ -734,7 +843,7 @@ Str.slug("@@@@@@jell----fw  fed");
 // jell-fw-fed
 ```
 
-### Snake [#str-snake]
+### snake [#str-snake]
 
 `Str.snake` transforms the given string into `snake_case`.
 
@@ -745,7 +854,7 @@ Str.snake(title);
 // how_to_get_started_with_intent
 ```
 
-### StartsWith [#str-starts-with]
+### startsWith [#str-starts-with]
 
 If you want to check if any string starts with a `substr` or not.
 
@@ -754,7 +863,7 @@ Str.startsWith("A Product Stack Framework", "A Product");
 // true
 ```
 
-### Swap [#str-swap]
+### swap [#str-swap]
 
 You can use `Str.swap` method to swap multiple words with some other words.
 
