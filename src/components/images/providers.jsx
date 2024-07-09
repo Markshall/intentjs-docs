@@ -2,7 +2,7 @@ import Image from "next/image";
 import { LuMemoryStick } from "react-icons/lu";
 
 export const Logo = () => {
-  return <Image src="/docs/trident.png" width={30} height={30} alt="logo" />;
+  return <Image src="/docs/logo.png" width={30} height={30} alt="logo" />;
 };
 
 export const RedisLogo = () => {

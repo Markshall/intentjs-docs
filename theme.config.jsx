@@ -56,7 +56,7 @@ export default {
   logo: (
     <div className="flex flex-row gap-2 items-center">
       <Logo />
-      <span className="text-3xl">IntentJs</span>
+      <span className="text-3xl">Intent</span>
     </div>
   ),
   // mdxComponet: {

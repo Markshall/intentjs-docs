@@ -212,6 +212,36 @@ const objEntries = Obj.entries(obj);
 
 ### Obj.get [#obj-get]
 
+The `Obj.get` method can be used to fetch a value from an object by using dot notation.
+
+```ts
+const obj = {
+  firstName: 'Vinayak',
+  lastName: 'Sarawagi',
+  email: 'vinayak@tryintent.com',
+  wishlist: [
+    { id: 1, name: 'Product 1' },
+    { id: 2, name: 'Product 2' },
+    { id: 3, name: 'Product 3' },
+  ],
+  address: {
+    line1: 'Somewhere',
+    line2: 'Far Far Away',
+    city: 'Delhi',
+    country: { code: 'IN', name: 'India' },
+  },
+};
+
+Obj.get(obj, 'firstName'); 
+// Vinayak
+
+Obj.get(obj, 'wishlist.0.name'); 
+// Product 1
+
+Obj.get(obj, 'address.country.name');
+// India
+```
+
 ### Obj.isEmpty [#obj-is-empty]
 
 ### Obj.isNotEmpty [#obj-is-not-empty]
