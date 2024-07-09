@@ -504,7 +504,7 @@ const result = Str.between(sentence, "brown", "jumps");
 // fox
 ```
 
-### Camel [#str-camel]
+### camel [#str-camel]
 
 The `Str.camel` method converts given string into it's `camelCase` representation.
 
@@ -519,7 +519,7 @@ const example2 = "Hey_there, What's up?";
 Str.camel(example2); // heyThereWhatSUp
 ```
 
-### Contains [#str-contains]
+### contains [#str-contains]
 
 You can use `Str.contains` method to check if specified `str` is present in a given string.
 
@@ -531,7 +531,7 @@ Str.contains(sentence, "over"); // returns true
 Str.contains(sentence, "over2"); // returns false
 ```
 
-### ContainsAll [#str-contains-all]
+### containsAll [#str-contains-all]
 
 If you want to search for all specified `str`s to be present in the given string, you can use `Str.containsAll` method.
 
@@ -543,7 +543,7 @@ Str.containsAll(sentence, ["fox", "dog"]); // returns true
 Str.containsAll(sentence, ["fox", "whale"]); // returns false
 ```
 
-### EndsWith [#str-ends-with]
+### endsWith [#str-ends-with]
 
 In cases where you want to check if given string ends with a `substr`, you can use `Str.endsWith` method.
 
@@ -553,7 +553,7 @@ const sentence = "The quick brown fox jumps over a lazy dog.";
 Str.endsWith(sentence, "dog."); // returns true
 ```
 
-### Headline [#str-headline]
+### headline [#str-headline]
 
 `Str.headline` method converts the given string into HeadLine case. This also strips all special characters.
 
@@ -563,7 +563,7 @@ const sentence = "Is this real?";
 Str.headline(sentence); // Is This Real?
 ```
 
-### Is [#str-is]
+### is [#str-is]
 
 `Str.is` method can be used for pattern matching a substr with given string, or even for exact matching as well.
 
@@ -577,7 +577,7 @@ Str.is(str, "*:create"); // true
 Str.is(str, "admin"); // false
 ```
 
-### IsEmail [#str-is-email]
+### isEmail [#str-is-email]
 
 `Str.isEmail` method validates if given string is an email or not.
 
@@ -587,7 +587,7 @@ Str.isEmail("hi@tryintent.com"); // true
 Str.isEmail("tryintent.com"); // false
 ```
 
-### IsJson [#str-is-json]
+### isJson [#str-is-json]
 
 `Str.isJson` method validates if the given string can be parsed into `JSON` format or not.
 
@@ -597,7 +597,7 @@ Str.isJson('{"name": "Intent"}'); // true
 Str.isJson('{"name": "Intent"'); // false
 ```
 
-### IsUrl [#str-is-url]
+### isUrl [#str-is-url]
 
 `Str.isUrl` method checks if the given string is a valid URL or not.
 
@@ -611,7 +611,7 @@ Str.isUrl("docs.tryintent.com"); // true
 Str.isUrl("http2://tryintent.com"); // false
 ```
 
-### IsUlid [#str-is-ulid]
+### isUlid [#str-is-ulid]
 
 You can use `Str.isUlid` to verify if the given string obeys `ULID` format or not.
 
@@ -621,7 +621,7 @@ Str.isUlid("01ARZ3NDEKTSV4RRFFQ69G5FAV"); // true
 Str.isUlid("admin"); // false
 ```
 
-### Kebab [#str-kebab]
+### kebab [#str-kebab]
 
 `Str.kebab` method converts the given string into `kebab-case`.
 
@@ -636,7 +636,7 @@ const example2 = "Hey_there, What's up?";
 Str.kebab(example2); // hey-there-what-s-up
 ```
 
-### Lcfirst [#str-lcfirst]
+### lcfirst [#str-lcfirst]
 
 `Str.lcfirst` can be used to convert the first character to lowercase.
 
@@ -646,7 +646,7 @@ Str.lcfirst("INTENT"); // iNTENT
 Str.lcfirst("Intent"); // intent
 ```
 
-### Length [#str-length]
+### length [#str-length]
 
 You can use `Str.len` to get the length of a given string.
 
@@ -656,7 +656,7 @@ Str.len("intent"); // 6
 Str.len(undefined); // 0
 ```
 
-### Limit [#str-limit]
+### limit [#str-limit]
 
 If you want only `n` length of characters from a given string, you can use `Str.limit` method.
 
@@ -673,7 +673,7 @@ Str.limit(sentence, 50);
 // The quick brown fox jumps over a lazy dog.
 ```
 
-### Lower [#str-lower]
+### lower [#str-lower]
 
 `Str.lower` transforms the given string into lower case.
 
@@ -682,7 +682,7 @@ Str.lower("VINAYAK SARAWAGI");
 // vinayak sarawagi
 ```
 
-### Mask [#str-mask]
+### mask [#str-mask]
 
 You can use `Str.mask` method to mask a given string.
 First argument accepts a string, 2nd argument accepts the masked character,
@@ -694,7 +694,7 @@ Str.mask("hi@tryintent.com", "*", 7);
 // hi@tryi*********
 ```
 
-### PadBoth [#str-pad-both]
+### padBoth [#str-pad-both]
 
 You can use `Str.padBoth` method to pad your strings from both the ends with given `char` to a defined length.
 
@@ -703,7 +703,7 @@ Str.padBoth("intent", 10, "~");
 // ~~intent~~
 ```
 
-### PadLeft [#str-pad-left]
+### padLeft [#str-pad-left]
 
 Similar to `Str.padBoth`, but if you want to just pad the left side of the string, you can use `Str.padLeft` method.
 
@@ -712,7 +712,7 @@ Str.padLeft("intent", 10, "~");
 // ~~~~intent
 ```
 
-### PadRight [#str-pad-right]
+### padRight [#str-pad-right]
 
 Similar to `Str.padBoth`, but if you want to just pad the right side of the string, you can use `Str.padRight` method.
 
@@ -721,7 +721,7 @@ Str.padRight("intent", 10, "~");
 // intent~~~~
 ```
 
-### Plural [#str-pluralize]
+### pluralize [#str-pluralize]
 The `Str.plural` method converts a given method to a plural form.
 
 ```ts
@@ -872,7 +872,7 @@ Str.swap("Butter Chicken", { Butter: "Chilli", Chicken: "Paneer" });
 // Chilli Paneer
 ```
 
-### Take [#str-take]
+### take [#str-take]
 
 The `Str.take` method returns the specified number of chars from the beginning of the string.
 
@@ -883,7 +883,7 @@ Str.take(sentence, 9);
 // The quick
 ```
 
-### Title [#str-title]
+### title [#str-title]
 
 The `Str.title` converts the given string into `Title` format.
 
@@ -894,7 +894,7 @@ Str.title(sentence);
 // The Quick Brown Fox Jumps Over A Lazy Dog.
 ```
 
-### ToBase64 [#str-to-base64]
+### toBase64 [#str-to-base64]
 
 The `Str.toBase64` converts the string into base64 format.
 
@@ -905,7 +905,7 @@ Str.toBase64(sentence);
 // VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIGEgbGF6eSBkb2cu
 ```
 
-### Ucfirst [#str-ucfirst`]
+### ucfirst [#str-ucfirst`]
 
 The `Str.ucFirst` returns the string with it's first character capitalized.
 
@@ -914,7 +914,7 @@ Str.ucfirst("hey intent");
 // Hey intent
 ```
 
-### Words [#str-words]
+### words [#str-words]
 
 The `Str.words` method returns the words present in the given sentence. It can also ignore the special characters, and unicodes.
 
@@ -930,7 +930,7 @@ Str.words("fox🤨and🤨dog", true);
 // [ 'fox', 'and', 'dog' ]
 ```
 
-### Wrap [#str-wrap]
+### wrap [#str-wrap]
 
 The `Str.wrap` function wraps the strings in `prefix` and `suffix`.
 
