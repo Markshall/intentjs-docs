@@ -6,7 +6,7 @@ export const Logo = () => {
 };
 
 export const RedisLogo = () => {
-  return <Image src="/redis.png" width={30} height={30} alt="redislogo" />;
+  return <Image src="/docs/redis.png" width={30} height={30} alt="redislogo" />;
 };
 
 export const Enterprise = () => {
