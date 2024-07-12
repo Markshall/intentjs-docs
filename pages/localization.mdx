@@ -1,5 +1,5 @@
 ---
-title: Helpers
+title: Localization
 description:
 image:
 ---
@@ -76,7 +76,7 @@ You can also nest your strings inside the json file.
 }
 ```
 
-<Callout>
+<Callout type="warning">
 You should not create conflicting keys i.e 2 keys should not have the same name.
 </Callout>
 
@@ -85,13 +85,7 @@ Now that our translation files are created, we will now see how to fetch the str
 
 You can retrieve translation strings from your language files using the `__` helper function. The `__` function takes 1 required arguments, the key of the translation string you wish. 
 
-You can use `.` the dot notation to refer to nested strings.
-
-```javascript
-__(key: string, language?: string, options?: Record<string, any>): string
-```
-
-Let's take a look at different ways of retrieving the values.
+You can use the dot `.` notation to refer to nested strings. Let's take a look at different ways of retrieving the values.
 ```ts
 import { __ } from '@intentjs/core';
 
@@ -106,15 +100,6 @@ __("greetings.morning");
 
 __("randomKey", "en"); 
 // randomKey
-```
-
-You can also skip the language parameter if you wish to and the package will use the fallback language as the speified language.
-Examples :
-
-```javascript
-__("helloWorld"); // returns => Hello World
-__("greetings.morning"); // returns => Good Morning
-__("randomKey"); // returns => ERR::INVALID KEY ==> randomKey
 ```
 
 ### Replacing Parameters In Translation Strings
@@ -132,84 +117,80 @@ If you wish, you may define placeholders in your translation strings. All placeh
 To replace the placeholders when retrieving a translation string, you may pass an array of replacements as the second argument to the `__` function:
 
 ```javascript
-__("hello", "en", { name: "jeo" }); // returns => Hello, jeo
+__("hello", { name: "vinayak" }); // returns => Hello, vinayak
 ```
 
 If your placeholder contains all capital letters, or only has its first letter capitalized, the translated value will be capitalized accordingly:
 
 ```json
-"hello": "Hello, :Name"      // Hello, Jeo
-  // OR
-"hello": "Hello, :NAME"     // Hello, JEO
+{
+  "hello": "Hello, :Name" ,     // Hello, Vinayak
+    // OR
+  "hello": "Hello, :NAME"     // Hello, VINAYAK
+}
 ```
 
 ### Pluralization
 
-Pluralization is a complex problem, as different languages have a variety of complex rules for pluralization, however, Intent can help you translate strings differently based on pluralization rules that you define. Using a `|` character, you may distinguish singular and plural forms of a string:
+Intent can also help you translate strings differently based on pluralization rules that you define. Using a `|` character as a delimiter, you may distinguish singular and plural forms of a string:
 
 ```json
 // en.json
-
-"apples" : "There is one apples|There are many apples"
+{
+  "apples" : "There is one apples|There are many apples"
+}
 ```
 
 You may even create more complex pluralization rules which specify translation strings for multiple ranges of values:
 
 ```json
-"apples": "[0] There is no apple|[1,10] There are some apples|[11,*] There are many apples",
+{
+  "apples": "[0] There is no apple|[1,10] There are some apples|[11,*] There are many apples",
+}
 ```
 
 After defining a translation string that has pluralization options, you may use the `transChoice` function to retrieve the line for a given "count".
+In the below example, since the count is greater than one, the plural form of the translation string is returned:
 
-```javascript
-transChoice(
-  key: string,
-  language?: string | number,
-  count?: number | Record<string, any>,
-  options?: Record<string, any>,
-): string
+```ts
+transChoice("apples", 10);
+// There are some apples
+```
+If you want to specify the lang, you can pass the `lang` as 2nd argument and `count` as 3rd argument.
+
+```ts
+transChoice("apples", "hi", 10);
+// वहाँ कुछ सेब हैं
 ```
 
-In this example, since the count is greater than one, the plural form of the translation string is returned:
-
-```javascript
-transChoice("apples", "en", 10); // returns => There are some apples
-```
-
-If you want the string to use the fallback language you can omit the 2nd parameter as shown below :
-
-```javascript
-transChoice("apples", 10); // returns => There are some apples
-```
-
-> NOTE : **The count agrument is required for tranChoice**
+<Callout type="info">
+  The count agrument is required for `tranChoice`
+</Callout>
 
 You may also define placeholder attributes in pluralization strings. These placeholders may be replaced by passing an array as the third argument to the `transChoice` function:
 
 ```json
 // en.json
-
 {
-  "time": {
-    "minutes_ago": "[1] :value minute ago|[2,*] :value minutes ago"
-  }
+  "minutes_ago": "[1] :value minute ago|[2,*] :value minutes ago"
 }
 ```
 
 ```javascript
-transChoice("time.minutes_ago", "en", 5, { value: 5 }); // returns => 5 minutes ago
+transChoice("minutes_ago", 10, { value: 10 }); 
+// 5 minutes ago
 ```
 
-If you would like to display the integer value that was passed to the `transChoice` function, you may use the built-in `:count` placeholder:
+If you would like to display the integer value that was passed to the `transChoice` function, you may use the built-in `:count` parameter:
 
 ```json
 // en.json
-
 {
   "apples": "[0] There are none|[1] There is one|[2,*] There are :count apples"
 }
 ```
 
 ```javascript
-transChoice("apples", "en", 30); // returns => There are 30 apples
+transChoice("apples", 30); 
+// There are 30 apples
 ```
