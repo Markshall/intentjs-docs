@@ -62,7 +62,9 @@ export default {
   // mdxComponet: {
   //   pre: CodeSnippet,
   // },
-  toc: {},
+  // toc: {
+  //   extraContent: <Community />
+  // },
   chat: {
     link: "https://google.com",
   },
@@ -103,7 +105,7 @@ export default {
     component: <Footer />,
   },
   editLink: {
-    component: <Community />,
+    component: (props) => <Community {...props}/>,
   },
   navigation: {
     prev: true,
