@@ -6,6 +6,7 @@ description: >-
   simple drivers to work with your files.
 image:
 ---
+import { Callout } from 'nextra/components'
 
 # File Storage
 
@@ -13,46 +14,48 @@ IntentJS provides a useful file storage abstraction for various file systems lik
 
 ## Configuration
 
-Before you can start using `Storage` facade, you need to first configure your settings at `config/filesystem.ts`
+The configuration is stored at `config/filesystem.ts`. By default, a `local` disk is already configured for your immediate use, you can take a look at the config file to understand the disk.
 
-**#1. Create filesystem.ts file**
+Below we have explained the different `disk` configurations available which you can use.
 
-```typescript
-import { registerAs } from "@intent/config";
+```ts filename="config/filesystem.ts"
+import { fromIni } from '@aws-sdk/credential-providers';
+import { StorageOptions } from '@libs/intent/storage';
+import { registerAs } from '@nestjs/config';
 
-export default registerAs("filesystem", () => ({
-  default: "docs",
-  disks: {
-    docs: {
-      driver: "s3",
-      bucket: process.env.AWS_S3_DOCS_BUCKET,
-      key: process.env.AWS_KEY,
-      secret: process.env.AWS_SECRET,
-      region: process.env.AWS_REGION,
-    },
-  },
-}));
+export default registerAs(
+  'filesystem',
+  () =>
+    ({
+      default: 's3',
+      disks: {
+        s3: {
+          driver: 's3',
+          region: process.env.AWS_REGION,
+          bucket: process.env.AWS_S3_BUCKET,
+          credentials: fromIni({ profile: process.env.AWS_PROFILE }),
+        },
+        local: {
+          driver: 'local',
+          basePath: 'resources',
+        },
+      },
+    }) as StorageOptions,
+);
 ```
 
-That's it. You don't need to do anything else, IntentJS would automatically read `filesystem.ts` and configure the disks.
+That's it. You don't need to do anything else, IntentJS would automatically read `filesystem` config namespace and configure the disks.
 
----
-
-### Driver Configuration
-
-IntentJS provides an excellent way to use different storage providers inside your application, without changing any line of code. It's a pure configuration play on the application level. Every driver follow a simple and consistent API.
+Intent provides an excellent way to use different storage providers inside your application, without changing any line of code. It's a pure configuration play on the application level. Every driver follow a simple and consistent API.
 
 We currently support the following storage providers.
 
 1. AWS S3
-2. Azure Storage Account
-3. Local File System
+2. Local File System
 
-#### **Amazon S3**
+### Amazon S3 Disk [#aws-s3]
 
-S3 is an highly scalable object storage solution provided by AWS. You can learn more about it [here](https://aws.amazon.com/s3/).
-
-**Driver Name:** `s3`
+S3 is an highly scalable object storage solution provided by AWS. You can learn more about it [here](https://aws.amazon.com/s3/)
 
 **Configuration:**
 
@@ -60,33 +63,29 @@ S3 is an highly scalable object storage solution provided by AWS. You can learn 
 {
   driver: 's3',
   bucket: process.env.AWS_S3_DOCS_BUCKET,
-  key: process.env.AWS_KEY,
-  secret: process.env.AWS_SECRET,
+  accessKey: process.env.AWS_KEY,
+  secretKey: process.env.AWS_SECRET,
   region: process.env.AWS_REGION,
+  credentials: fromIni({ profile: process.env.AWS_PROFILE })
 }
 ```
+If you don't want to use the traditional `accessKey` and `secretKey` for authentication, we provide a generic attribute `credentials` which you can use to add your suited credential logic from `@aws-sdk/credential-providers` package. You can read more about it [here](https://www.npmjs.com/package/@aws-sdk/credential-providers).
 
-`s3` driver expects four parameters to interact with an S3 bucket. You can get the `AWS_KEY`, `AWS_SECRET` by creating an api role user using IAM. Learn more about it [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_api).
+### Local Disk
 
-#### **Local**
-
-You can use this package to manage the file objects stored locally on your system.
-
-**Driver Name:** `local`
+You can use the `local` disk to manage the file objects stored locally on your system.
 
 **Configuration:**
 
-```typescript
+```ts
 {
   driver: 'local',
-  basePath: '/home/ubuntu/var/www/your_project/storage', // fully qualified path of the folder
+  basePath: 'storage/uploads', // relative path wrt to your project's root.
   baseUrl: 'https://example.com',
 }
 ```
 
 To serve the file objects from your project, have a look at [serve-static](https://docs.nestjs.com/recipes/serve-static) module by NestJS.
-
----
 
 ## Disks
 
@@ -94,63 +93,93 @@ We understand that while working on a big project, you may sometime encounter ca
 
 While drivers help you to differentiate between the different storage provides for each disks. Disks help you create logical distinctions between different types of storages.
 
-**For example:** In e-commerce, you may want to handle the `invoices` and `products` differently. Via the principles of disks we can easily implement it like following:
+For example: While building an e-commerce application, you may want to handle the uploaded `invoices` and `products` differently. With the helps of different disks configuration, we can easily implement it.
 
 ```typescript
 import { registerAs } from "@nestjs/config";
+
 export default registerAs("filesystem", () => ({
   default: "docs",
   disks: {
-    invoices: {
-      // `invoices` disk, will contain the invoices of all the orders passed so far
+    invoices: { // `invoices` disk, will contain the invoices of all the orders passed so far
       driver: "s3",
       bucket: process.env.AWS_S3_DOCS_BUCKET,
-      key: process.env.AWS_KEY,
-      secret: process.env.AWS_SECRET,
+      credentials: fromIni({ profile: process.env.AWS_PROFILE }),
       region: process.env.AWS_REGION,
     },
-    products: {
-      // `products` disk, will contain photos of all the products
+    products: { // `products` disk, will contain photos of all the products
       driver: "s3",
       bucket: process.env.AWS_S3_PROFILE_PIC_BUCKET,
-      key: process.env.AWS_KEY,
-      secret: process.env.AWS_SECRET,
+      credentials: fromIni({ profile: process.env.AWS_PROFILE }),
       region: process.env.AWS_REGION,
     },
   },
 }));
 ```
 
-Here we have created two different logical partitioning of `invoices`, `products` disk without trashing our code 😎.
+Above, we have created two different logical partitioning of `invoices`, and `products` disks without writing any extra code 😎.
 
-To switch between the different disks, it is as simple as:
-
-**To access `invoices` disk:**
+To switch between the different disks, you can make use of the `disk` method from the `Storage` facade. To access any disk other than the default, you can simply pass the name of the disk to the method.
 
 ```typescript
-import { Storage } from "@bento/storage";
+import { Storage } from "@intentjs/core";
 
-Storage.disk("invoices"); // uses the `invoices` disk mentioned in above steps
+Storage.disk("invoices"); // return the instance of the `invoices` disk
 ```
 
-**To access `products` disk:**
+Now let's say, you want to access `products` disk,
 
 ```typescript
-import { Storage } from "@bento/storage";
+import { Storage } from "@intentjs/core";
 
-Storage.disk("products"); // uses the `products` disk
+Storage.disk("products"); // returns the instance of `products` disk
+```
+
+### Dynamic Disks
+
+If you would like to build disks dynamically, you can do so with the help of `Storage.build` method.
+
+```ts
+import { Storage } from "@intentjs/core";
+
+const driver = Storage.build({
+  driver: 'local',
+  basePath: 'storage/uploads2',
+});
+// [StorageDriver] instance
 ```
 
 ## Usage
 
-IntentJS comes with very simple APIs to interact with your filesystem. For example, to read a file irrespective of the driver, you can simply do.
+Intent comes with very simple APIs to interact with your filesystem. We will see the usage of different methods provided by `Storage` facade.
+
+### Reading a file
+
+For example, to read a file irrespective of the driver, you can use `get` method. The method returns a `Buffer` content of the file.
 
 ```typescript
 await Storage.disk("invoices").get("order_1234.pdf");
-// this would give you the buffer content of the pdf file.
+// returns buffer content of the pdf file.
 ```
 
-The above line of code will return the buffer content of the PDF file. Similarly, you can use other methods to perform suitable tasks. You can see the supported methods in the following section.
+If you want to read a file as a `JSON`, you can make use of the `getAsJson` method.
+
+```ts
+await Storage.disk().getAsJson('config.json');
+```
+
+If you want to get a signed url for a particular object with an expiry, you can use the `signedUrl` method to do so
+
+```ts
+await Storage.disk().signedUrl('profile_pic.png', 60, 'get');
+```
+
+<Callout type="warning">
+`signedUrl` method is only supported by `s3` disk.
+</Callout>
+
+### Uploading a file
+To upload the files, we provide several methods which you can use as per your convinience.
 
 Let's say you want to put a file on a particular path, you can simply do
 
@@ -160,59 +189,98 @@ await Storage.disk("invoices").put("order_23456.pdf", bufferContent, {
 });
 ```
 
-If you want to check if a file exists
+You can also use `signedUrl` method to signed url with an expiry to upload a file directly to a client.
+
+```ts
+await Storage.disk().signedUrl('sample.txt', 60, 'put');
+```
+
+<Callout type="warning">
+`signedUrl` method is currently only supported by `s3` disk.
+</Callout>
+
+### File Deletion and Migration
+
+`Storage` has multiple in-built methods for deletion, copying and migration of files.
+
+The `delete` method is used for deleting a particular file.
+
+```ts
+await Storage.disk("invoices").delete("order_23456.pdf");
+// returns true if delete is successfull, else false
+```
+
+To copy file from one `source path` to another `destination path` within the same disk, you can use `copy` method.
+
+```ts
+await Storage.disk().copy('file.png', 'new_file.png');
+// returns true if copy is successfull, else false;
+```
+
+If you want to move a file within the same disk, you can use `move` method. The method will copy the file to the new destination and delete from the current path.
+
+```ts
+await Storage.disk().move('file.png', 'new_file.png');
+// returns true if movement is successfull, else false.
+```
+
+There might be some cases where you would want to perform the `copy` and `move` operations between two different disk, ie from a `source disk` to a `destination disk`. You can make use of the `copyToDisk` and `moveToDisk` method respectively.
+
+```ts
+await Storage.disk().copyToDisk('file.png', 'disk_name', 'new_file.png');
+// returns true if copy is successfull, else false;
+
+await Storage.disk().moveToDisk('file.png', 'disk_name', 'new_file.png');
+// returns true if movement is successfull, else false.
+```
+
+### File Meta Operations
+
+Intent also comes packed with some other file operations like checking if a file exists, or is missing, etc. You can use these methods to perform your tasks without downloading the complete file.
+
+To check if a file exists, you can use the `exists` method.
 
 ```ts
 await Storage.disk("invoices").exists("order_23456.pdf"); // returns true or false
 ```
 
-Also, if you want to check if a file is missing or doesn't exists
+Alternatively, if you want to check if a file is missing or doesn't exists, you can use the `missing` method.
 
 ```typescript
 await Storage.disk("invoices").missing("order_23456.pdf"); // returns true or false
 ```
 
-To delete a file in a disk, simply do
-
-```typescript
-await Storage.disk("invoices").delete("order_23456.pdf");
-```
-
-To get a meta information for a file
+If you want the `meta` information related to a file, you can use the `meta` method.
 
 ```typescript
 await Storage.disk("invoices").meta("order_23456.pdf");
+/**
+  {
+    path: 'sample.txt',
+    contentType: 'txt',
+    contentLength: 14,
+    lastModified: 2024-07-14T13:43:37.000Z
+  }
+*/
 ```
 
-There can be situations when you would want to copy files from one disk to another, IntentJS makes it simple for you to do so. To copy a file from a disk to another disk, you can simply do
+If you only want to get the size of a file, you can use the `size` method, it returns the size of a file in bytes.
 
-```typescript
-await Storage.disk("invoics").copyToDisk(
-  "source_file_name.pdf",
-  "destination_disk_name"
-);
+```ts
+await Storage.disk().size('file.png');
+// 1234
 ```
 
-Similar to copy, you can also move file from one disk to another disk seamlessly.
+The `mimeType` method will help you get the mime type of a file.
 
-```typescript
-await Storage.disk("invoices").moveToDisk(
-  "source_file_name.pdf",
-  "destination_disk_name"
-);
+```ts
+await Storage.disk().mimeType('file.png');
+// image/png
 ```
 
-### **All Methods**
+To check the last modified timestamp of a file, use the `lastModifiedAt` method. It returns the native `Date` object.
 
-- `put(path: string, fileContent: any): Promise<StorageDriver$PutFileResponse>`: Put the file at the specified path.
-- `get(path: string): Promise<Buffer | null>`: Get the file stored at the specified path.
-- `exists(path: string): Promise<boolean>`: Check if file exists at the specified path.
-- `missing(path: string): Promise<boolean>`: Check if file is missing at the specified path.
-- `url(path: string): string`: Get the url for the specified path.
-- `signedUrl(path: string, expire: number):Promise<string>`: Get a signed url to privately access the file stored at the specified `path`. Learn more about it [here](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PrivateContent.html). Currently works for `s3` only.
-- `meta(path: string): Promise<StorageDriver$FileMetadataResponse>`: Get file's metadata at the specified path.
-- `delete(path: string): Promise<boolean>`: Delete file at the specified path.
-- `copy(path: string, newPath: string): Promise<StorageDriver$RenameFileResponse>`: Copy file from path to newPath.
-- `move(path: string, newPath: string): Promise<StorageDriver$RenameFileResponse>`: Move the file from path to newPath.
-- `getClient()`: Get the underlying client of the disk. Currently works for `s3` only.
-- `getConfig()`: Get the configuration object of the disk.
+```ts
+await Storage.disk().lastModifiedAt(path);
+// 2024-07-14T13:43:37.000Z
+```
