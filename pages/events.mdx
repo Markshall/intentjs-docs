@@ -133,8 +133,8 @@ For a better readability, Intent also ships and `Emit` method which accepts mult
 import { Emit } from '@intentjs/core';
 
 Emit(
-    new OrderPlacedEvent(order);
-    new SomeOtherEvent(order);
+  new OrderPlacedEvent(order);
+  new SomeOtherEvent(order);
 )
 ```
 
@@ -211,7 +211,7 @@ shouldBeQueued(): boolean | JobOptions {
 Just like `emitIf` method, you can make use of `shouldQueue` method inside the event class to determine if the event should be queued and processed or not. Returning `true` will mean the event will be queued and processed, and `false` means it will neither be queued, nor be processed.
 
 ```typescript
-function shouldQueue(): boolean {
+shouldBeQueued(): boolean {
   return this.order.isConfirmed;
 }
 ```
