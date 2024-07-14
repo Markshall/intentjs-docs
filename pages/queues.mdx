@@ -1,128 +1,128 @@
 ---
 title: Queues
-description:
+description: Intent provides powerful and consistent set of APIs for interacting with frequently used message queues like `AWS SQS`, `Redis`.
 image:
 ---
-import { Callout } from "nextra/components";
 
-import { Tabs } from 'nextra/components'
- 
-<Tabs items={['pnpm', 'npm', 'yarn']}>
-  <Tabs.Tab>**pnpm**: Fast, disk space efficient package manager.</Tabs.Tab>
-  <Tabs.Tab>**npm** is a package manager for the JavaScript programming language.</Tabs.Tab>
-  <Tabs.Tab>**Yarn** is a software packaging system.</Tabs.Tab>
-</Tabs>
+import { Callout } from "nextra/components";
 
 # Queues
 
-When you want to build scalable applications, you need a framework which helps you scale as your product scales. This is where IntentJS Queues come in the picture. Queues are a form of asynchronous service-to-service communication used in backend architecture. You can use queues to decouple or defer compute heavy tasks such as Sending Mails, Processing large files, etc. Messages are kept in queue until processed. Separating these heavy time consuming tasks drastically improves your application's performance and also helps you keep your code clean.
+When you want to build scalable applications, you need a tool which helps you scale as your product scales. This is where Intent Queues come in the picture. Message Queues are a form of asynchronous service-to-service communication used in backend architecture. 
 
-IntentJS provides powerful and consistent set of APIs for interacting with frequently used message queues like `AWS SQS`, `Redis`, `RabbitMQ`, and `Kafka`.
+You can use queues to decouple or defer compute heavy or time taking tasks such as Sending Mails, Bulk Imports/Exports, Image Compressions, etc. Messages are kept in a queue until processed.
+
+Separating these heavy time consuming tasks drastically improves your application's performance and also helps you keep your code clean.
+
+Intent provides powerful and consistent set of APIs for interacting with frequently used message queues like `AWS SQS`, `Redis`, `RabbitMQ`, and `Kafka`.
 
 ## Configuration
 
-By default, all of the configurations for Queues are stored inside `config/queue.ts` . You would see a similar configuration as below
+All of the queue configurations are stored in the `config/queue.ts` file. By default, `sync` queue is configured. The configuration will be similar to below:
 
-```ts
+```ts filename="config/queue.ts"
 import { registerAs } from "@nestjs/config";
-import { SyncQueueDriver, QueueOptions } from "@intentjs/core/queue";
+import { SyncQueueDriver, QueueOptions } from "@intentjs/core";
 
 export default registerAs("queue", () => {
   return {
     default: "notifications",
     connections: {
       notifications: {
-        driver: SyncQueueDriver,
+        driver: 'sync',
+        listenerType: 'poll'
       },
     },
   } as QueueOptions;
 });
 ```
 
-Let's say you want to use AWS SQS as your message queue, you can use the below mentioned configuration
+Let's say you want to use `AWS SQS` as your message queue, you can use the below mentioned configuration
 
-```typescript
+```ts filename="config/queue.ts"
 import { registerAs } from "@nestjs/config";
-import { SyncQueueDriver, QueueOptions } from "@intentjs/core/queue";
+import { SyncQueueDriver, QueueOptions } from "@intentjs/core";
 
 export default registerAs("queue", () => {
   return {
     default: "notifications",
     connections: {
       notifications: {
-        driver: SqsQueueDriver,
-        apiVersion: "2012-11-05",
-        profile: "default",
-        prefix: "https://sqs.us-east-1.amazonaws.com/123456789012",
-        queue: "MyQueue",
-        suffix: "",
-        region: "us-east-1",
+        driver: 'sqs',
+        listenerType: 'poll',
+        apiVersion: '2012-11-05',
+        credentials: fromIni({ profile: process.env.AWS_PROFILE }),
+        prefix: process.env.SQS_PREFIX,
+        queue: process.env.SQS_QUEUE,
+        suffix: '',
+        region: process.env.AWS_REGION,
       },
     },
   } as QueueOptions;
 });
 ```
-
-Now that the queue is configured,. We need to create jobs. You can think of jobs as pieces of code which will run on the other end of the queue. Technically, we dispatch jobs that will be pushed into the queue and processed by the queue worker.
-
-Now, to create a job, this package ships a `@Job` decorator inside any `@Injectable` provider.
 
 ## Creating Job
+Now that the queue is configured. We can start creating jobs. You can think of jobs as pieces of code which will run on the other end of the queue. Technically, we dispatch jobs that will be pushed into the queue and processed by the queue worker.
 
-After you are done configuring the queue, you will now need to create a job which will basically be your asynchronous piece of code.
+By default all of the jobs are stored inside the `app/jobs` directory. You can use the following command to create new job class.
 
-To create a job, we will make use of `@Job` decorator from the `@injentjs/core/queue` . Note that, the job should be defined inside an Injectable only.
+```bash
+node intent make:job notification
+```
 
-```typescript
-import { Job } from "@intentjs/core/queue";
-import { Injectable } from "@nestjs/common";
+This command will create a `notificationJob.ts` file inside the `app/jobs` directory. Inside the `handle` method you can write your business logic.
+
+```ts filename="app/jobs/notificationJob.ts"
+import { Injectable } from '@nestjs/common';
+import { Job } from '@intentjs/core';
 
 @Injectable()
-export class NotificationService {
-  @Job("SEND_MAIL")
-  sampleMethod(data: Record<string, any>) {
-    console.log("data coming ===> ", data);
-    // ...add your logic here
+export class NotificationJob {
+  constructor() {}
+
+  @Job('notification')
+  async create(data: Record<string, any>) {
+    // write your logic here
   }
 }
 ```
-
-Notice the `@Job('SEND_MAIL')`. **SEND_MAIL** is the job name which we will be using when dispatching jobs.
+You can also create jobs manually by adding a `@Job(job_name)` decorator on any method.
 
 ### Options
 
 #### connection
 
-We understand that you may have multiple queue connections to handle in your application. While configuring the module, we set `default` connection. Incase, you want to dispatch the job on a different connection, you can do:
+We understand that you may have multiple queue connections to handle in your application. While configuring the module, we set `default` connection inside the `config/queue.ts`. Incase, you want to dispatch the job on a different connection, you can do so:
 
 ```typescript
-@Job('SEND_MAIL', {connection: "transactional-emails"})
+@Job('notification', { connection: "transactional-emails" })
 ```
 
 #### queue
 
-If you want to dispatch job to a different queue but on `default` connection, you can pass the queue attribute.
+If you want to dispatch job to a different queue but on `default` connection, you can mention the queue attribute explicitly.
 
 ```typescript
-@Job('SEND_MAIL', {queue: 'payment-emails'})
+@Job('SEND_MAIL', { queue: 'high-priority-queue' })
 ```
 
 #### tries
 
-This package provides out-of-the-box retrial logic, so that incase if any of the job throws any error, they will be retried a specific number of times. Default being 0.
+This package provides out-of-the-box retrial logic, so that incase if any of the job throws any error, they will be retried a specific number of times. Default being `5`. But you can pass `tries` argument inside the `@Job` decorator to change the tries for a particular job.
 
 ```typescript
-@Job('SEND_MAIL', {tries: 3})
+@Job('SEND_MAIL', { tries: 3 })
 ```
 
-If the `SEND_MAIL` job throws any error, worker will again push the job to the queue and re-run it again. Once the maximum number of retries are exhausted, the job will be discarded as it is.
+If the `SEND_MAIL` job throws any error, worker will again re-queue the job and re-run it again. Once the maximum number of retries are exhausted, the job will be discarded as it is.
 
 #### delay
 
-There can be some situations where you may want to delay the job by sometime. For example, you may want to delay the job by 60 seconds, ie the job will become available to the queue worker once the delay period has been elapsed.
+There can be some situations where you may want to delay the job by sometime. The default delay is `10` seconds, the job will become visible to the queue worker once the delay period has been elapsed. If you want to change the `delay` for a particular job, you can do it using the following method.
 
 ```typescript
-@Job('SEND_MAIL', {delay: 60})
+@Job('SEND_MAIL', { delay: 60 })
 ```
 
 After creating jobs, we will now need to dispatch it. Dispatching a job basically means pushing it to the queue(sqs, redis or sync etc.) so that it can be processed by the queue worker.
@@ -135,7 +135,7 @@ To dispatch a job, you can simply do:
 
 ```typescript
 import { Injectable } from "@nestjs/common";
-import { Dispatch } from "@intentjs/core/queue";
+import { Dispatch } from "@intentjs/core";
 
 @Injectable()
 export class PaymentService {
@@ -167,7 +167,7 @@ You can use class, to dispatch jobs in a more declarative way
 
 ```typescript
 import { Injectable } from "@nestjs/common";
-import { Queue } from "@intentjs/core/queue";
+import { Queue } from "@intentjs/core";
 
 @Injectable()
 export class PaymentService {
@@ -343,14 +343,12 @@ In this section, we will see how you can various drivers very easily in the appl
 
 This package supports the following drivers as of now
 
-1. [Sync Driver](queues.md#sync-driver)
-2. [AWS SQS Driver](queues.md#sqs-driver)
-3. [Redis Driver](queues.md#redis-driver)
-4. RabbitMQ Driver
-5. [Kafka Driver](queues.md#kafka-drive)
-6. [Custom Driver](queues.md#custom-driver)
+1. [Sync Driver](#sync-driver)
+2. [AWS SQS Driver](#sqs-driver)
+3. [Redis Driver](#redis-driver)
+4. [Custom Driver](#custom-driver)
 
-### Sync Driver
+### Sync Driver [#sync-driver]
 
 This is the easiest driver of all. There can be some cases where you may want to run your code synchronously for testing or debugging purposes. So, to keep it simple, this package provides out-of-the box support for running your `Jobs` synchronously.
 
@@ -359,7 +357,7 @@ This is the easiest driver of all. There can be some cases where you may want to
   dispatching and consuming jobs in the same app.
 </Callout>
 
-### SQS Driver
+### SQS Driver [#sqs-driver]
 
 [AWS SQS](https://aws.amazon.com/sqs/) is one of the most popular choice of using managed queue service. To use the driver, you need to install it first.
 
@@ -371,7 +369,7 @@ Before using it, you need to configure it first like below:
 
 ```typescript
 import { registerAs } from "@nestjs/config";
-import { QueueOptions, SqsDriver } from "@intentjs/core/queue";
+import { QueueOptions, SqsDriver } from "@intentjs/core";
 
 export default registerAs("queue", () => {
   return {
@@ -403,7 +401,7 @@ export default registerAs("queue", () => {
 | **suffix**     | URL suffix of the queue                                                                       |
 | **queue**      | Queue's name                                                                                  |
 
-### Redis Driver
+### Redis Driver [#redis-driver]
 
 You can also use Redis as your queue driver. You can install it like below
 
@@ -415,7 +413,7 @@ Before using it, you need to configure it first like below:
 
 ```typescript
 import { registerAs } from "@nestjs/config";
-import { QueueOptions, RedisDriver } from "@intentjs/core/queue";
+import { QueueOptions, RedisDriver } from "@intentjs/core";
 
 export default registerAs("queue", () => {
   return {
@@ -442,36 +440,6 @@ export default registerAs("queue", () => {
 | **port**     | Port of the redis server      |
 | **database** | Database to be used for queue |
 | **queue**    | Name of the queue             |
-
-### Kafka Drive
-
-If you want to use Kafka driver, you will first need to install
-
-```bash
-npm i kafkajs @kafkajs/confluent-schema-registry --save
-```
-
-Now you can configure it like below
-
-```typescript
-import { registerAs } from "@nestjs/config";
-import { QueueOptions, KafkaDriver } from "@intentjs/core/queue";
-
-export default registerAs("queue", () => {
-  return {
-    default: "kafka",
-    connections: {
-      kafka: {
-        listenerType: "subscribe",
-        driver: KafkaDriver,
-        clientId: "listener-client-id",
-        brokers: process.env.KAFKA_BROKERS.split(","),
-        registryHost: process.env.KAFKA_SCHEMA_REGISTRY_HOST,
-      },
-    },
-  } as QueueOptions;
-});
-```
 
 ### Custom Driver
 
