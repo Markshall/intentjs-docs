@@ -5,6 +5,14 @@ image:
 ---
 import { Callout } from "nextra/components";
 
+import { Tabs } from 'nextra/components'
+ 
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tabs.Tab>**pnpm**: Fast, disk space efficient package manager.</Tabs.Tab>
+  <Tabs.Tab>**npm** is a package manager for the JavaScript programming language.</Tabs.Tab>
+  <Tabs.Tab>**Yarn** is a software packaging system.</Tabs.Tab>
+</Tabs>
+
 # Queues
 
 When you want to build scalable applications, you need a framework which helps you scale as your product scales. This is where IntentJS Queues come in the picture. Queues are a form of asynchronous service-to-service communication used in backend architecture. You can use queues to decouple or defer compute heavy tasks such as Sending Mails, Processing large files, etc. Messages are kept in queue until processed. Separating these heavy time consuming tasks drastically improves your application's performance and also helps you keep your code clean.
@@ -180,7 +188,9 @@ Attributes are same as above.
 
 ### Options
 
-:::caution All the options passed while dispatching the job will override all the default options and the options defined in `@Job` :::
+<Callout type="warning">
+All the options passed while dispatching the job will override all the default options and the options defined in `@Job`.
+</Callout>
 
 #### connection
 
@@ -304,7 +314,7 @@ await worker.listen(); // this will run a forever running thread to listen to th
 
 Note that if any of the value is not passed, then default setting for the missing property will be used as fallback.
 
-<Callout type="success">
+<Callout type="info">
   If you are using multiple queues/connections in your application, then you
   will have to run different queue worker instances for each queue/connection.
 </Callout>
