@@ -14,7 +14,7 @@ You can use queues to decouple or defer compute heavy or time taking tasks such 
 
 Separating these heavy time consuming tasks drastically improves your application's performance and also helps you keep your code clean.
 
-Intent provides powerful and consistent set of APIs for interacting with frequently used message queues like `AWS SQS`, `Redis`, `RabbitMQ`, and `Kafka`.
+Intent provides powerful and consistent set of APIs for interacting with frequently used message queues like `AWS SQS`, `Redis`.
 
 ## Configuration
 
@@ -104,7 +104,7 @@ We understand that you may have multiple queue connections to handle in your app
 If you want to dispatch job to a different queue but on `default` connection, you can mention the queue attribute explicitly.
 
 ```typescript
-@Job('SEND_MAIL', { queue: 'high-priority-queue' })
+@Job('notification', { queue: 'high-priority-queue' })
 ```
 
 #### tries
@@ -112,24 +112,25 @@ If you want to dispatch job to a different queue but on `default` connection, yo
 This package provides out-of-the-box retrial logic, so that incase if any of the job throws any error, they will be retried a specific number of times. Default being `5`. But you can pass `tries` argument inside the `@Job` decorator to change the tries for a particular job.
 
 ```typescript
-@Job('SEND_MAIL', { tries: 3 })
+@Job('notification', { tries: 3 })
 ```
 
-If the `SEND_MAIL` job throws any error, worker will again re-queue the job and re-run it again. Once the maximum number of retries are exhausted, the job will be discarded as it is.
+If the `notification` job throws any error, worker will again re-queue the job and re-run it again. Once the maximum number of retries are exhausted, the job will be discarded as it is.
 
 #### delay
 
 There can be some situations where you may want to delay the job by sometime. The default delay is `10` seconds, the job will become visible to the queue worker once the delay period has been elapsed. If you want to change the `delay` for a particular job, you can do it using the following method.
 
 ```typescript
-@Job('SEND_MAIL', { delay: 60 })
+@Job('notification', { delay: 60 })
 ```
 
-After creating jobs, we will now need to dispatch it. Dispatching a job basically means pushing it to the queue(sqs, redis or sync etc.) so that it can be processed by the queue worker.
 
 ## Dispatching Job
 
-To dispatch a job, you can simply do:
+After creating jobs, we will now need to dispatch it. Dispatching a job basically means pushing it to the configured message queue so that it can be processed by the queue worker.
+
+To dispatch a job, you can make use of the `Dispatch` helper function or `Queue` class.
 
 ### Using helper function
 
@@ -140,11 +141,10 @@ import { Dispatch } from "@intentjs/core";
 @Injectable()
 export class PaymentService {
   async verify(inputs: Record<string, any>): Promise<Record<string, any>> {
-    // ...your custom code here
     Dispatch({
-      job: "SEND_MAIL",
+      job: "notification",
       data: {
-        email: "abcdefgh@gmail.com",
+        email: "hi@tryintent.com",
         subject: "Yay! Your payment is succesful!",
       },
     });
@@ -154,16 +154,18 @@ export class PaymentService {
 
 Notice the `Dispatch` function call, we are passing two attributes:
 
-- **job**: Name of the job that we want to run when this payload is received by the queue worker. In our case, 'SEND_MAIL'
+- **job**: Name of the job that we want to run when this payload is received by the queue worker. In our case, `notification` job.
 - **data**: Payload that we want to pass to the job. Any data that you pass here will be received by the job as its argument.
 
-Since, the payload is serialized while pushing it to the queue, whatever type of object that you are passing will be serialized and pushed. Jobs will receive POJO/string/number as their argument.
+<Callout type="info">
+Since, the payload is serialized while pushing it to the queue, whatever type of object that you are passing will be serialized and pushed. Job handlers will only receive POJO/string/number as their argument.
 
 For example, if you are passing a class instance, that will be converted into a POJO and pushed to the queue. In the job also, POJO will be received.
+</Callout>
 
 ### Using Queue class
 
-You can use class, to dispatch jobs in a more declarative way
+You can use `Queue` class, to dispatch jobs in a more declarative way
 
 ```typescript
 import { Injectable } from "@nestjs/common";
@@ -174,9 +176,9 @@ export class PaymentService {
   async verify(inputs: Record<string, any>): Promise<Record<string, any>> {
     // ...your custom code here
     Queue.dispatch({
-      job: "SEND_MAIL",
+      job: "notification",
       data: {
-        email: "abcdefgh@gmail.com",
+        email: "hi@tryintent.com",
         subject: "Yay! Your payment is succesful!",
       },
     });
@@ -189,19 +191,23 @@ Attributes are same as above.
 ### Options
 
 <Callout type="warning">
-All the options passed while dispatching the job will override all the default options and the options defined in `@Job`.
+All the options passed while dispatching the job will override all the default options and the options defined in `@Job`. The priority of the configuration is defined as below:
+
+```bash
+Dispatch Config >> Job Config >> Default Config
+```
 </Callout>
 
 #### connection
 
-We understand that you may have multiple queue connections to handle in your application. While configuring the module, we set `default` connection. Incase, you want to dispatch the job on a different connection, you can do:
+We understand that you may have multiple queue connections to handle in your application. While configuring the module, we use the `default` connection. Incase, you want to dispatch the job on a different connection, you can do:
 
 ```typescript
 Dispatch({
-  job: "SEND_MAIL",
+  job: "notification",
   connection: "transactional-emails",
   data: {
-    email: "abcdefgh@gmail.com",
+    email: "hi@tryintent.com",
     subject: "Yay! Your payment is succesful!",
   },
 });
@@ -209,14 +215,14 @@ Dispatch({
 
 #### queue
 
-If you want to dispatch job to a different queue but on `default` connection, you can pass the queue attribute.
+If you want to dispatch a job to a different queue but on `default` connection, you can pass the queue attribute.
 
 ```typescript
 Dispatch({
-  job: "SEND_MAIL",
+  job: "notification",
   queue: "payment-emails",
   data: {
-    email: "abcdefgh@gmail.com",
+    email: "hi@tryintent.com",
     subject: "Yay! Your payment is succesful!",
   },
 });
@@ -228,16 +234,16 @@ This package provides out-of-the-box retrial logic, so that incase if any of the
 
 ```typescript
 Dispatch({
-  job: "SEND_MAIL",
+  job: "notification",
   tries: 3,
   data: {
-    email: "abcdefgh@gmail.com",
+    email: "hi@tryintent.com",
     subject: "Yay! Your payment is succesful!",
   },
 });
 ```
 
-If the `SEND_MAIL` job throws any error, worker will again push the job to the queue and re-run it again. Once the maximum number of retries are exhausted, the job will be discarded as it is.
+If the `notification` job throws any error, worker will again push the job to the queue and re-run it again. Once the maximum number of retries are exhausted, the job will be discarded as it is.
 
 #### delay
 
@@ -245,35 +251,34 @@ There can be some situations where you may want to delay the job for a while. Fo
 
 ```typescript
 Dispatch({
-  job: "SEND_MAIL",
+  job: "notification",
   delay: 60, // in seconds
   data: {
-    email: "abcdefgh@gmail.com",
+    email: "hi@tryintent.com",
     subject: "Yay! Your payment is succesful!",
   },
 });
 ```
 
 <Callout type="warning">
-  If you are using AWS SQS as the driver, the maximum allowed delay is 15
-  mins.&#x20;
+  If you are using AWS SQS as the driver, the maximum allowed delay is `15 mins` only. If you want a queue with a good delay, you can use `redis` queue driver.
 </Callout>
 
 ## Running a Queue Worker
 
-Now that we have seen how to create a job and dispatching it. We need to run a worker as well to listen to the incoming messages from the queue and process them.
+Now that we have seen how to create a job and dispatching it. We need to run a queue worker which will listen to the incoming messages from the queue and handle them.
 
-<Callout>
+<Callout type="info">
   You don't need to run QueueWorker if you are using Sync driver.
 </Callout>
 
-IntentJS comes with a command which you can use to run the \`QueueWorker\`
+IntentJS comes with a command which you can use to run the `QueueWorker`. To run it, you can do so
 
 ```bash
 node intent queue:work
 ```
 
-To define the connection, simply do
+You can also pass the `--connection` option to listen to a specific connection.
 
 ```bash
 node intent queue:work --connection=highpriority
@@ -285,10 +290,10 @@ To define the queue in the default connection
 node intent queue:work --queue=high-priority-queue
 ```
 
-To define the sleep time if message queue is empty, before it starts checking again
+To define the sleep time in seconds. It is used to define the wait time before it starts checking again after the queue is empty.
 
 ```bash
-node intent queue:work --sleep=20 # in seconds
+node intent queue:work --sleep=20
 ```
 
 ### Available Commands
@@ -298,28 +303,29 @@ Following commands are available which you can use with `node intent`
 | Command      | Description                                                 |
 | ------------ | ----------------------------------------------------------- |
 | queue:work   | Command to run the queue worker, starts processing the jobs |
-| queue:length | Command to get the length of the specified queue            |
-| queue:purge  | Command to purge the queue                                  |
 
-While the `queue:work` command will be good enough for majority of the cases, however if you want to write your `queue:work` script, you can make use of `QueueWorker` class, like below.
+While the `queue:work` command will be good enough for majority of the cases, however if you want to write your custom `QueueWorker` script, you can make use of `QueueWorker` class, like below.
 
 ```typescript
+import { QueueWorker } from '@intentjs/core';
+
 const worker = QueueWorker.init({
   connection: "default",
   queue: "default-queue",
   sleep: 10,
 });
+
 await worker.listen(); // this will run a forever running thread to listen to the incoming messages
 ```
 
-Note that if any of the value is not passed, then default setting for the missing property will be used as fallback.
+Note that if any of the value is not passed, then default setting for the missing properties will be used as fallback.
 
 <Callout type="info">
   If you are using multiple queues/connections in your application, then you
   will have to run different queue worker instances for each queue/connection.
 </Callout>
 
-### Functions
+### Queue Worker Functions
 
 #### Run Worker
 
@@ -329,13 +335,13 @@ To start listening to the messages, you can simply do
 await worker.listen();
 ```
 
-#### Purge Queue
+{/* #### Purge Queue
 
 You may want to clear(purge) the queue, you can do so by calling `purge` method.
 
 ```typescript
 await worker.purge();
-```
+``` */}
 
 ## Drivers
 
@@ -362,7 +368,7 @@ This is the easiest driver of all. There can be some cases where you may want to
 [AWS SQS](https://aws.amazon.com/sqs/) is one of the most popular choice of using managed queue service. To use the driver, you need to install it first.
 
 ```bash
-npm i aws-sdk
+npm i @aws-sdk/client-sqs @aws-sdk/credential-providers
 ```
 
 Before using it, you need to configure it first like below:
@@ -376,37 +382,40 @@ export default registerAs("queue", () => {
     default: "notifications",
     connections: {
       notifications: {
-        listenerType: "poll",
-        driver: SqsDriver,
-        apiVersion: "2012-11-05",
-        profile: "default",
-        prefix: "https://sqs.us-east-1.amazonaws.com/123456789012",
-        queue: "MyQueue",
-        suffix: "",
-        region: "us-east-1",
+        driver: 'sqs',
+        listenerType: 'poll',
+        apiVersion: '2012-11-05',
+        credentials: fromIni({ profile: process.env.AWS_PROFILE }),
+        prefix: process.env.SQS_PREFIX,
+        queue: process.env.SQS_QUEUE,
+        suffix: '',
+        region: process.env.AWS_REGION,
       },
     },
   } as QueueOptions;
 });
 ```
 
-`SqsQueueDriver` expects following attributes
+`sqs` queue driver expects following attributes
 
 | Attribute      | Description                                                                                   |
 | -------------- | --------------------------------------------------------------------------------------------- |
-| **apiVersion** | API version to be used by SQS client                                                          |
-| **profile**    | Profile of the credential that will be read by the aws-sqs sdk from `~/.aws/credentials` file |
-| **region**     | Region where the queue exists                                                                 |
-| **prefix**     | URL prefix of the queue                                                                       |
-| **suffix**     | URL suffix of the queue                                                                       |
-| **queue**      | Queue's name                                                                                  |
+| apiVersion | API version to be used by SQS client                                                          |
+| profile   | Profile of the credential that will be read by the aws-sqs sdk from `~/.aws/credentials` file |
+| region     | Region where the queue exists                                                                 |
+| prefix     | URL prefix of the queue                                                                       |
+| suffix     | URL suffix of the queue                                                                       |
+| queue      | Queue's name                                                                                  |
+| accessKey | Access Key of the AWS Account |
+| secretKey | Secret Key of the AWS Acccout |
+| credentials | One of the `credentials` method mentioned in [@aws-sdk/credential-providers](https://www.npmjs.com/package/@aws-sdk/credential-providers) |
 
 ### Redis Driver [#redis-driver]
 
 You can also use Redis as your queue driver. You can install it like below
 
 ```
-npm i ioredis
+npm i ioredis --save
 ```
 
 Before using it, you need to configure it first like below:
@@ -420,11 +429,14 @@ export default registerAs("queue", () => {
     default: "notifications",
     connections: {
       notifications: {
-        listenerType: "poll",
-        driver: RedisQueueDriver,
-        queue: "MyQueue",
-        host: "localhost",
-        port: "6379",
+        driver: 'redis',
+        listenerType: 'poll',
+        host: process.env.REDIS_HOST,
+        port: +process.env.REDIS_PORT,
+        queue: process.env.REDIS_QUEUE_NAME,
+        username: process.env.REDIS_USERNAME,
+        password: process.env.REDIS_PASSWORD,
+        prefix: '',
         database: 0,
       },
     },
@@ -432,33 +444,33 @@ export default registerAs("queue", () => {
 });
 ```
 
-`RedisQueueDriver` expects following attributes
+`redis` queue driver expects following attributes
 
 | Attribute    | Description                   |
 | ------------ | ----------------------------- |
-| **host**     | Host of the redis server      |
-| **port**     | Port of the redis server      |
-| **database** | Database to be used for queue |
-| **queue**    | Name of the queue             |
+| host     | Host of the redis server      |
+| port     | Port of the redis server      |
+| database | Database to be used for queue |
+| queue    | Name of the queue             |
+| username | Username of the redis server |
+| password | Username of the redis password |
+| prefix | Prefix of the queue (useful if you are using single redis server for multiple apps)|
+| url | a fully qualified url string of the redis connection |
 
 ### Custom Driver
 
-If selected drivers does not meet your requirements, you can create your own custom drivers for queues like `beanstalkd`, `rabbitmq` etc.
+If you want to use your own custom queue driver, you can do so by extending `PollQueueDriver` class from `@intentjs/core` package.
 
 You can easily do so using the command below:
-
-```bash
-node intent make:queue-driver MyCustomQueueDriver
-```
 
 Now, you need to create two classes `MyCustomQueueDriver` and `MyCustomQueueJob`. Here for understanding purpose we will use AWS AQS in our `MyCustom` driver.
 
 ```typescript
-import { QueueDriver, InternalMessage } from "@intentjs/core";
+import { PollQueueDriver, InternalMessage } from "@intentjs/core";
 import AWS = require("aws-sdk");
 import { SqsJob } from "./job";
 
-export class MyCustomQueueDriver implements QueueDriver {
+export class MyCustomQueueDriver implements PollQueueDriver {
   private client: AWS.SQS;
   private queueUrl: string;
 
