@@ -56,13 +56,15 @@ export default {
   logo: (
     <div className="flex flex-row gap-2 items-center">
       <Logo />
-      <span className="text-3xl">IntentJs</span>
+      <span className="text-3xl">Intent</span>
     </div>
   ),
   // mdxComponet: {
   //   pre: CodeSnippet,
   // },
-  toc: {},
+  // toc: {
+  //   extraContent: <Community />
+  // },
   chat: {
     link: "https://google.com",
   },
@@ -103,7 +105,7 @@ export default {
     component: <Footer />,
   },
   editLink: {
-    component: <Community />,
+    component: (props) => <Community {...props}/>,
   },
   navigation: {
     prev: true,

@@ -36,7 +36,8 @@ const CommunityData = [
   },
 ];
 
-const Community = () => {
+const Community = (props) => {
+  console.log(props)
   return (
     <div>
       <p className="nx-mb-3.5 nx-font-semibold nx-tracking-tight">Community</p>
