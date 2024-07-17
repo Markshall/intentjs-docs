@@ -13,7 +13,6 @@
   },
 
   "requests": "Requests",
-  "providers": "Providers",
   "transformers": "Transformers",
   "validation": "Validation",
   "logging": "Logging",
