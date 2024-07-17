@@ -50,34 +50,82 @@ The App directory is where most of your business logic will reside. The director
 
 The `console` directory contains all of the custom Intent commands for your application. These commands may be generated using `make:command` command. To read more about, see [Console](../advanced/console.md).
 
+```bash
+node intent make:controller books
+# Successfully created app/controllers/booksController.ts
+```
+
 ### The `events` directory
 
 The `events` directory contains all of your event classes. This directory doesn't exist by default and get s created when you create your first event. These events may be generated using `make:event` command. To read more about what Events offer, [read here](../advanced/events.md).
+
+```bash
+node intent make:event order_placed
+# Successfully created app/events/orderPlacedEvent.ts
+```
 
 ### The `exceptions` directory
 
 The `exceptions` directory is where all of your errors exist. It contains a few commonly used HTTP exceptions and an `ExceptionFilter` class which is responsible for handling all of the exceptions happening in your HTTP application. Read more about exceptions in [Error Handling](../the-basics/error-handling.md).
 
+```bash
+node intent make:exception user_not_found
+# Successfully created app/exceptions/userNotFoundException.ts
+```
+
 ### The `http` directory
 
 The `http` directory contains all of your controllers, middlewares and guards in their respective directory. Almost all of the logic of handling requests will be placed inside this directory.
+
+```bash
+node intent make:controller books
+# Successfully created app/http/controllers/booksController.ts
+
+node intent make:guard auth
+# Successfully created app/http/guards/authGuard.ts
+```
 
 ### The `jobs` directory
 
 The `jobs` directory houses all of your Queue Job classes. Again, similar to events directory, this doesn't exist by default and will be created when you generate your first job class, you may do so using `make:job` command. Head to [Queues](../advanced/queues.md) for more detail.
 
+```bash
+node intent make:job send_mail
+# Successfully created job at app/jobs/sendMailJob.ts
+```
+
 ### The `listeners` directory
 
-The `listeners` directory holds all of your event listener classes. This directory doesn't exist by default and will be created when you generate your first listener class, you may do so using `make:listener` command. See the [documentation](directory-structure.md#events) for more details.
+The `events/listeners` directory holds all of your event listener classes. This directory doesn't exist by default and will be created when you generate your first listener class, you may do so using `make:listener` command. See the [documentation](directory-structure.md#events) for more details.
+
+```bash
+node intent make:listener payment_confirmed
+# Successfully created app/events/listeners/paymentConfirmedListener.ts
+```
 
 ### The `mails` directory
 
 The `mails` directory contains all of your mail classes. The directory will be created when you generate your first mail class using `make:mail` command. You can read more about mails [here](../advanced/mailers.md).
 
+```bash
+node intent make:mail send_otp
+# Successfully created apps/mails/sendOtpMail.ts
+```
+
 ### The `models` directory
 
 The `models` directory contains all of your database models that we will create. When you create your IntentJS application for the first time, it contains one `user.ts` model by default. You can read about models in detail [here](../database/models.md).
 
+```bash
+node intent make:model user
+# Successfully created app/models/userModel.ts
+```
+
 ### The `services` directory
 
 The `services` directory holds all of your service classes. You can make use of `services` to write classes that hold your business logic and inject them inside the controllers.
+
+```bash
+node intent make:service auth
+# Successfully created app/services/authService.ts
+```
