@@ -124,7 +124,7 @@ To write data to a cache, you can use the `set` method.
 await Cache.store().set("otp", 1234);
 // returns true if successfully written
 
-await Cache.store().set("book_name", "Shoe Dog")
+await Cache.store().set("book_name", "Shoe Dog");
 // returns true if successfully written
 ```
 
@@ -145,6 +145,13 @@ const books = [
 await Cache.store().set('books', books);
 ```
 
+If you want your cache to only be valid for certain time, you can pass `ttl (time to live)` in seconds as 3rd parameter.
+
+```ts
+// saved for 120 seconds in the store
+await CacheStore().set("books", books, 120);
+```
+
 ### Reading Cache
 
 To read data from a store, you can make use of the `get` method.
@@ -154,68 +161,91 @@ If you pass a class instance to the `get` method, it is converted to Plain Old J
 </Callout>
 
 ```typescript
-await CacheStore().get("reset_password_token");
-// will return 'abcd123456'
+await CacheStore().get("book_name");
+// will return 'Shoe Dog'
+
+await Cache.store().get('books');
+/**
+  [
+    { name: 'Shoe Dog', author: 'Phil Knight' },
+    { name: 'The Silva Mind Control Method', author: 'José Silva' }
+  ]
+*/
 ```
 
+There can be some situations where you are not sure if a data exists in the cache or not. Intent has `rememberForever` and `remember` method which you can use to build your data if it doesn't exist in the cache or else return directly from the cache.
 
-```typescript
-// saved forever in the store
-await CacheStore().set("reset_password_token", "abcd123456");
-
-// saved for 2 mins or 120 seconds in the store
-await CacheStore().set("reset_password_token", "abcdef12345678", 120);
-```
-
-
-To check if key exists in the store, you can use `.has()` method
-
-```typescript
-await CacheStore().has("reset_password_token");
-// will return `true` if found, else `false`
-```
-
-To remove a key from the store, use `.forget()` method
-
-```typescript
-await CacheStore().forget("reset_password_token");
-```
-
-In a much more real world use case, you may want to process something and then save it to the store, and then read from there on.
-
-In such case, you can consider using `remember` and `rememberForever` methods which takes a callback, keep it's output in the store, and then automatically return the data next time onwards.
+In a much more real world use case, you may want to process something and then save it to the store, and then read from there on. Let's see how you can use these methods.
 
 ```ts
 const cb = () => {
   // your custom logic here, for eg. a db query, an api call.
-  return "some_random_generated_token";
+  return [
+    {
+      name: 'Shoe Dog',
+      author: 'Phil Knight',
+    },
+    {
+      name: 'The Silva Mind Control Method',
+      author: 'José Silva',
+    },
+  ];
 };
 
-await CacheStore().remember("reset_password_token", cb, 120);
+await CacheStore().remember("books", cb, 120);
 ```
 
 Notice the 2nd arg `cb` callback, and the 3rd arg `ttl` timeout, passed to the `remember` method. The `cb` will be processed and the value returned by the callback will be serialized and saved to the store automatically for `ttl` time.
+
+<Callout type="info">
+  You can pass `async` callbacks in the `remember` and `rememberForever` methods.
+</Callout>
 
 If you want to just store the data without any expiry, you can use the `rememberForever` method.
 
 ```ts
 const cb = () => {
   // your custom logic here, for eg. a db query, an api call.
-  return "some_random_generated_token";
+  return []; // books here.
 };
 
-await CacheStore().rememberForever("reset_password_token", cb);
+await CacheStore().rememberForever("books", cb);
 ```
 
 The above example saves the data indefinitely in the redis store. The only difference between the `rememberForever` and `remember` method is the expiry time (3rd argument) of the key in the store.
 
-## Extras
 
-There might be instances where you would want to generate unique keys with multiple values, and to maintain a uniformity and consistency, Intent also comes with a `genKey` method.
+### Other Operations
+
+Till now we have seen how to write and read data from cache, but it is much more than that. Fortunately, Intent comes with multiple utility based methods which are meant to ease your interaction with cache.
+
+Let's take a look at those.
+
+To check if key exists in the store, you can use `.has()` method
 
 ```typescript
-const key = Cache.genKey({ type: "reset_password_token", userId: 1234 });
-console.log(key); // type[reset_password_token],userId[1234]
+await CacheStore().has("books");
+// will return `true` if found, else `false`
 ```
+
+To remove a key from the store, use `.forget()` method
+
+```typescript
+await CacheStore().forget("books");
+```
+
+When it comes to interacting with cache, it can often become cumbersome to maintain a standardisation of how keys are being built and used in an application. We have added a `genKey` method or `CacheKeyGen` helper which you can use to generate keys.
+
+For example, let's say you want to build a key for a user which is responsibe for holding user's data in the cache.
+
+```ts
+const keyObj = { type: 'info', id: 'user_1234' };
+Cache.genKey(keyObj);
+// id[user_1234],type[info]
+```
+
+<Callout type="info">
+If the key length is more than `10000 characters`, it would automatically hash(sha1) the keys and return the hashed key.
+</Callout>
 
 `genKey` method automatically sorts the object's key in lexical order and return a string which later can be used as a key.
