@@ -10,6 +10,7 @@ import {
   PiTreeViewDuotone,
   PiListChecksDuotone,
   PiGameControllerDuotone,
+  PiTreeDuotone,
 } from "react-icons/pi";
 import {
   TbTimelineEventPlus,
@@ -49,7 +50,7 @@ export const iconMap = {
   Response: VscJson,
   Transformers: TbTransform,
   Validation: PiListChecksDuotone,
-  Logging: TbWood,
+  Logging: PiTreeDuotone,
   "Error Handling": VscBracketError,
   Providers: BiInjection,
 };
