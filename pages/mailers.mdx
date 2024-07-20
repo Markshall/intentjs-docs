@@ -54,7 +54,8 @@ While `smtp` provider should be able to handle your email needs, Intent comes wi
 Intent currently supports following providers.
 
 1. SMTP (using `nodemailer`)
-2. Sendgrid
+2. Mailgun - [Website](https://www.mailgun.com/)
+3. Resend - [Website](https://resend.com/)
 
 ### SMTP Configuration
 To configure SMTP server in your application, you can define the following configuration inside the `channels` attribute. You should be able to get the following mentioned credentials from your SMTP provider, such as `AWS SES`.
@@ -74,21 +75,37 @@ channels: {
 },
 ```
 
-### Sendgrid
-To configure sendgrid as a provider in your application, you can do so by
+### Mailgun
+To configure mailgun as a mail provider in your application, you can do so by
 
 <Callout type="info">
-You can get the sendgrid's api key from it's console.
+You can get the mailgun's api key and username from it's console.
 </Callout>
 
 ```ts copy
 channels: {
   transactions: {
-    provider: 'sendgrid',
-    apiKey: process.env.SENDGRID_API_KEY,
+    provider: 'mailgun',
+    username: process.env.MAILGUN_USERNAME,
+    key: process.env.MAILGUN_API_KEY,
+    domain: process.env.MAILGUN_DOMAIN,
     from: process.env.FROM_ADDRESS,
   },
 },
+```
+
+### Resend
+
+To configure resend as a mail provider in your application, you can do so by
+
+```ts copy
+channels: {
+  resend: {
+    provider: 'resend',
+    apiKey: process.env.RESEND_API_KEY,
+    from: process.env.FROM_ADDRESS,
+  }
+}
 ```
 
 ## Build Mails
@@ -335,9 +352,20 @@ To attach file(s) with your email, you can make use of `attach()` method.
 | filename  | filename to be reported as the name of the attached file.        |
 | content   | [Attachment](https://nodemailer.com/message/attachments/) Object |
 
+Let's say you have the file hosted somewhere, you can do it like
+
 ```typescript
-mail.attach("license", {
-  path: "https://link.com/invoice.pdf",
+mail.attach("invoice.pdf", {
+  url: "https://link.com/invoice.pdf",
+});
+```
+
+Alternatively, you can also pass the buffer of the file to the `attach` method.
+
+```ts
+const fileData = await Storage.disk('local').get('orders/invoice_1234.pdf');
+mail.attach('invoice_1234.pdf', {
+  content: fileData,
 });
 ```
 
