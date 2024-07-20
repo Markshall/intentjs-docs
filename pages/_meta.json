@@ -39,8 +39,6 @@
   "db-migrations": "Migrations",
   "db-models": "Models",
   "db-repository": "Repository",
-  "out-of-context": "Out of Context",
-  "packages": "Packages",
 
   "home": {
     "title": "Home",
