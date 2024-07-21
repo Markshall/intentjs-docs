@@ -3,7 +3,7 @@ import { LuMemoryStick } from "react-icons/lu";
 
 export const Logo = () => {
   return (
-    <Image src="/docs/logo.png" width={30} height={30} alt="logo" unoptimized />
+    <Image src="/docs/intent-logo-light.png" width={30} height={30} alt="logo" unoptimized />
   );
 };
 
