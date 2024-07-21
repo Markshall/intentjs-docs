@@ -2,7 +2,6 @@ import React from "react";
 import { PiPencilSimpleLineLight } from "react-icons/pi";
 import { PiShootingStar } from "react-icons/pi";
 import { MdOutlineMessage } from "react-icons/md";
-import { PiHandHeart } from "react-icons/pi";
 import { PiNote } from "react-icons/pi";
 import { PiArrowUpRightBold } from "react-icons/pi";
 import { Enterprise } from "../components/images/providers";
@@ -16,41 +15,46 @@ const CommunityData = [
   },
   {
     Icon: PiShootingStar,
-    title: "Star on GuitHub",
+    title: "Star on Github",
     ArrowIcon: PiArrowUpRightBold,
+    href: "https://github.com/intentjs/core",
   },
   {
     Icon: MdOutlineMessage,
     title: "Chat on Discord",
     ArrowIcon: PiArrowUpRightBold,
-  },
-  {
-    Icon: PiHandHeart,
-    title: "Become a Sponsor",
-    ArrowIcon: PiArrowUpRightBold,
+    href: "https://discord.com/invite/CvCPVYMR",
   },
   {
     Icon: PiNote,
-    title: "Give us Feedback",
+    title: "Give feedback",
     ArrowIcon: PiArrowUpRightBold,
+    href: "https://github.com/intentjs/core/issues/new",
   },
 ];
 
 const Community = (props) => {
-  console.log(props)
   return (
     <div>
       <p className="nx-mb-3.5 nx-font-semibold nx-tracking-tight">Community</p>
       <ul>
         {CommunityData.map((item, index) => (
           <li className="nx-my-2 nx-scroll-my-6 nx-scroll-py-6" key={index}>
-            <a className="nx-font-semibold nx-inline-block nx-text-gray-500 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-300 contrast-more:nx-text-gray-900 contrast-more:nx-underline contrast-more:dark:nx-text-gray-50 nx-w-full nx-break-words">
+            <Link
+              className="nx-font-semibold nx-inline-block nx-text-gray-500 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-300 contrast-more:nx-text-gray-900 contrast-more:nx-underline contrast-more:dark:nx-text-gray-50 nx-w-full nx-break-words"
+              href={
+                item.title === "Edit this page"
+                  ? `https://github.com/intentjs/docs/blob/master/${props.filePath}`
+                  : item.href || "/installation"
+              }
+              target="_blank"
+            >
               <span className="flex flex-row items-center gap-2 cursor-pointer">
                 <item.Icon />
                 {item.title}
                 <item.ArrowIcon />
               </span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
