@@ -23,7 +23,7 @@ const CommunityData = [
     Icon: MdOutlineMessage,
     title: "Chat on Discord",
     ArrowIcon: PiArrowUpRightBold,
-    href: "https://discord.com/invite/CvCPVYMR",
+    href: "https://discord.gg/5ambDUN7Ge",
   },
   {
     Icon: PiNote,

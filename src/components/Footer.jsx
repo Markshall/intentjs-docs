@@ -13,7 +13,7 @@ const Footer = () => {
           </Link>
         </div>
         <div className="rounded-full bg-bgcolor dark:bg-darkfont text-darkfont dark:text-bgcolor hover:bg-main dark:hover:bg-main dark:hover:text-darkfont p-2 cursor-pointer">
-          <Link href={"https://discord.com/invite/CvCPVYMR"}>
+          <Link href={"https://discord.gg/5ambDUN7Ge"}>
             <FaDiscord size={20} />
           </Link>
         </div>
