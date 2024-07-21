@@ -7,7 +7,7 @@ export default function GithubStar() {
     async function fetchStarCount() {
       try {
         const response = await fetch(
-          `https://api.github.com/repos/facebook/react`
+          `https://api.github.com/repos/intentjs/core`
         );
         if (!response.ok) {
           throw new Error(`Error fetching stars: ${response.status}`);
