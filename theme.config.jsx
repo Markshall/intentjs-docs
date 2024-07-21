@@ -21,32 +21,16 @@ export default {
       <>
         <meta property="og:url" content={url} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={frontMatter.title || "IntentJs"} />
+        <meta property="og:title" content={frontMatter.title || "Intent - An Elegant NodeJS framework"} />
         <meta
           property="og:description"
-          content={frontMatter.description || "The next site builder"}
+          content={frontMatter.description || "A fresh take on traditional nodejs frameworks, change the way you engineer your products. Intent is an open source framework that makes web development 10x easier and powerful."}
         />
         <meta
           property="og:image"
           content={
             frontMatter.image ||
-            "https://docs.intentjs.dev/~gitbook/ogimage/c54x0ZXLzB17lOdopIfm"
-          }
-        />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="docs.intentjs.dev" />
-        <meta property="twitter:url" content={url} />
-        <meta name="twitter:title" content={frontMatter.title || "IntentJs"} />
-        <meta
-          name="twitter:description"
-          content={frontMatter.description || "The next site builder"}
-        />
-        <meta
-          name="twitter:image"
-          content={
-            frontMatter.image ||
-            "https://docs.intentjs.dev/~gitbook/ogimage/c54x0ZXLzB17lOdopIfm"
+            "https://intent-assets.s3.ap-south-1.amazonaws.com/intent-banner.png"
           }
         />
       </>
