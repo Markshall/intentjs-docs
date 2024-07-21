@@ -20,7 +20,7 @@ Below we have explained the different `disk` configurations available which you 
 
 ```ts filename="config/filesystem.ts"
 import { fromIni } from '@aws-sdk/credential-providers';
-import { StorageOptions } from '@libs/intent/storage';
+import { StorageOptions } from '@intentjs/core';
 import { registerAs } from '@nestjs/config';
 
 export default registerAs(

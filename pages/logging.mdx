@@ -18,7 +18,7 @@ Intent comes with simple methods to store all your application logs in the forma
 By default, all of the configurations for loggers are stored inside `config/logger.ts` . You would see a similar configuration as below
 
 ```ts copy
-import { Formats, LogLevel, Transports } from '@libs/intent';
+import { Formats, LogLevel, Transports } from '@intentjs/core';
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('logger', () => ({
