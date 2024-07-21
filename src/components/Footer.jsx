@@ -10,9 +10,6 @@ const Footer = () => {
     <div className="flex flex-col justify-center items-center w-full pt-12 pb-5">
       <div className="flex flex-row gap-5">
         <div className="rounded-full bg-[#fff] p-2 cursor-pointer">
-          <FaSquareInstagram size={20} color="black" />
-        </div>
-        <div className="rounded-full bg-[#fff] p-2 cursor-pointer">
           <BsTwitterX size={20} color="black" />
         </div>
         <div className="rounded-full bg-[#fff] p-2 cursor-pointer">

@@ -14,7 +14,7 @@ Intent is a web application framework built on top of [NestJS](https://nestjs.co
 
 In a real world scenario, it is likely that you will need many things like authentication, database integration, web views and what not. This is exactly what Intent wants to solve for you.
 
-Intent strives to provide a good developer experience while providing powerful features like database integration, queue integration, event listeners, task scheduling etc.
+Intent aims to provide a good developer experience while providing powerful features like database integration, queue integration, event listeners, task scheduling etc.
 
 Note - While Intent tries it's best to respect NestJS design principles in the best way possible, but sometimes it can be difficult. So, by default Intent follows the way which ensures maximum value for the community.
 
@@ -25,10 +25,10 @@ Intent is a web application framework for devs and teams who intends to build an
 Intent provides necessary feature-integrations out of the box.
 
 - **RDBMS** - MySQL, PostgreSQL,
-- **Storage** - Unix File System AWS S3, Azure Store Account
+- **Storage** - Unix File System AWS S3.
 - **Message** Queues - AWS SQS, Redis
-- **Mailers** - SMTP, Sendgrid, AWS SES, Loop, Nodemailer
-- **Caching** - Redis, Memcache, In-Memory
+- **Mailers** - SMTP, Mailgun, Resend
+- **Caching** - Redis, In-Memory
 - **Logging**
 - **Validations**
 - **Transformers**
@@ -46,11 +46,13 @@ Intent provides necessary feature-integrations out of the box.
 Intent works best when you create your new application with Intent itself, to do so, simply run
 
 ```bash
-npx create-intent-app
+npx new-intent-app@latest
 ```
 
 <Callout type="info" emoji="ℹ️">
   Currently, due to many integrations out of the box, integrating IntentJS in
   your NestJS application is not supported. If you would like to request it, you
-  can do it here.
+  reach out to the team via support link.
+
+  Also, since under the hood, Intent utilities NestJS, so almost all of the packages for NestJS should be compatible.
 </Callout>
