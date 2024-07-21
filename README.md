@@ -22,4 +22,10 @@ Intent provides necessary feature-integrations out of the box.
 - [Localization](https://tryintent.com/docs/localization)
 - [Console Commands](https://tryintent.com/docs/console)
 
-## Getting Started with Docs
+## Contact Us
+
+If you would like to support our work or just a few words of feedback, we are all ears at hi@tryintent.com.
+
+## License
+
+The Intent framework is open-source software licensed under the [MIT License](#license)
