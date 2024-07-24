@@ -1,8 +1,13 @@
-const { readFileSync } = require("fs");
+const { remarkCodeHike } = require("@code-hike/mdx");
 
 const withNextra = require("nextra")({
   theme: "nextra-theme-docs",
   themeConfig: "./theme.config.jsx",
+  mdxOptions: {
+    remarkPlugins: [
+      [remarkCodeHike, { theme: "one-dark-pro", showCopyButton: true }],
+    ],
+  },
 });
 
 module.exports = withNextra({
@@ -15,10 +20,5 @@ module.exports = withNextra({
         permanent: true,
       },
     ];
-  },
-  mdxOptions: {
-    rehypePrettyCodeOptions: {
-      theme: JSON.parse(readFileSync("./custom-theme.json", "utf8")),
-    },
   },
 });

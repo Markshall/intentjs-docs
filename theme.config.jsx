@@ -5,7 +5,6 @@ import { iconMap } from "./src/components/utils/iconmap";
 import Community from "./src/components/Community";
 import Footer from "./src/components/Footer";
 import { Logo } from "./src/components/images/providers";
-import CodeSnippet from "./src/components/utils/CodeSnippet";
 
 const GITHUB_REPO_STAR = <GithubStar />;
 
@@ -21,10 +20,16 @@ export default {
       <>
         <meta property="og:url" content={url} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={frontMatter.title || "Intent - An Elegant NodeJS framework"} />
+        <meta
+          property="og:title"
+          content={frontMatter.title || "Intent - An Elegant NodeJS framework"}
+        />
         <meta
           property="og:description"
-          content={frontMatter.description || "A fresh take on traditional nodejs frameworks, change the way you engineer your products. Intent is an open source framework that makes web development 10x easier and powerful."}
+          content={
+            frontMatter.description ||
+            "A fresh take on traditional nodejs frameworks, change the way you engineer your products. Intent is an open source framework that makes web development 10x easier and powerful."
+          }
         />
         <meta
           property="og:image"
@@ -89,7 +94,7 @@ export default {
     component: <Footer />,
   },
   editLink: {
-    component: (props) => <Community {...props}/>,
+    component: (props) => <Community {...props} />,
   },
   navigation: {
     prev: true,
