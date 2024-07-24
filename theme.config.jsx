@@ -55,7 +55,7 @@ export default {
   //   extraContent: <Community />
   // },
   chat: {
-    link: "https://google.com",
+    link: "https://discord.gg/5ambDUN7Ge",
   },
   project: {
     link: "https://github.com/intentjs/core",
