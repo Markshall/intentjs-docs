@@ -5,3 +5,7 @@
 pre {
   background-color: #1d2429 !important;
 }
+
+.ch-codeblock, .ch-codegroup, .ch-preview {
+  box-shadow: none !important;
+}
