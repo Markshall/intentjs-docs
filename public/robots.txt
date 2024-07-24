@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://tryintent.com
+Host: https://tryintent.com/docs
 
 # Sitemaps
-Sitemap: https://tryintent.com/sitemap.xml
+Sitemap: https://tryintent.com/docs/sitemap.xml
