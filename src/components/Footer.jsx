@@ -35,6 +35,11 @@ const Footer = () => {
             Docs
           </span>
         </Link>
+        <Link href={"https://blog.tryintent.com"}>
+          <span className="text-md text-bgcolor dark:text-darkfont font-semibold cursor-pointer hover:text-main dark:hover:text-main">
+            Blog
+          </span>
+        </Link>
         <Link href="https://app.youform.com/forms/kmxapqv4" target="_blank">
           <span className="text-md text-bgcolor dark:text-darkfont font-semibold cursor-pointer hover:text-main dark:hover:text-main">
             Support
