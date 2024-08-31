@@ -45,6 +45,12 @@
     "type": "page",
     "href": "https://tryintent.com/docs/installation"
   },
+  "blog": {
+    "title": "Blog",
+    "type": "page",
+    "newWindow": true,
+    "href": "https://blog.tryintent.com"
+  },
   "support": {
     "title": "Pro Support",
     "type": "page",
