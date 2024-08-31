@@ -40,11 +40,6 @@
   "db-models": "Models",
   "db-repository": "Repository",
 
-  "home": {
-    "title": "Home",
-    "type": "page",
-    "href": "https://tryintent.com/docs/installation"
-  },
   "blog": {
     "title": "Blog",
     "type": "page",
