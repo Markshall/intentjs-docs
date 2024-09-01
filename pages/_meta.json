@@ -12,6 +12,7 @@
     "type": "separator"
   },
 
+  "controllers": "Controllers",
   "requests": "Requests",
   "transformers": "Transformers",
   "validation": "Validation",
