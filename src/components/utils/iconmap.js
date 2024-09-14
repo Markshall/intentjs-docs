@@ -11,6 +11,8 @@ import {
   PiListChecksDuotone,
   PiGameControllerDuotone,
   PiTreeDuotone,
+  PiShieldCheckDuotone,
+  PiShippingContainerDuotone,
 } from "react-icons/pi";
 import {
   TbTimelineEventPlus,
@@ -18,8 +20,9 @@ import {
   TbTransform,
   TbWood,
   TbHttpConnect,
+  TbTransfer,
 } from "react-icons/tb";
-import { MdAlternateEmail } from "react-icons/md";
+import { MdAlternateEmail, MdOutlineDesignServices } from "react-icons/md";
 import { LuLanguages } from "react-icons/lu";
 import { BsDatabaseUp } from "react-icons/bs";
 import { RxBoxModel } from "react-icons/rx";
@@ -29,6 +32,8 @@ import { BiInjection } from "react-icons/bi";
 
 export const iconMap = {
   Controllers: PiGameControllerDuotone,
+  Guards: PiShieldCheckDuotone,
+  Middlewares: TbTransfer,
   Installation: PiRocketLaunchDuotone,
   Cache: PiMemoryDuotone,
   Console: PiTerminalWindowDuotone,
@@ -53,4 +58,6 @@ export const iconMap = {
   Logging: PiTreeDuotone,
   "Error Handling": VscBracketError,
   Providers: BiInjection,
+  "Service Providers": MdOutlineDesignServices,
+  "Service Containers": PiShippingContainerDuotone,
 };

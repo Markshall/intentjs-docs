@@ -27,7 +27,7 @@ This will create a new controller file named `userController` inside `app/http/c
 at it.
 
 ```ts
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get } from '@intentjs/core';
 
 @Controller('/users/')
 export class UserController {
@@ -40,7 +40,7 @@ export class UserController {
 }
 ```
 
-For a class to be registered as a controller, it needs to be anotated with `@Controller` decorator from `@nestjs/common`. In this class, we will define our various routes.
+For a class to be registered as a controller, it needs to be anotated with `@Controller` decorator from `@intentjs/common`. In this class, we will define our various routes.
 
 ## Routing
 
@@ -56,10 +56,9 @@ app.get('/', (req, res) => {
 In Intent, you can define the same route in your controller, just like below.
 
 ```ts
-import { Controller, Get } from '@nestjs/common';
-import { Req, Res, Request, Response } from '@intentjs/core';
+import { Controller, Get, Req, Res, Request, Response } from '@intentjs/core';
 
-@Controller('/user/')
+@Controller('/users')
 export class UserController {
   constructor() {}
 
@@ -88,16 +87,16 @@ But if you would like to use NestJS decorators, feel free to do so.
 For example, let's say you want to build an endpoint which creates customer. For this, you will need to create a `POST` handler.
 
 ```ts
-import { Req, Request } from '@intentjs/core';
-import { Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
+import { Req, Request, Controller, Post, } from '@intentjs/core';
 
 @Controller('/users')
 export class UserController {
   constructor() {}
 
-  @Get('')
-  async index(@Req() req: Request) {
+  @Post('')
+  async create(@Req() req: Request) {
     console.log(req.all());
+    // your create user logic here...
   }
 }
 ```
@@ -110,8 +109,7 @@ multiple endpoints to create, update, delete data.
 Let's take an example how this looks like.
 
 ```ts
-import { Req, Request } from '@intentjs/core';
-import { Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
+import { Controller, Delete, Get, Patch, Post, Put, Req, Request } from '@intentjs/core';
 
 @Controller('/users')
 export class UserController {
@@ -164,7 +162,7 @@ The `ab*cd` route path will match abcd, ab_cd, abecd, and so on. The characters 
 By default, all of the HTTP Methods except `@Post()` return `200 OK` status code, only `POST` method returns a `201 Created` status code. You can easily change this behavious by adding the `@HttpCode` decorator at the handler level.
 
 ```ts
-import { HttpCode } from '@nestjs/common';
+import { HttpCode } from '@intentjs/common';
 
 @Delete()
 @HttpCode(204)
@@ -177,7 +175,7 @@ async delete() {
 To specify a custom response header, you can use `@Header` decorator or a library-specific response object.
 
 ```ts
-import { Header } from '@nestjs/common';
+import { Header } from '@intentjs/common';
 
 @Post()
 @Header('Cache-Control', 'none')
@@ -260,15 +258,9 @@ We recommend using `@Payload` decorator as it provides a typed safe object, wher
 </Callout>
 
 ## Registering Controller
-For Intent to know, you will need to register the `UserController` inside the `AppModule`. This enables to scan all of the routes, and register them on the HTTP server.
+For Intent to know, you will need to register the `UserController` inside the `app/boot/sp/http.ts`. This enables our `HttpServiceProvider` to register the controller.
 
 
 ```ts
-import { Module } from '@intentjs/common';
-import { UserController } from './http/controllers/user';
-
-@Module({
-  controllers: [UserController],
-})
-export class AppModule {}
+this.registerController(UserController)
 ```
