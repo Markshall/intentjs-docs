@@ -59,5 +59,5 @@ export const iconMap = {
   "Error Handling": VscBracketError,
   Providers: BiInjection,
   "Service Providers": MdOutlineDesignServices,
-  "Service Containers": PiShippingContainerDuotone,
+  "Application Containers": PiShippingContainerDuotone,
 };
