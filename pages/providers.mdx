@@ -81,9 +81,12 @@ If you are trying out intent for the first time, we recommend reading [`Angular'
 
 To understand, how you can implement it in Intent, you can do so by using [`Service Providers`](/service-providers). 
 
-### Custom Providers
+## Custom Providers
 
-### Property Based Injection
+Apart from creating simple providers, you can also create your own custom providers using Intent. To do so, you can use class, value, some factory method, etc.
+To see how to build your own custom provider in Intent, we recommend reading through [`Service Provider`](/service-providers) documentation.
+
+## Property Based Injection
 
 Till now we have seen how to inject properties inside the class constructor methods automatically, it's called constructor-based injection, but there can be cases where your top level class
 is dependent on one or multiple providers from the child class. Traditionally, you would have to call `super()` method inside the subclass and pass the injections by yourself. But by using `property-based-injection`,
@@ -103,7 +106,7 @@ export class UserBaseService<T> {
 If your class doesn't extend another class, you should always prefer using constructor-based injection. The constructor explicitly outlines what dependencies are required and provides better visibility than class attributes annotated with @Inject.
 </Callout>
 
-## Provider Registration
+## Registering Providers
 To register a provider, you can make the following changes to the `app/boot/sp/services.ts`.
 
 ```ts
