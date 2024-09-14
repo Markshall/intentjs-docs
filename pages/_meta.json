@@ -12,8 +12,9 @@
 
   "configuration": "Configuration",
   "directory-structure": "Directory Structure",
+  "dependency-injection": "Dependency Injection",
   "service-providers": "Service Providers",
-  "service-containers": "Service Containers",
+  "app-containers": "Application Containers",
 
   "Basics": {
     "title": "Basics",
