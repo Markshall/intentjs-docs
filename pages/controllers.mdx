@@ -40,7 +40,7 @@ export class UserController {
 }
 ```
 
-For a class to be registered as a controller, it needs to be anotated with `@Controller` decorator from `@intentjs/common`. In this class, we will define our various routes.
+For a class to be registered as a controller, it needs to be anotated with `@Controller` decorator from `@intentjs/core`. In this class, we will define our various routes.
 
 ## Routing
 
@@ -162,7 +162,7 @@ The `ab*cd` route path will match abcd, ab_cd, abecd, and so on. The characters 
 By default, all of the HTTP Methods except `@Post()` return `200 OK` status code, only `POST` method returns a `201 Created` status code. You can easily change this behavious by adding the `@HttpCode` decorator at the handler level.
 
 ```ts
-import { HttpCode } from '@intentjs/common';
+import { HttpCode } from '@intentjs/core';
 
 @Delete()
 @HttpCode(204)
@@ -175,7 +175,7 @@ async delete() {
 To specify a custom response header, you can use `@Header` decorator or a library-specific response object.
 
 ```ts
-import { Header } from '@intentjs/common';
+import { Header } from '@intentjs/core';
 
 @Post()
 @Header('Cache-Control', 'none')
