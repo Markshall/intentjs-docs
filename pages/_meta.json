@@ -4,8 +4,16 @@
     "type": "separator"
   },
   "installation": "Installation",
+
+  "Architecture Concepts": {
+    "title": "Architecture Concepts",
+    "type": "separator"
+  },
+
   "configuration": "Configuration",
   "directory-structure": "Directory Structure",
+  "service-providers": "Service Providers",
+  "service-containers": "Service Containers",
 
   "Basics": {
     "title": "Basics",
@@ -13,10 +21,12 @@
   },
 
   "controllers": "Controllers",
+  "providers": "Providers",
+  "guards": "Guards",
+  "middlewares": "Middlewares",
   "requests": "Requests",
   "transformers": "Transformers",
   "validation": "Validation",
-  "logging": "Logging",
   "error-handling": "Error Handling",
 
   "Advanced": {
@@ -29,6 +39,7 @@
   "file-storage": "File Storage",
   "helpers": "Helpers",
   "localization": "Localization",
+  "logging": "Logging",
   "mailers": "Mailers",
   "queues": "Queues",
 

@@ -28,7 +28,7 @@ import { VscBracketError, VscJson } from "react-icons/vsc";
 import { BiInjection } from "react-icons/bi";
 
 export const iconMap = {
-  Controller: PiGameControllerDuotone,
+  Controllers: PiGameControllerDuotone,
   Installation: PiRocketLaunchDuotone,
   Cache: PiMemoryDuotone,
   Console: PiTerminalWindowDuotone,

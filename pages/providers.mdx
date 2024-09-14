@@ -1,0 +1,113 @@
+---
+title: Providers
+description:
+image:
+---
+import { Callout } from "nextra/components";
+
+# Providers
+
+Providers are an essential concept in Intent, they reuse the same providers that are avaialble in NestJS. Many of the classes that you see here like
+Services, Repositories, Console Commands, Jobs, etc, all of them are providers. The main idea of providers is that it can be injected as a dependency inside another `Injectable` class.
+This means that the objects can create various relationships with each other, and the responsibility of "wiring up" can be delegated to Nest runtime system.
+
+In "Controllers" document, you saw how you can create a `Controller`, register it and start using it. Well, in a real world scenario, you would need more than just a controller,
+you will likely need a separate class called `Services`, this service class now then gets registered inside the `providers`.
+
+## Services
+
+To see providers in action, we will need to create a service class first, let's start by creating a `UserService` class inside `app/services` directory.
+
+```bash
+$ node intent make:service user
+```
+
+```ts
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class UserService {
+  constructor() {}
+
+  async create(payload: Record<string,any>) {
+  }
+}
+```
+
+Notice the `Injectable` decorator above the `UserService`, this lets runtime system know that this call will either have some class injected inside it, or this will be injected somewhere.
+
+After creating the `Injectable` class, you will now need to register it inside the `module.ts` file.
+
+```ts
+import config from 'config';
+import { Module } from '@nestjs/common';
+import { IntentModule } from '@intentjs/core';
+import { UserController } from "./http/controllers/userController";
+import { UserService } from "./services/userService";
+
+@Module({
+  imports: [IntentModule.register(config)],
+  controllers: [UserController],
+  providers: [UserService],
+})
+export class AppModule {}
+```
+
+After these two steps, we can inject the `UserService` inside the `UserController` now. To inject, you just need to pass it as an argument inside the contructor.
+
+```ts
+import { Controller, Get, Req, Request } from '@intentjs/core';
+import { UserService } from 'app/services/userService';
+
+@Controller('/users')
+export class UserController {
+  constructor(private service: UserService) {}
+
+  @Get('')
+  async create(@Req() req: Request) {
+    return this.service.create(req.all());
+  }
+}
+```
+
+The `UserService` is injected through the class constructor. Notice the use of the private syntax. This shorthand allows us to both declare and initialize the `service` member immediately in the same location.
+
+## Dependency Injection
+
+Since Intent is built on top of of NestJS, it makes complete sense to utilise the Nest's in-built Inversion of Control (IoC) container in Intent as well.
+All of the dependency injection concepts that you know of Intent is fully valid and applicable in Intent as well (with some syntax changes).
+
+If you are trying out intent for the first time, we recommend reading [`Angular's`](https://angular.dev/guide/di) explanation of Dependency Injection.
+
+To understand, how you can implement it in Intent, you can do so by using [`Service Providers`](/service-providers). 
+
+### Custom Providers
+
+### Property Based Injection
+
+Till now we have seen how to inject properties inside the class constructor methods automatically, it's called constructor-based injection, but there can be cases where your top level class
+is dependent on one or multiple providers from the child class. Traditionally, you would have to call `super()` method inside the subclass and pass the injections by yourself. But by using `property-based-injection`,
+you can inject properties directly on a property in a class. Let's look at the below example.
+
+```ts
+import { Injectable } from '@intentjs/core';
+
+@Injectable()
+export class UserBaseService<T> {
+  @Inject('PROVIDER_TOKEN')
+  provider: T
+}
+```
+
+<Callout type="warning">
+If your class doesn't extend another class, you should always prefer using constructor-based injection. The constructor explicitly outlines what dependencies are required and provides better visibility than class attributes annotated with @Inject.
+</Callout>
+
+## Provider Registration
+To register a provider, you can make the following changes to the `app/boot/sp/services.ts`.
+
+```ts
+register() {
+  this.provide(UserService)
+}
+```
