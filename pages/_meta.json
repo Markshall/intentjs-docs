@@ -23,8 +23,8 @@
 
   "controllers": "Controllers",
   "providers": "Providers",
-  "guards": "Guards",
   "middlewares": "Middlewares",
+  "guards": "Guards",
   "requests": "Requests",
   "transformers": "Transformers",
   "validation": "Validation",
