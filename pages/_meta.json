@@ -4,15 +4,16 @@
     "type": "separator"
   },
   "installation": "Installation",
+  "first-project": "First Project",
 
-  "Architecture Concepts": {
-    "title": "Architecture Concepts",
+  "Fundamentals": {
+    "title": "Fundamentals",
     "type": "separator"
   },
 
   "configuration": "Configuration",
   "directory-structure": "Directory Structure",
-  "dependency-injection": "Dependency Injection",
+  "providers": "Providers",
   "service-providers": "Service Providers",
   "app-containers": "Application Containers",
 
@@ -22,7 +23,7 @@
   },
 
   "controllers": "Controllers",
-  "providers": "Providers",
+  "services": "Services",
   "middlewares": "Middlewares",
   "guards": "Guards",
   "requests": "Requests",

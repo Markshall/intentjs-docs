@@ -258,9 +258,23 @@ We recommend using `@Payload` decorator as it provides a typed safe object, wher
 </Callout>
 
 ## Registering Controller
-For Intent to know, you will need to register the `UserController` inside the `app/boot/sp/http.ts`. This enables our `HttpServiceProvider` to register the controller.
+For Intent to know, you will need to register the `UserController` inside the the `controllers` method in `app/http/kernel.ts`.
 
 
 ```ts
-this.registerController(UserController)
+import { Kernel } from '@intentjs/core';
+import { UserController } from 'app/http/controllers/users';
+
+export class HttpKernel extends Kernel {
+  public controllers(): Type<any>[] {
+    return [
+      UserController
+    ];
+  }
+}
 ```
+
+The `HttpKernel` class is then passed to the `IntentHttpServer` inside `main.ts`. 
+
+We don't use `HttpKernel` just for registering controllers, but also for adding global middlewares, route based middlewares and guards. 
+If you would like to know more how to use HttpKernel, read [middlewares](/middlewares) and [guards](/guards).

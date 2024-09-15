@@ -6,3 +6,29 @@ image:
 import { Callout } from "nextra/components";
 
 # Guards
+
+A guard is an injectable class which has only single responsibility. Unlike Middlewares, Guards have context object, and can
+determine which route handler will be running. You can use guards to verify the authenticity of a user, perform some role permission checks
+and other security related stuff.
+
+In Guards, we don't have any `next` method and just need to return `true` or `false` to evaluate. If you return `true`, the guards will move on to next handler
+automatically, or else if you return `false` it would throw an `Forbidden 403` error by default.
+
+## Writing Guards
+To create a guard, you can run the `node intent make:guard AuthenticateJwt` command. This command will create a `AuthenticateJwt.ts` file inside `app/http/guards` directory. For example, following guard will be created
+
+```ts
+// update the code here.
+import { IntentGuard } from '@libs/intent/rest/foundation/guards/baseGuard';
+import { Request } from '@libs/intent/rest/foundation/request';
+import { Response } from '@libs/intent/rest/foundation/response';
+
+export class SampleGuard extends IntentGuard {
+  async boot(req: Request, res: Response): Promise<boolean> {
+    return true;
+    // throw new Error('Method not implemented.');
+  }
+}
+```
+
+Along with the `request` and `response` object, guards also get a ``

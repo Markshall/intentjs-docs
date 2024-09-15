@@ -13,30 +13,29 @@ const CommunityData = [
     title: "Edit this page",
     ArrowIcon: PiArrowUpRightBold,
   },
-  {
-    Icon: PiShootingStar,
-    title: "Star on Github",
-    ArrowIcon: PiArrowUpRightBold,
-    href: "https://github.com/intentjs/core",
-  },
-  {
-    Icon: MdOutlineMessage,
-    title: "Chat on Discord",
-    ArrowIcon: PiArrowUpRightBold,
-    href: "https://discord.gg/5ambDUN7Ge",
-  },
-  {
-    Icon: PiNote,
-    title: "Give feedback",
-    ArrowIcon: PiArrowUpRightBold,
-    href: "https://github.com/intentjs/core/issues/new",
-  },
+  // {
+  //   Icon: PiShootingStar,
+  //   title: "Star on Github",
+  //   ArrowIcon: PiArrowUpRightBold,
+  //   href: "https://github.com/intentjs/core",
+  // },
+  // {
+  //   Icon: MdOutlineMessage,
+  //   title: "Chat on Discord",
+  //   ArrowIcon: PiArrowUpRightBold,
+  //   href: "https://discord.gg/5ambDUN7Ge",
+  // },
+  // {
+  //   Icon: PiNote,
+  //   title: "Give feedback",
+  //   ArrowIcon: PiArrowUpRightBold,
+  //   href: "https://github.com/intentjs/core/issues/new",
+  // },
 ];
 
 const Community = (props) => {
   return (
     <div>
-      <p className="nx-mb-3.5 nx-font-semibold nx-tracking-tight">Community</p>
       <ul>
         {CommunityData.map((item, index) => (
           <li className="nx-my-2 nx-scroll-my-6 nx-scroll-py-6" key={index}>

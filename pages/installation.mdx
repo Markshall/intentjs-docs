@@ -10,13 +10,18 @@ import { Callout } from "nextra/components";
 
 ## What is Intent?
 
-Intent is a web application framework built on top of [NestJS](https://nestjs.com). It _intends_ to provide declarative APIs to develop and ship sophisticated solutions. While NestJS provides great syntax and structure to your application, but it lacks many things which are needed to develop a good solution.&#x20;
+Intent is a web application framework with elegant syntax and focus on developer experience. 
+It _intends_ to provide declarative APIs to develop and ship sophisticated solutions with ease. 
+NodeJS ecosystem has been growing for more than almost a decade, but the challenge for us as a developer
+is still the same, ie to setup a project we need to perform 20+ steps to get the project running, and leave alone the part
+where you want to integrate something like AWS S3, Message Queues, Redis, etc.
 
-In a real world scenario, it is likely that you will need many things like authentication, database integration, web views and what not. This is exactly what Intent wants to solve for you.
+Intent is trying to solve exactly that, you get a sweet, elegant and well-structured framework to quickly build and ship your project while we sweat out the details.
 
-Intent aims to provide a good developer experience while providing powerful features like database integration, queue integration, event listeners, task scheduling etc.
+Intent comes packed with tons of features like Database integration, Storages, Message Queues, Loggers, Mailers, Caching, Localization, etc. We internally use NestJS dependency injection and Http Server, on top of this
+we also try to simplify things for you.  While Intent tries it's best to respect NestJS design principles in the best way possible, but sometimes it can be difficult. So, by default Intent follows the way which ensures maximum value for the community
 
-Note - While Intent tries it's best to respect NestJS design principles in the best way possible, but sometimes it can be difficult. So, by default Intent follows the way which ensures maximum value for the community.
+Intent aims to provide a good developer experience while still ensuring that it is performant and scalable.
 
 ## Why Intent?
 
@@ -46,13 +51,15 @@ Intent provides necessary feature-integrations out of the box.
 Intent works best when you create your new application with Intent itself, to do so, simply run
 
 ```bash
-npx new-intent-app@latest
+$ npx new-intent-app@latest
+
+? What's your *Intent* to name this project? new-sample-app
+? Are you planning to use AWS in your application? Yes
+? Would you like to use Redis in your application? Yes
+✔ Cloning repository
+✔ Installing dependencies
+✔ Setting up .env
+✔ Reset git history
 ```
 
-<Callout type="info" emoji="ℹ️">
-  Currently, due to many integrations out of the box, integrating IntentJS in
-  your NestJS application is not supported. If you would like to request it, you
-  reach out to the team via support link.
-
-  Also, since under the hood, Intent utilities NestJS, so almost all of the packages for NestJS should be compatible.
-</Callout>
+Once the command has run, you can take a look at the [first project](/first-project) to getting it running.

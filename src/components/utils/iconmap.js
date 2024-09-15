@@ -13,28 +13,33 @@ import {
   PiTreeDuotone,
   PiShieldCheckDuotone,
   PiShippingContainerDuotone,
+  PiDownloadDuotone,
 } from "react-icons/pi";
 import {
   TbTimelineEventPlus,
   TbRoute2,
   TbTransform,
-  TbWood,
   TbHttpConnect,
   TbTransfer,
 } from "react-icons/tb";
-import { MdAlternateEmail, MdOutlineDesignServices } from "react-icons/md";
+import {
+  MdAlternateEmail,
+  MdMiscellaneousServices,
+  MdOutlineDesignServices,
+} from "react-icons/md";
 import { LuLanguages } from "react-icons/lu";
 import { BsDatabaseUp } from "react-icons/bs";
 import { RxBoxModel } from "react-icons/rx";
 import { RiGitRepositoryLine } from "react-icons/ri";
 import { VscBracketError, VscJson } from "react-icons/vsc";
 import { BiInjection } from "react-icons/bi";
+import { GoPackageDependencies } from "react-icons/go";
 
 export const iconMap = {
   Controllers: PiGameControllerDuotone,
   Guards: PiShieldCheckDuotone,
   Middlewares: TbTransfer,
-  Installation: PiRocketLaunchDuotone,
+  Installation: PiDownloadDuotone,
   Cache: PiMemoryDuotone,
   Console: PiTerminalWindowDuotone,
   "File Storage": PiFilesDuotone,
@@ -57,7 +62,10 @@ export const iconMap = {
   Validation: PiListChecksDuotone,
   Logging: PiTreeDuotone,
   "Error Handling": VscBracketError,
-  Providers: BiInjection,
+  Providers: GoPackageDependencies,
   "Service Providers": MdOutlineDesignServices,
   "Application Containers": PiShippingContainerDuotone,
+  "Dependency Injection": GoPackageDependencies,
+  Services: MdMiscellaneousServices,
+  "First Project": PiRocketLaunchDuotone,
 };
