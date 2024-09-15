@@ -8,7 +8,6 @@
   "dependencies": {
     "@builder.io/partytown": "^0.10.2",
     "@code-hike/mdx": "^0.9.0",
-    "@docsearch/js": "^3.6.0",
     "next": "^13.0.6",
     "next-plausible": "^3.12.0",
     "nextra": "latest",

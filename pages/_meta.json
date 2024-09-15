@@ -4,18 +4,31 @@
     "type": "separator"
   },
   "installation": "Installation",
+  "first-project": "First Project",
+
+  "Fundamentals": {
+    "title": "Fundamentals",
+    "type": "separator"
+  },
+
   "configuration": "Configuration",
   "directory-structure": "Directory Structure",
+  "providers": "Providers",
+  "service-providers": "Service Providers",
+  "app-containers": "Application Containers",
 
   "Basics": {
     "title": "Basics",
     "type": "separator"
   },
 
+  "controllers": "Controllers",
+  "services": "Services",
+  "middlewares": "Middlewares",
+  "guards": "Guards",
   "requests": "Requests",
   "transformers": "Transformers",
   "validation": "Validation",
-  "logging": "Logging",
   "error-handling": "Error Handling",
 
   "Advanced": {
@@ -28,6 +41,7 @@
   "file-storage": "File Storage",
   "helpers": "Helpers",
   "localization": "Localization",
+  "logging": "Logging",
   "mailers": "Mailers",
   "queues": "Queues",
 
