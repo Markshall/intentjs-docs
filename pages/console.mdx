@@ -41,8 +41,7 @@ This command will automatically create a `newCommand.ts` file in `commands` dire
 You can create an injectable class and use `@Command` decorator on it. The package will automatically look for `handle` method inside the class.
 
 ```typescript
-import { Injectable } from "@nestjs/common";
-import { Command, ConsoleIO } from "@intentjs/core";
+import { Injectable, Command, ConsoleIO } from "@intentjs/core";
 
 @Injectable()
 @Command("hello {name=world}", { desc: "Test Command" })
@@ -60,8 +59,7 @@ export class HelloWorldCommand {
 You can also use `@Command` decorator on the method.
 
 ```ts
-import { Injectable } from "@nestjs/common";
-import { Command, ConsoleIO } from "@intentjs/core";
+import { Injectable, Command, ConsoleIO } from "@intentjs/core";
 
 @Injectable()
 export class HelloWorldCommand {

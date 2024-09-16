@@ -18,8 +18,7 @@ Your application comes with out-of-the-box `Sentry` integration, making it easie
 You can configure your exception filter by changing settings inside the `config/app.ts` file. It comes with a few default configuration which provides elegant error handlings in your application.
 
 ```ts
-import { toBoolean, AppConfig, ValidationErrorSerializer } from '@libs/intent';
-import { registerAs } from '@nestjs/config';
+import { registerAs, toBoolean, AppConfig, ValidationErrorSerializer } from '@libs/intent';
 
 export default registerAs(
   'app',
