@@ -42,8 +42,7 @@ export class OrderPlacedEvent extends EmitsEvent {
 ```
 
 ```ts filename="app/events/listeners/orderPlacedListener.ts"
-import { ListensTo } from '@intentjs/core';
-import { Injectable } from '@nestjs/common';
+import { Injectable, ListensTo } from '@intentjs/core';
 
 @Injectable()
 export class OrderPlacedListener {
@@ -82,8 +81,7 @@ All of the listeners only receive the normalised form of the all the data passed
 </Callout>
 
 ```ts filename="app/events/listeners/orderPlacedListener.ts"
-import { ListensTo } from '@intentjs/core';
-import { Injectable } from '@nestjs/common';
+import { Injectable, ListensTo } from '@intentjs/core';
 
 @Injectable()
 export class OrderPlacedListener {

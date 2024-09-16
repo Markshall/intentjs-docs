@@ -21,8 +21,7 @@ Intent provides powerful and consistent set of APIs for interacting with frequen
 All of the queue configurations are stored in the `config/queue.ts` file. By default, `sync` queue is configured. The configuration will be similar to below:
 
 ```ts filename="config/queue.ts"
-import { registerAs } from "@nestjs/config";
-import { SyncQueueDriver, QueueOptions } from "@intentjs/core";
+import { SyncQueueDriver, QueueOptions, registerAs } from "@intentjs/core";
 
 export default registerAs("queue", () => {
   return {
@@ -40,8 +39,7 @@ export default registerAs("queue", () => {
 Let's say you want to use `AWS SQS` as your message queue, you can use the below mentioned configuration
 
 ```ts filename="config/queue.ts"
-import { registerAs } from "@nestjs/config";
-import { SyncQueueDriver, QueueOptions } from "@intentjs/core";
+import { SyncQueueDriver, QueueOptions, registerAs } from "@intentjs/core";
 
 export default registerAs("queue", () => {
   return {
@@ -74,8 +72,7 @@ node intent make:job notification
 This command will create a `notificationJob.ts` file inside the `app/jobs` directory. Inside the `handle` method you can write your business logic.
 
 ```ts filename="app/jobs/notificationJob.ts"
-import { Injectable } from '@nestjs/common';
-import { Job } from '@intentjs/core';
+import { Injectable, Job } from '@intentjs/core';
 
 @Injectable()
 export class NotificationJob {
@@ -135,8 +132,7 @@ To dispatch a job, you can make use of the `Dispatch` helper function or `Queue`
 ### Using helper function
 
 ```typescript
-import { Injectable } from "@nestjs/common";
-import { Dispatch } from "@intentjs/core";
+import { Injectable, Dispatch } from "@intentjs/core";
 
 @Injectable()
 export class PaymentService {
@@ -168,8 +164,7 @@ For example, if you are passing a class instance, that will be converted into a 
 You can use `Queue` class, to dispatch jobs in a more declarative way
 
 ```typescript
-import { Injectable } from "@nestjs/common";
-import { Queue } from "@intentjs/core";
+import { Injectable, Queue } from "@intentjs/core";
 
 @Injectable()
 export class PaymentService {
@@ -354,7 +349,8 @@ This package supports the following drivers as of now
 1. [Sync Driver](#sync-driver)
 2. [AWS SQS Driver](#sqs-driver)
 3. [Redis Driver](#redis-driver)
-4. [Custom Driver](#custom-driver)
+4. [DB Driver](#db-driver)
+5. [Custom Driver](#custom-driver)
 
 ### Sync Driver [#sync-driver]
 
@@ -376,8 +372,7 @@ npm i @aws-sdk/client-sqs @aws-sdk/credential-providers
 Before using it, you need to configure it first like below:
 
 ```typescript
-import { registerAs } from "@nestjs/config";
-import { QueueOptions, SqsDriver } from "@intentjs/core";
+import { QueueOptions, SqsDriver, registerAs } from "@intentjs/core";
 
 export default registerAs("queue", () => {
   return {
@@ -423,8 +418,7 @@ npm i ioredis --save
 Before using it, you need to configure it first like below:
 
 ```typescript
-import { registerAs } from "@nestjs/config";
-import { QueueOptions, RedisDriver } from "@intentjs/core";
+import { QueueOptions, RedisDriver, registerAs } from "@intentjs/core";
 
 export default registerAs("queue", () => {
   return {
@@ -459,7 +453,37 @@ export default registerAs("queue", () => {
 | prefix | Prefix of the queue (useful if you are using single redis server for multiple apps)|
 | url | a fully qualified url string of the redis connection |
 
-### Custom Driver
+### Database Driver [#db-driver]
+If you are just starting out with your application, and don't want to pay for third party services. You can use Database as a message queue.
+Intent internally uses the same database connection that is used, so we don't need to re-configure our db connection for queue.
+
+To use database as a message queue, you can simply do
+
+```ts
+import { QueueOptions, RedisDriver, registerAs } from "@intentjs/core";
+
+export default registerAs("queue", () => {
+  return {
+    default: "notifications",
+    connections: {
+      db: {
+        driver: 'db',
+        listenerType: 'poll',
+        table: 'intent_jobs',
+        queue: 'default',
+        sleep: 30,
+      },
+    },
+  } as QueueOptions;
+});
+```
+
+<Callout type="info">
+  There is already a migration for `intent_jobs` table that comes with your intent application. This table gets created,
+  whenever you run `node intent migrate`.
+</Callout>
+
+### Custom Driver [#custom-driver]
 
 If you want to use your own custom queue driver, you can do so by extending `PollQueueDriver` class from `@intentjs/core` package.
 
