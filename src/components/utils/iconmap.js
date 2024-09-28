@@ -32,7 +32,7 @@ import { BsDatabaseUp } from "react-icons/bs";
 import { RxBoxModel } from "react-icons/rx";
 import { RiGitRepositoryLine } from "react-icons/ri";
 import { VscBracketError, VscJson } from "react-icons/vsc";
-import { BiInjection } from "react-icons/bi";
+import { BiReflectVertical } from "react-icons/bi";
 import { GoPackageDependencies } from "react-icons/go";
 
 export const iconMap = {
@@ -68,4 +68,5 @@ export const iconMap = {
   "Dependency Injection": GoPackageDependencies,
   Services: MdMiscellaneousServices,
   "First Project": PiRocketLaunchDuotone,
+  Reflectors: BiReflectVertical,
 };

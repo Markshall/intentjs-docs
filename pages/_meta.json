@@ -16,6 +16,7 @@
   "providers": "Providers",
   "service-providers": "Service Providers",
   "app-containers": "Application Containers",
+  "reflectors": "Reflectors",
 
   "Basics": {
     "title": "Basics",
