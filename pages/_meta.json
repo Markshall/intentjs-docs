@@ -25,6 +25,7 @@
   "controllers": "Controllers",
   "services": "Services",
   "middlewares": "Middlewares",
+  "guards": "Guards",
   "requests": "Requests",
   "transformers": "Transformers",
   "validation": "Validation",
