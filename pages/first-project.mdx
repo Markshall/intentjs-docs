@@ -90,7 +90,7 @@ DEFAULT_MAILER=logger
 To run the project locally in watch mode, you can simply run the following command in your terminal.
 
 ```ts
-$ npm run start:dev
+$ node intent server:dev
 ```
 
 Visit [http://localhost:5001](http://localhost:5001), and you should be greeted with a message.
@@ -123,6 +123,6 @@ Just like any typescript project, you will need to first build the Intent app, a
 To do so, you can make use of the following commands
 
 ```ts
-$ npm run build
-$ npm run start
+$ node intent server:build
+$ node dist/app/main.js
 ```
