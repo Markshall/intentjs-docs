@@ -14,6 +14,7 @@ import {
   PiShieldCheckDuotone,
   PiShippingContainerDuotone,
   PiDownloadDuotone,
+  PiPenDuotone,
 } from "react-icons/pi";
 import {
   TbTimelineEventPlus,
@@ -69,4 +70,5 @@ export const iconMap = {
   Services: MdMiscellaneousServices,
   "First Project": PiRocketLaunchDuotone,
   Reflectors: BiReflectVertical,
+  Contributing: PiPenDuotone,
 };

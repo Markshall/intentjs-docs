@@ -8,7 +8,7 @@ const Footer = () => {
     <div className="flex flex-col justify-center items-center w-full pt-12 pb-5">
       <div className="flex flex-row gap-5">
         <div className="rounded-full bg-bgcolor dark:bg-darkfont text-darkfont dark:text-bgcolor hover:bg-main dark:hover:bg-main dark:hover:text-darkfont p-2 cursor-pointer">
-          <Link href={"https://github.com/intentjs/core"}>
+          <Link href={"https://github.com/intentjs/intent"}>
             <FaGithub size={20} />
           </Link>
         </div>

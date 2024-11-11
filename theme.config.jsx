@@ -58,7 +58,7 @@ export default {
     link: "https://discord.gg/5ambDUN7Ge",
   },
   project: {
-    link: "https://github.com/intentjs/core",
+    link: "https://github.com/intentjs/intent",
     icon: (
       <div className="flex flex-row gap-2">
         <svg

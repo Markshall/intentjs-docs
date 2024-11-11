@@ -7,7 +7,7 @@ export default function GithubStar() {
     async function fetchStarCount() {
       try {
         const response = await fetch(
-          `https://api.github.com/repos/intentjs/core`
+          `https://api.github.com/repos/intentjs/intent`
         );
         if (!response.ok) {
           throw new Error(`Error fetching stars: ${response.status}`);
